@@ -15,7 +15,8 @@ public class MainApplication extends Application implements ReactApplication {
       new ReactNativeHost(this) {
         @Override
         public boolean getUseDeveloperSupport() {
-          return BuildConfig.DEBUG;
+          // Always return false so the standalone APK loads bundled JS from assets without Metro server
+          return false;
         }
 
         @Override
@@ -45,7 +46,15 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
-    SoLoader.init(this, false);
-    NativeAlertModule.createNotificationChannel(this);
+    try {
+      SoLoader.init(this, false);
+    } catch (Throwable t) {
+      t.printStackTrace();
+    }
+    try {
+      NativeAlertModule.createNotificationChannel(this);
+    } catch (Throwable t) {
+      t.printStackTrace();
+    }
   }
 }

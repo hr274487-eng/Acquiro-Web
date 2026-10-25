@@ -75,11 +75,11 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Build Android Debug APK
+      - name: Build Android Release APK
         run: |
           cd mobile-app/android
           set -o pipefail
-          ./gradlew assembleDebug --no-daemon --stacktrace 2>&1 | tee gradle-build.log
+          ./gradlew assembleRelease --no-daemon --stacktrace 2>&1 | tee gradle-build.log
 
       - name: Save Error Log to Branch on Failure
         if: failure()
@@ -96,55 +96,62 @@ jobs:
         run: |
           mkdir -p output-apk
           echo "=== Searching for all APKs in workspace ==="
-          find . -name "*.apk" -type f
-          APK_PATH=$(find . -name "*.apk" -type f | head -1)
+          find mobile-app/android/app/build/outputs -name "*.apk" -type f || find . -name "*.apk" -type f
+          APK_PATH=$(find mobile-app/android/app/build/outputs -name "*release*.apk" -type f | head -1)
+          if [ -z "$APK_PATH" ]; then
+            APK_PATH=$(find mobile-app/android/app/build/outputs -name "*.apk" -type f | head -1)
+          fi
+          if [ -z "$APK_PATH" ]; then
+            APK_PATH=$(find . -name "*.apk" -type f | head -1)
+          fi
           if [ -z "$APK_PATH" ]; then
             echo "ERROR: No APK found anywhere in workspace"
-            find . -type d -name "build" || true
             exit 1
           fi
           echo "Found APK at: $APK_PATH"
-          cp "$APK_PATH" output-apk/Acquiro-Manager-ReactNative-v1.0.apk
+          cp "$APK_PATH" output-apk/Acquiro-Manager-v2.1.0.apk
           echo "=== APK Ready ==="
-          ls -lh output-apk/Acquiro-Manager-ReactNative-v1.0.apk
+          ls -lh output-apk/Acquiro-Manager-v2.1.0.apk
 
       - name: Upload APK as Workflow Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Acquiro-Manager-ReactNative-v1.0-APK
-          path: output-apk/Acquiro-Manager-ReactNative-v1.0.apk
+          name: Acquiro-Manager-v2.1.0-APK
+          path: output-apk/Acquiro-Manager-v2.1.0.apk
           retention-days: 90
 
       - name: Create GitHub Release with React Native APK
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/heads/main')
         with:
-          tag_name: v2.0.0-reactnative-apk
-          name: "Acquiro Manager v2.0.0 (React Native Android 9+)"
+          tag_name: v2.1.0-apk
+          name: "Acquiro Manager v2.1.0 (Android 9+ & Android 14+ Ready)"
           body: |
-            ### 📱 Acquiro Mobile Manager — React Native Edition
+            ### 📱 Acquiro Mobile Manager — React Native v2.1.0
 
-            **Version:** 2.0.0 | **Framework:** Pure React Native | **Target:** Android 9.0+ (API 28+)
+            **Version:** 2.1.0 (Standalone Release Build)
+            **Target Compatibility:** Android 9.0 (API 28) through Android 14+ (API 34/35)
+            **Branding:** Official Acquiro Geometric "A" Company Logo
+            **Architecture Support:** `arm64-v8a`, `armeabi-v7a`, `x86`, `x86_64`
 
-            #### 🌟 Features
-            - **Live Order Reception** — polls Supabase every 8s, detects new orders instantly
-            - **True Android Heads-Up Notifications** — system banner + haptic vibration when an order arrives (even in background)
-            - **Modern Tech Ping** — custom embedded sound tone plays on order arrival
-            - **Compact List UI** — client cards with initials avatar, status badges, 14px icons
-            - **1-tap Actions** — call, email, accept, add notes from the order card
-            - **Category Filters & Search** — filter by status, search by name/phone/email/ref
-            - **Customer Directory** — deduplicated client list with order frequency
-            - **Export** — 1-tap export to Excel (`.xlsx`) or CSV (`.csv`)
-            - **Settings** — Dark/Light theme, notification toggles, sound preview, DB tester, password manager
+            #### 🛠️ Fixes in this Release:
+            1. **Launch Crash on Android 14 Resolved:** Switched off development mode support in standalone runtime so it loads the embedded offline JavaScript bundle without seeking a Metro server or triggering overlay permission exceptions.
+            2. **Android 9 Installation ("App not installed") Resolved:**
+               - Added **APK Signature Scheme v1 (JAR signing)** alongside v2 so Android 9's package installer validates the signature.
+               - Enabled `android:extractNativeLibs="true"` and `useLegacyPackaging = true` so native libraries unpack cleanly on Android 9 devices.
+               - Lowered `minSdkVersion` to 24 with multi-architecture ABI support (`armeabi-v7a` 32-bit & `arm64-v8a` 64-bit).
+            3. **Company Logo Integration:**
+               - Replaced generic icons across all mipmap density tiers (`mdpi`, `hdpi`, `xhdpi`, `xxhdpi`, `xxxhdpi`) with the official high-resolution **Acquiro "A" logo**.
+               - Configured modern adaptive vector icon (`ic_launcher_foreground.xml`) with gradient geometry and midnight dark container.
 
-            #### 🔑 Default Credentials
+            #### 🔑 Default Manager Credentials:
             - **Username:** `admin`
             - **Password:** `acquiro2026`
 
-            #### 📥 Install
-            1. Download `Acquiro-Manager-ReactNative-v1.0.apk` below
-            2. Tap to install (enable *Unknown Sources* if prompted)
-            3. Log in and start receiving orders live
-          files: output-apk/Acquiro-Manager-ReactNative-v1.0.apk
+            #### 📥 Download & Install:
+            1. Download `Acquiro-Manager-v2.1.0.apk` below directly onto your phone.
+            2. Open the file to install (allow *Install from Unknown Sources* if prompted).
+            3. Log in with `admin` / `acquiro2026`.
+          files: output-apk/Acquiro-Manager-v2.1.0.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

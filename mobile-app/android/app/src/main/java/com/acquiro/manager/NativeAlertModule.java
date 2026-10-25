@@ -34,64 +34,72 @@ public class NativeAlertModule extends ReactContextBaseJavaModule {
     }
 
     public static void createNotificationChannel(Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            if (manager != null) {
-                NotificationChannel channel = new NotificationChannel(
-                    CHANNEL_ID,
-                    CHANNEL_NAME,
-                    NotificationManager.IMPORTANCE_HIGH
-                );
-                channel.setDescription("High priority order reception alerts with Modern Tech Ping tone");
-                channel.enableVibration(true);
-                channel.setVibrationPattern(new long[]{0, 250, 100, 250, 100, 350});
-                channel.setLockscreenVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                if (manager != null) {
+                    NotificationChannel channel = new NotificationChannel(
+                        CHANNEL_ID,
+                        CHANNEL_NAME,
+                        NotificationManager.IMPORTANCE_HIGH
+                    );
+                    channel.setDescription("High priority order reception alerts with Modern Tech Ping tone");
+                    channel.enableVibration(true);
+                    channel.setVibrationPattern(new long[]{0, 250, 100, 250, 100, 350});
+                    channel.setLockscreenVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
-                Uri soundUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() + "/" + R.raw.tech_ping);
-                AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .setUsage(AudioAttributes.USAGE_NOTIFICATION_COMMUNICATION_REQUEST)
-                    .build();
-                channel.setSound(soundUri, audioAttributes);
+                    Uri soundUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() + "/" + R.raw.tech_ping);
+                    AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .setUsage(AudioAttributes.USAGE_NOTIFICATION_COMMUNICATION_REQUEST)
+                        .build();
+                    channel.setSound(soundUri, audioAttributes);
 
-                manager.createNotificationChannel(channel);
+                    manager.createNotificationChannel(channel);
+                }
             }
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
     }
 
     @ReactMethod
     public void triggerHeadsUpNotification(String title, String body, String orderRef) {
-        Context context = getReactApplicationContext();
-        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        if (manager == null) return;
+        try {
+            Context context = getReactApplicationContext();
+            NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            if (manager == null) return;
 
-        createNotificationChannel(context);
+            createNotificationChannel(context);
 
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.putExtra("orderRef", orderRef);
+            Intent intent = new Intent(context, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.putExtra("orderRef", orderRef);
 
-        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            flags |= PendingIntent.FLAG_IMMUTABLE;
+            int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                flags |= PendingIntent.FLAG_IMMUTABLE;
+            }
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, flags);
+
+            Uri soundUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() + "/" + R.raw.tech_ping);
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(title)
+                .setContentText(body)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent)
+                .setVibrate(new long[]{0, 250, 100, 250, 100, 350})
+                .setSound(soundUri)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+
+            manager.notify((int) System.currentTimeMillis(), builder.build());
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, flags);
-
-        Uri soundUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() + "/" + R.raw.tech_ping);
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentTitle(title)
-            .setContentText(body)
-            .setPriority(NotificationCompat.PRIORITY_MAX)
-            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-            .setAutoCancel(true)
-            .setContentIntent(pendingIntent)
-            .setVibrate(new long[]{0, 250, 100, 250, 100, 350})
-            .setSound(soundUri)
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-
-        manager.notify((int) System.currentTimeMillis(), builder.build());
     }
 
     @ReactMethod
@@ -103,8 +111,8 @@ public class NativeAlertModule extends ReactContextBaseJavaModule {
                 mediaPlayer.setOnCompletionListener(MediaPlayer::release);
                 mediaPlayer.start();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
     }
 
@@ -116,8 +124,8 @@ public class NativeAlertModule extends ReactContextBaseJavaModule {
             if (vibrator != null && vibrator.hasVibrator()) {
                 vibrator.vibrate(new long[]{0, 220, 80, 220, 80, 360}, -1);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
     }
 }
