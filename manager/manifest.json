@@ -1,0 +1,26 @@
+{
+  "name": "Acquiro Manager",
+  "short_name": "Acquiro Mgr",
+  "description": "Acquiro Real-time Order Reception, Triage, Customer Directory and Export Portal",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#090d16",
+  "theme_color": "#7c3aed",
+  "categories": ["business", "productivity", "management"],
+  "icons": [
+    {
+      "src": "assets/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "appId": "com.acquiro.manager",
+  "appName": "Acquiro Manager",
+  "webDir": "manager",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https",
+    "cleartext": true
+  },
+  "android": {
+    "allowMixedContent": true,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": true
+  }
+}

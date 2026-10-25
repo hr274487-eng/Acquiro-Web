@@ -15,3 +15,12 @@ npm-debug.log*
 .env
 .env.local
 .env.*.local
+
+# Node Dependencies
+node_modules/
+
+# Android Build Outputs & Caches
+android/app/build/
+android/.gradle/
+android/build/
+output-apk/

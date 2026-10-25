@@ -1,0 +1,26 @@
+{
+  "name": "acquiro-web-(updated)",
+  "version": "1.0.0",
+  "description": "Official multi-page business website for **Acquiro**, an engineering company that designs, integrates, tests, and deploys custom AI voice agents, business workflow automations, and modern web applications.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hr274487-eng/Acquiro-Web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/hr274487-eng/Acquiro-Web/issues"
+  },
+  "homepage": "https://github.com/hr274487-eng/Acquiro-Web#readme",
+  "dependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/cli": "^8.5.3",
+    "@capacitor/core": "^8.5.3"
+  }
+}
