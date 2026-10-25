@@ -78,15 +78,15 @@ jobs:
       - name: Build Android Debug APK
         run: |
           cd mobile-app/android
-          ./gradlew assembleDebug --no-daemon --stacktrace
+          ./gradlew assembleDebug --no-daemon --stacktrace 2>&1 | tee gradle-build.log || (echo "=== GRADLE FAILURE ===" && tail -n 150 gradle-build.log && exit 1)
 
-      - name: List Build Outputs (Debug)
-        if: always()
-        run: |
-          echo "=== Build output tree ==="
-          find mobile-app/android/app/build -type f -name "*.apk" 2>/dev/null || echo "No APKs found in expected path"
-          echo "=== All files in build/outputs ==="
-          find mobile-app/android/app/build/outputs -type f 2>/dev/null | head -40 || echo "outputs dir not found"
+      - name: Upload Build Log on Failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gradle-build-log
+          path: mobile-app/android/gradle-build.log
+          retention-days: 7
 
       - name: Locate and Prepare Output APK
         run: |
@@ -94,6 +94,7 @@ jobs:
           APK_PATH=$(find mobile-app/android/app/build -name "*.apk" -type f 2>/dev/null | head -1)
           if [ -z "$APK_PATH" ]; then
             echo "ERROR: No APK found anywhere in build directory"
+            find mobile-app/android/app/build -type f 2>/dev/null | head -40 || true
             exit 1
           fi
           echo "Found APK at: $APK_PATH"
@@ -110,6 +111,7 @@ jobs:
 
       - name: Create GitHub Release with React Native APK
         uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/heads/main')
         with:
           tag_name: v2.0.0-reactnative-apk
           name: "Acquiro Manager v2.0.0 (React Native Android 9+)"
