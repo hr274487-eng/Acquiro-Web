@@ -17,8 +17,8 @@ android {
         applicationId "com.acquiro.manager"
         minSdkVersion 24
         targetSdkVersion 33
-        versionCode 6
-        versionName "2.5.0"
+        versionCode 7
+        versionName "2.6.0"
 
         ndk {
             abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
@@ -27,18 +27,18 @@ android {
 
     signingConfigs {
         release {
-            storeFile file(file('acquiro.keystore').exists() ? 'acquiro.keystore' : 'debug.keystore')
-            storePassword file('acquiro.keystore').exists() ? 'acquiro2026' : 'android'
-            keyAlias file('acquiro.keystore').exists() ? 'acquirokey' : 'androiddebugkey'
-            keyPassword file('acquiro.keystore').exists() ? 'acquiro2026' : 'android'
+            storeFile file('debug.keystore')
+            storePassword 'acquiro2026'
+            keyAlias 'acquirokey'
+            keyPassword 'acquiro2026'
             v1SigningEnabled true
             v2SigningEnabled true
         }
         debug {
-            storeFile file(file('acquiro.keystore').exists() ? 'acquiro.keystore' : 'debug.keystore')
-            storePassword file('acquiro.keystore').exists() ? 'acquiro2026' : 'android'
-            keyAlias file('acquiro.keystore').exists() ? 'acquirokey' : 'androiddebugkey'
-            keyPassword file('acquiro.keystore').exists() ? 'acquiro2026' : 'android'
+            storeFile file('debug.keystore')
+            storePassword 'acquiro2026'
+            keyAlias 'acquirokey'
+            keyPassword 'acquiro2026'
             v1SigningEnabled true
             v2SigningEnabled true
         }
@@ -60,11 +60,6 @@ android {
             useLegacyPackaging = true
         }
     }
-    packagingOptions {
-        jniLibs {
-            useLegacyPackaging = true
-        }
-    }
 
     sourceSets {
         main {
@@ -76,6 +71,6 @@ android {
 dependencies {
     implementation("com.facebook.react:react-android")
     implementation("com.facebook.react:hermes-android")
-    implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("androidx.core:core:1.13.1")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.core:core:1.12.0")
 }

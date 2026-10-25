@@ -57,7 +57,8 @@ jobs:
               -keypass acquiro2026 \
               -dname "CN=Acquiro Manager,O=Acquiro,C=US"
           fi
-          cp mobile-app/android/app/acquiro.keystore mobile-app/android/app/debug.keystore || true
+          # Always copy as debug.keystore so build.gradle can use a fixed path
+          cp mobile-app/android/app/acquiro.keystore mobile-app/android/app/debug.keystore
 
       - name: Install React Native Dependencies
         run: |
@@ -115,44 +116,43 @@ jobs:
             exit 1
           fi
           echo "Found APK at: $APK_PATH"
-          cp "$APK_PATH" output-apk/Acquiro-Manager-v2.5.0.apk
+          cp "$APK_PATH" output-apk/Acquiro-Manager-v2.6.0.apk
           echo "=== APK Ready ==="
-          ls -lh output-apk/Acquiro-Manager-v2.5.0.apk
+          ls -lh output-apk/Acquiro-Manager-v2.6.0.apk
 
       - name: Upload APK as Workflow Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Acquiro-Manager-v2.5.0-APK
-          path: output-apk/Acquiro-Manager-v2.5.0.apk
+          name: Acquiro-Manager-v2.6.0-APK
+          path: output-apk/Acquiro-Manager-v2.6.0.apk
           retention-days: 90
 
       - name: Create GitHub Release with React Native APK
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/heads/main')
         with:
-          tag_name: v2.5.0-apk
-          name: "Acquiro Manager v2.5.0 (Android 9+ Universal Installation & Background Reception)"
+          tag_name: v2.6.0-apk
+          name: "Acquiro Manager v2.6.0 (Android 9+ Fixed — True Universal Install)"
           body: |
-            ### 📱 Acquiro Mobile Manager — React Native v2.5.0 (Universal Android 9+ Release)
+            ### 📱 Acquiro Mobile Manager — React Native v2.6.0
 
-            **Version:** 2.5.0
+            **Version:** 2.6.0
             **Target Compatibility:** Android 9.0 (API 28) through Android 14+ (API 34/35)
             **Branding:** Official Acquiro Company Geometric "A" Logo
             **Architecture:** `arm64-v8a`, `armeabi-v7a`, `x86`, `x86_64`
 
-            #### 🛠️ What's Fixed in v2.5.0:
-            1. **Full Android 9 Installation Compatibility:**
-               - Removed API 34-only manifest attributes (`foregroundServiceType="dataSync"` and `FOREGROUND_SERVICE_DATA_SYNC`) that caused Android 9 package managers to abort installation with parse errors.
-               - Set `targetSdkVersion = 33` for backward compatibility across all Android versions without breaking foreground background services.
-               - Guaranteed native `useLegacyPackaging = true` and `extractNativeLibs="true"` for smooth execution on 32-bit and 64-bit Android 9 devices.
-            2. **Permanent Keystore Signature:** Signed with consistent permanent keys so future updates do not fail with signature mismatch.
-            3. **Background Order Reception Service:** Runs 24/7 in the background with `R.raw.tech_ping` audio and heads-up banner notifications when minimized or locked.
-            4. **Clean Order Status Transitions:** Fixed status toggle callbacks so changing orders to Accepted, Completed, etc., works smoothly without errors.
+            #### 🛠️ What's Fixed in v2.6.0 (Android 9 Install Fix):
+            1. **Removed duplicate `packagingOptions {}` block** — v2.5.0 had both `packaging {}` AND `packagingOptions {}` which caused AGP to not apply `useLegacyPackaging=true` correctly; `.so` libs were left DEFLATED (compressed), causing Android 9's package manager to reject the APK.
+            2. **Removed `ProfileInstallReceiver`** — `androidx.core:1.13.1` merges a `ProfileInstallReceiver` into the manifest that Android 9 package parser rejects with `INSTALL_PARSE_FAILED_MANIFEST_MALFORMED`. Overridden with `tools:node="remove"`.
+            3. **Downgraded androidx dependencies** — `appcompat:1.6.1` and `core:1.12.0` avoid pulling in newer `profileinstaller` transitive dependencies that are not compatible with Android 9.
+            4. **Simplified keystore signing config** — Fixed conditional keystore detection that could silently fall back to wrong credentials; now always uses copied `debug.keystore` with consistent `acquirokey` alias.
+            5. **All previously fixed features preserved:** Background service, persistent login, no in-app notifications, correct filter chip layout, and Acquiro "A" logo.
 
             #### 📥 Download & Install:
-            > **Important Note for Android 9:** If you have an older test version installed on your device, **please uninstall the old version first** to avoid Android signature conflicts, then install `Acquiro-Manager-v2.5.0.apk`.
-            1. Download `Acquiro-Manager-v2.5.0.apk` below directly onto your device.
-            2. Tap the file to install.
-          files: output-apk/Acquiro-Manager-v2.5.0.apk
+            > ⚠️ **IMPORTANT — Uninstall old version first!** If you have ANY previous version of Acquiro Manager installed, uninstall it completely before installing v2.6.0. This is required because earlier builds were signed with a different key.
+            1. Download `Acquiro-Manager-v2.6.0.apk` below directly onto your device.
+            2. Allow "Install from unknown sources" in your device settings if prompted.
+            3. Tap the APK file to install.
+          files: output-apk/Acquiro-Manager-v2.6.0.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
