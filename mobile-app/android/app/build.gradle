@@ -15,10 +15,10 @@ android {
 
     defaultConfig {
         applicationId "com.acquiro.manager"
-        minSdkVersion 24
+        minSdkVersion 21
         targetSdkVersion 33
-        versionCode 7
-        versionName "2.6.0"
+        versionCode 8
+        versionName "2.7.0"
 
         ndk {
             abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
@@ -55,6 +55,9 @@ android {
         }
     }
 
+    // IMPORTANT: Must come after buildTypes. Controls .so compression in APK.
+    // minSdkVersion < 23 forces AGP to use legacy (compressed) .so packaging,
+    // which is compatible with Android 5+ including Android 9.
     packaging {
         jniLibs {
             useLegacyPackaging = true
