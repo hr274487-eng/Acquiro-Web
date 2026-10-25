@@ -4,6 +4,8 @@ import android.app.Application;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
+import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
+import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import java.util.Arrays;
@@ -12,7 +14,7 @@ import java.util.List;
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
-      new ReactNativeHost(this) {
+      new DefaultReactNativeHost(this) {
         @Override
         public boolean getUseDeveloperSupport() {
           // Always return false so the standalone APK loads bundled JS from assets without Metro server
@@ -36,6 +38,16 @@ public class MainApplication extends Application implements ReactApplication {
         protected String getBundleAssetName() {
           return "index.android.bundle";
         }
+
+        @Override
+        protected boolean isNewArchEnabled() {
+          return false;
+        }
+
+        @Override
+        protected Boolean isHermesEnabled() {
+          return true;
+        }
       };
 
   @Override
@@ -48,6 +60,9 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     try {
       SoLoader.init(this, false);
+      if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
+        DefaultNewArchitectureEntryPoint.load();
+      }
     } catch (Throwable t) {
       t.printStackTrace();
     }

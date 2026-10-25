@@ -1,5 +1,4 @@
 import { Share, Alert } from 'react-native';
-import * as XLSX from 'xlsx';
 
 export function formatOrdersForExport(orders) {
   return orders.map(o => ({
@@ -55,6 +54,14 @@ export async function exportOrdersAsExcel(orders) {
     if (!data.length) {
       Alert.alert('Export', 'No orders available to export.');
       return;
+    }
+
+    let XLSX;
+    try {
+      XLSX = require('xlsx');
+    } catch (e) {
+      // If XLSX binary is not supported in environment, seamlessly fallback to CSV
+      return exportOrdersAsCsv(orders);
     }
 
     const worksheet = XLSX.utils.json_to_sheet(data);

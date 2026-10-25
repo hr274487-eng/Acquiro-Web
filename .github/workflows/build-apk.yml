@@ -109,49 +109,46 @@ jobs:
             exit 1
           fi
           echo "Found APK at: $APK_PATH"
-          cp "$APK_PATH" output-apk/Acquiro-Manager-v2.1.0.apk
+          cp "$APK_PATH" output-apk/Acquiro-Manager-v2.2.0.apk
           echo "=== APK Ready ==="
-          ls -lh output-apk/Acquiro-Manager-v2.1.0.apk
+          ls -lh output-apk/Acquiro-Manager-v2.2.0.apk
 
       - name: Upload APK as Workflow Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Acquiro-Manager-v2.1.0-APK
-          path: output-apk/Acquiro-Manager-v2.1.0.apk
+          name: Acquiro-Manager-v2.2.0-APK
+          path: output-apk/Acquiro-Manager-v2.2.0.apk
           retention-days: 90
 
       - name: Create GitHub Release with React Native APK
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/heads/main')
         with:
-          tag_name: v2.1.0-apk
-          name: "Acquiro Manager v2.1.0 (Android 9+ & Android 14+ Ready)"
+          tag_name: v2.2.0-apk
+          name: "Acquiro Manager v2.2.0 (Hermes C++ Engine & Standalone Production)"
           body: |
-            ### 📱 Acquiro Mobile Manager — React Native v2.1.0
+            ### 📱 Acquiro Mobile Manager — React Native v2.2.0 (Production Standalone)
 
-            **Version:** 2.1.0 (Standalone Release Build)
+            **Version:** 2.2.0 (Fully Linked Hermes Release)
             **Target Compatibility:** Android 9.0 (API 28) through Android 14+ (API 34/35)
-            **Branding:** Official Acquiro Geometric "A" Company Logo
-            **Architecture Support:** `arm64-v8a`, `armeabi-v7a`, `x86`, `x86_64`
+            **Branding:** Official Acquiro Company Geometric "A" Logo
+            **Architecture:** `arm64-v8a`, `armeabi-v7a`, `x86`, `x86_64`
 
-            #### 🛠️ Fixes in this Release:
-            1. **Launch Crash on Android 14 Resolved:** Switched off development mode support in standalone runtime so it loads the embedded offline JavaScript bundle without seeking a Metro server or triggering overlay permission exceptions.
-            2. **Android 9 Installation ("App not installed") Resolved:**
-               - Added **APK Signature Scheme v1 (JAR signing)** alongside v2 so Android 9's package installer validates the signature.
-               - Enabled `android:extractNativeLibs="true"` and `useLegacyPackaging = true` so native libraries unpack cleanly on Android 9 devices.
-               - Lowered `minSdkVersion` to 24 with multi-architecture ABI support (`armeabi-v7a` 32-bit & `arm64-v8a` 64-bit).
-            3. **Company Logo Integration:**
-               - Replaced generic icons across all mipmap density tiers (`mdpi`, `hdpi`, `xhdpi`, `xxhdpi`, `xxxhdpi`) with the official high-resolution **Acquiro "A" logo**.
-               - Configured modern adaptive vector icon (`ic_launcher_foreground.xml`) with gradient geometry and midnight dark container.
+            #### 🛠️ Root Causes Resolved:
+            1. **Missing Hermes Native Shared Library (`libhermes.so`):** In previous build, `hermesEnabled=true` was set, but `com.facebook.react:hermes-android` was omitted from Gradle dependencies, causing `UnsatisfiedLinkError: couldn't find DSO to load: libhermes.so` on launch. Added `hermes-android` dependency.
+            2. **Native Runtime Delegate Alignment:** Wired `DefaultReactNativeHost` and `DefaultReactActivityDelegate` with `isHermesEnabled() = true` and `isNewArchEnabled() = false` to guarantee standard JavaScriptExecutor initialization.
+            3. **Safe Dynamic Modules:** Guarded optional modules in `exportService.js` to ensure zero module evaluation exceptions at startup.
+            4. **Dual Signature & Legacy Packaging for Android 9:** Embedded APK Signature Scheme v1 alongside v2, with `android:extractNativeLibs="true"` and `useLegacyPackaging = true`.
+            5. **Official Acquiro "A" Logo:** Rendered across all launcher mipmap densities (`mdpi`, `hdpi`, `xhdpi`, `xxhdpi`, `xxxhdpi`) and adaptive vector foreground drawable.
 
             #### 🔑 Default Manager Credentials:
             - **Username:** `admin`
             - **Password:** `acquiro2026`
 
             #### 📥 Download & Install:
-            1. Download `Acquiro-Manager-v2.1.0.apk` below directly onto your phone.
-            2. Open the file to install (allow *Install from Unknown Sources* if prompted).
+            1. Download `Acquiro-Manager-v2.2.0.apk` below directly onto your device.
+            2. Tap the file to install (allow *Install from Unknown Sources* if prompted).
             3. Log in with `admin` / `acquiro2026`.
-          files: output-apk/Acquiro-Manager-v2.1.0.apk
+          files: output-apk/Acquiro-Manager-v2.2.0.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
