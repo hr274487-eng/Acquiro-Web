@@ -281,39 +281,46 @@ export default function OrdersScreen({
       </View>
 
       {/* Filter Chips Scroll */}
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filterScroll}>
-        {[
-          { key: 'all', label: 'All Orders' },
-          { key: 'new', label: '• New' },
-          { key: 'accepted', label: 'Accepted' },
-          { key: 'in_progress', label: 'In Progress' },
-          { key: 'completed', label: 'Completed' },
-          { key: 'cancelled', label: 'Cancelled' }
-        ].map(f => {
-          const isActive = selectedFilter === f.key;
-          return (
-            <TouchableOpacity
-              key={f.key}
-              style={[
-                styles.chip,
-                {
-                  backgroundColor: isActive ? theme.primary : theme.surfaceCard,
-                  borderColor: isActive ? theme.primary : theme.border
-                }
-              ]}
-              onPress={() => setSelectedFilter(f.key)}
-              activeOpacity={0.7}
-            >
-              <Text style={[styles.chipText, { color: isActive ? '#ffffff' : theme.textSecondary }]}>
-                {f.label}
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
-      </ScrollView>
+      <View style={styles.filterWrapper}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.filterScroll}
+        >
+          {[
+            { key: 'all', label: 'All Orders' },
+            { key: 'new', label: '• New' },
+            { key: 'accepted', label: 'Accepted' },
+            { key: 'in_progress', label: 'In Progress' },
+            { key: 'completed', label: 'Completed' },
+            { key: 'cancelled', label: 'Cancelled' }
+          ].map(f => {
+            const isActive = selectedFilter === f.key;
+            return (
+              <TouchableOpacity
+                key={f.key}
+                style={[
+                  styles.chip,
+                  {
+                    backgroundColor: isActive ? theme.primary : theme.surfaceCard,
+                    borderColor: isActive ? theme.primary : theme.border
+                  }
+                ]}
+                onPress={() => setSelectedFilter(f.key)}
+                activeOpacity={0.7}
+              >
+                <Text style={[styles.chipText, { color: isActive ? '#ffffff' : theme.textSecondary }]}>
+                  {f.label}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+      </View>
 
       {/* Orders FlatList */}
       <FlatList
+        style={styles.ordersList}
         data={filteredOrders}
         keyExtractor={item => String(item.id)}
         renderItem={renderOrderItem}
@@ -501,21 +508,32 @@ const styles = StyleSheet.create({
     fontSize: 13,
     height: 40,
   },
+  filterWrapper: {
+    height: 46,
+    marginVertical: 6,
+  },
   filterScroll: {
     paddingHorizontal: 16,
-    paddingVertical: 10,
-    gap: 8,
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   chip: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 100,
+    height: 32,
+    paddingHorizontal: 14,
+    borderRadius: 16,
     borderWidth: 1,
-    marginRight: 6,
+    marginRight: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   chipText: {
     fontSize: 12,
     fontWeight: '700',
+    includeFontPadding: false,
+    textAlignVertical: 'center',
+  },
+  ordersList: {
+    flex: 1,
   },
   listContainer: {
     paddingHorizontal: 16,

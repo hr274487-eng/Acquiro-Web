@@ -109,46 +109,42 @@ jobs:
             exit 1
           fi
           echo "Found APK at: $APK_PATH"
-          cp "$APK_PATH" output-apk/Acquiro-Manager-v2.2.0.apk
+          cp "$APK_PATH" output-apk/Acquiro-Manager-v2.3.0.apk
           echo "=== APK Ready ==="
-          ls -lh output-apk/Acquiro-Manager-v2.2.0.apk
+          ls -lh output-apk/Acquiro-Manager-v2.3.0.apk
 
       - name: Upload APK as Workflow Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Acquiro-Manager-v2.2.0-APK
-          path: output-apk/Acquiro-Manager-v2.2.0.apk
+          name: Acquiro-Manager-v2.3.0-APK
+          path: output-apk/Acquiro-Manager-v2.3.0.apk
           retention-days: 90
 
       - name: Create GitHub Release with React Native APK
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/heads/main')
         with:
-          tag_name: v2.2.0-apk
-          name: "Acquiro Manager v2.2.0 (Hermes C++ Engine & Standalone Production)"
+          tag_name: v2.3.0-apk
+          name: "Acquiro Manager v2.3.0 (Persistent Auth, Fixed Filter Chips & Clean Login)"
           body: |
-            ### 📱 Acquiro Mobile Manager — React Native v2.2.0 (Production Standalone)
+            ### 📱 Acquiro Mobile Manager — React Native v2.3.0 (Production Release)
 
-            **Version:** 2.2.0 (Fully Linked Hermes Release)
+            **Version:** 2.3.0
             **Target Compatibility:** Android 9.0 (API 28) through Android 14+ (API 34/35)
             **Branding:** Official Acquiro Company Geometric "A" Logo
             **Architecture:** `arm64-v8a`, `armeabi-v7a`, `x86`, `x86_64`
 
-            #### 🛠️ Root Causes Resolved:
-            1. **Missing Hermes Native Shared Library (`libhermes.so`):** In previous build, `hermesEnabled=true` was set, but `com.facebook.react:hermes-android` was omitted from Gradle dependencies, causing `UnsatisfiedLinkError: couldn't find DSO to load: libhermes.so` on launch. Added `hermes-android` dependency.
-            2. **Native Runtime Delegate Alignment:** Wired `DefaultReactNativeHost` and `DefaultReactActivityDelegate` with `isHermesEnabled() = true` and `isNewArchEnabled() = false` to guarantee standard JavaScriptExecutor initialization.
-            3. **Safe Dynamic Modules:** Guarded optional modules in `exportService.js` to ensure zero module evaluation exceptions at startup.
-            4. **Dual Signature & Legacy Packaging for Android 9:** Embedded APK Signature Scheme v1 alongside v2, with `android:extractNativeLibs="true"` and `useLegacyPackaging = true`.
-            5. **Official Acquiro "A" Logo:** Rendered across all launcher mipmap densities (`mdpi`, `hdpi`, `xhdpi`, `xxhdpi`, `xxxhdpi`) and adaptive vector foreground drawable.
-
-            #### 🔑 Default Manager Credentials:
-            - **Username:** `admin`
-            - **Password:** `acquiro2026`
+            #### 🛠️ What's New in v2.3.0:
+            1. **Fixed Filter Chips Orientation & Sizing:** Corrected the vertical capsule stretching by enforcing strict 32px pill chip heights, centered alignment, and constrained scroll wrappers.
+            2. **Persistent Native Authentication Session:** Integrated Android `SharedPreferences` session persistence. You only need to log in once after installing; the app remembers your session and opens directly into Orders without logging you out when closed.
+            3. **Explicit Logout in Settings:** Added persistent sign-out support via the "Sign Out of Console" button in Settings.
+            4. **Clean Login Screen (No Pre-filled Credentials):** Removed pre-filled usernames/passwords from the login screen and replaced placeholders with generic prompts.
+            5. **Refined Real-time Order Alerting:** Prevented historical unfulfilled orders from triggering false notifications on login or cold start by filtering on recent timestamp deltas and String ID tracking.
 
             #### 📥 Download & Install:
-            1. Download `Acquiro-Manager-v2.2.0.apk` below directly onto your device.
-            2. Tap the file to install (allow *Install from Unknown Sources* if prompted).
-            3. Log in with `admin` / `acquiro2026`.
-          files: output-apk/Acquiro-Manager-v2.2.0.apk
+            1. Download `Acquiro-Manager-v2.3.0.apk` below directly onto your device.
+            2. Tap the file to install (select "Update" or install over previous version).
+            3. Log in once with `admin` / `acquiro2026` — subsequent launches will keep you logged in automatically.
+          files: output-apk/Acquiro-Manager-v2.3.0.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

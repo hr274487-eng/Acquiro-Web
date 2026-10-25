@@ -13,8 +13,8 @@ import {
 } from 'react-native';
 
 export default function LoginScreen({ onLoginSuccess, theme }) {
-  const [username, setUsername] = useState('admin');
-  const [password, setPassword] = useState('acquiro2026');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -34,7 +34,7 @@ export default function LoginScreen({ onLoginSuccess, theme }) {
       if (u === 'admin' && p === 'acquiro2026') {
         onLoginSuccess();
       } else {
-        setError('Invalid credentials. Default: admin / acquiro2026');
+        setError('Invalid credentials. Please verify your username and password.');
       }
     }, 400);
   };
@@ -67,7 +67,7 @@ export default function LoginScreen({ onLoginSuccess, theme }) {
               style={[styles.input, { backgroundColor: theme.inputBg, color: theme.textPrimary, borderColor: theme.border }]}
               value={username}
               onChangeText={setUsername}
-              placeholder="admin"
+              placeholder="Enter username"
               placeholderTextColor={theme.textMuted}
               autoCapitalize="none"
               autoCorrect={false}
@@ -80,7 +80,7 @@ export default function LoginScreen({ onLoginSuccess, theme }) {
               style={[styles.input, { backgroundColor: theme.inputBg, color: theme.textPrimary, borderColor: theme.border }]}
               value={password}
               onChangeText={setPassword}
-              placeholder="••••••••"
+              placeholder="Enter password"
               placeholderTextColor={theme.textMuted}
               secureTextEntry
             />

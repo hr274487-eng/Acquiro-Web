@@ -2,7 +2,6 @@ package com.acquiro.manager;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
-import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactActivityDelegate;
 
 public class MainActivity extends ReactActivity {
@@ -14,9 +13,9 @@ public class MainActivity extends ReactActivity {
 
   @Override
   protected ReactActivityDelegate createReactActivityDelegate() {
-    return new DefaultReactActivityDelegate(
-        this,
-        getMainComponentName(),
-        DefaultNewArchitectureEntryPoint.getFabricEnabled());
+    // Fabric disabled (new arch off) — pass false explicitly; do NOT call
+    // DefaultNewArchitectureEntryPoint.getFabricEnabled() which throws when
+    // new-arch codegen has not run.
+    return new DefaultReactActivityDelegate(this, getMainComponentName(), false);
   }
 }

@@ -7,11 +7,13 @@ import {
   StyleSheet,
   StatusBar,
   Platform,
-  PermissionsAndroid
+  PermissionsAndroid,
+  ActivityIndicator
 } from 'react-native';
 import { lightTheme, darkTheme } from './src/theme/colors';
 import { fetchOrdersFromSupabase } from './src/services/supabase';
 import { triggerHeadsUpAlert, playTechPing, pulseVibration } from './src/services/notificationService';
+import { checkAuthSession, saveAuthSession } from './src/services/authService';
 
 // Screens
 import LoginScreen from './src/screens/LoginScreen';
@@ -20,7 +22,7 @@ import CustomersScreen from './src/screens/CustomersScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(null); // null = verifying stored session
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [activeTab, setActiveTab] = useState('orders'); // 'orders' | 'customers' | 'settings'
   const [orders, setOrders] = useState([]);
@@ -29,6 +31,20 @@ export default function App() {
   const theme = isDarkMode ? darkTheme : lightTheme;
   const knownOrderIds = useRef(new Set());
   const isInitialLoad = useRef(true);
+  const appMountTime = useRef(Date.now());
+
+  // Check persistent authentication session on launch
+  useEffect(() => {
+    let isMounted = true;
+    checkAuthSession().then(auth => {
+      if (isMounted) {
+        setIsAuthenticated(!!auth);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   // Request Android 13+ Notification Permission
   useEffect(() => {
@@ -52,11 +68,19 @@ export default function App() {
     try {
       const fetched = await fetchOrdersFromSupabase();
       if (Array.isArray(fetched)) {
-        // Detect newly arrived orders for notifications
+        // Detect newly arrived orders for notifications only after initial snapshot
         if (!isInitialLoad.current) {
-          const brandNewOrders = fetched.filter(
-            o => !knownOrderIds.current.has(o.id) && (o.status === 'new' || !o.status)
-          );
+          const brandNewOrders = fetched.filter(o => {
+            const idStr = String(o.id);
+            if (knownOrderIds.current.has(idStr)) return false;
+            const isNewStatus = (o.status || 'new').toLowerCase() === 'new';
+            if (!isNewStatus) return false;
+
+            // Ensure order was placed recently (within last 5 min or after app start)
+            const orderTime = o.created_at ? new Date(o.created_at).getTime() : Date.now();
+            const isRecent = !isNaN(orderTime) && (Date.now() - orderTime < 300000 || orderTime >= appMountTime.current);
+            return isRecent;
+          });
 
           if (brandNewOrders.length > 0) {
             const latest = brandNewOrders[0];
@@ -69,8 +93,8 @@ export default function App() {
           }
         }
 
-        // Update known order IDs
-        fetched.forEach(o => knownOrderIds.current.add(o.id));
+        // Update known order IDs using String conversion to guarantee exact match
+        fetched.forEach(o => knownOrderIds.current.add(String(o.id)));
         isInitialLoad.current = false;
         setOrders(fetched);
       }
@@ -81,8 +105,10 @@ export default function App() {
     }
   }, []);
 
-  // Initial fetch and background interval polling
+  // Initial fetch and background interval polling (only when authenticated)
   useEffect(() => {
+    if (!isAuthenticated) return;
+
     loadOrders(false);
 
     // Poll every 8 seconds for real-time reception of orders
@@ -91,7 +117,19 @@ export default function App() {
     }, 8000);
 
     return () => clearInterval(interval);
-  }, [loadOrders]);
+  }, [isAuthenticated, loadOrders]);
+
+  const handleLoginSuccess = async () => {
+    await saveAuthSession(true);
+    setIsAuthenticated(true);
+  };
+
+  const handleLogout = async () => {
+    await saveAuthSession(false);
+    setIsAuthenticated(false);
+    knownOrderIds.current = new Set();
+    isInitialLoad.current = true;
+  };
 
   const handleOrderUpdated = (updatedOrder) => {
     setOrders(prev =>
@@ -103,6 +141,19 @@ export default function App() {
     o => (o.status || 'new').toLowerCase() === 'new'
   ).length;
 
+  // Loading state while checking persistent session
+  if (isAuthenticated === null) {
+    return (
+      <View style={[styles.container, styles.loadingCenter, { backgroundColor: theme.background }]}>
+        <StatusBar
+          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+          backgroundColor={theme.background}
+        />
+        <ActivityIndicator size="large" color={theme.primary} />
+      </View>
+    );
+  }
+
   if (!isAuthenticated) {
     return (
       <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
@@ -111,7 +162,7 @@ export default function App() {
           backgroundColor={theme.background}
         />
         <LoginScreen
-          onLoginSuccess={() => setIsAuthenticated(true)}
+          onLoginSuccess={handleLoginSuccess}
           theme={theme}
         />
       </SafeAreaView>
@@ -145,7 +196,7 @@ export default function App() {
           <SettingsScreen
             isDarkMode={isDarkMode}
             onToggleTheme={() => setIsDarkMode(!isDarkMode)}
-            onLogout={() => setIsAuthenticated(false)}
+            onLogout={handleLogout}
             theme={theme}
           />
         )}
@@ -262,6 +313,10 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1
+  },
+  loadingCenter: {
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   content: {
     flex: 1
