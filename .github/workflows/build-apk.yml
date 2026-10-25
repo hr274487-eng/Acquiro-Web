@@ -54,15 +54,18 @@ jobs:
       - name: Build Android Debug APK
         run: |
           cd android
-          ./gradlew assembleDebug --no-daemon --stacktrace > ../gradle-output.log 2>&1 || {
-            echo "## ❌ Gradle Build Failure Details" >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-            tail -n 60 ../gradle-output.log >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-            echo "=== TOP ERROR LINES ==="
-            grep -E "FAILED|FAILURE|Error|Exception" ../gradle-output.log -A 8 | head -n 40
-            exit 1
-          }
+          ./gradlew assembleDebug --no-daemon --stacktrace > ../gradle-output.log 2>&1
+
+      - name: Capture Failure Log
+        if: failure()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -B debug-log
+          cp gradle-output.log android-build-error.txt
+          git add android-build-error.txt
+          git commit -m "build error log"
+          git push -u origin debug-log --force
 
       - name: Locate and Prepare APK
         run: |
