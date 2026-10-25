@@ -1,0 +1,17 @@
+# Operating System & Editor Files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*~
+
+# Logs & Temporary files
+*.log
+npm-debug.log*
+
+# Environment & Secrets (Keep your private keys safe!)
+.env
+.env.local
+.env.*.local

@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Workflow Automation | Acquiro</title>
+  <meta name="description" content="Acquiro connects business tools to reduce manual work—automating lead qualification, CRM syncing, booking workflows, and team follow-ups.">
+  <link rel="canonical" href="https://acquiro-tech.vercel.app/automation">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+
+  <!-- Google Fonts: Plus Jakarta Sans, Inter, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    /* Dedicated Automation Flow Visual Styles */
+    .workflow-pipeline-card {
+      background: #ffffff;
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-xl);
+      padding: clamp(28px, 4vw, 44px);
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pipeline-nodes-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      position: relative;
+      margin: 32px 0 24px 0;
+    }
+
+    @media (max-width: 990px) {
+      .pipeline-nodes-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .pipeline-node {
+      background: #f8fafc;
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-lg);
+      padding: 20px 16px;
+      text-align: center;
+      position: relative;
+      transition: all var(--transition-normal);
+    }
+
+    .pipeline-node:hover {
+      background: #ffffff;
+      border-color: var(--c-brand-blue-light);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.08);
+    }
+
+    .node-icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      background: #ffffff;
+      border: 1px solid var(--c-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px auto;
+      color: var(--c-brand-blue);
+      box-shadow: var(--shadow-xs);
+    }
+
+    .node-step-tag {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--c-brand-blue);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .node-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .node-desc {
+      font-size: 0.8rem;
+      color: var(--c-text-muted);
+      line-height: 1.4;
+    }
+
+    /* Responsive Flow: Horizontal on Desktop, Vertical with Downward Connectors on Mobile */
+    @media (min-width: 991px) {
+      .pipeline-node:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: -12px;
+        transform: translateY(-50%) rotate(45deg);
+        width: 8px;
+        height: 8px;
+        border-top: 2px solid var(--c-brand-sky);
+        border-right: 2px solid var(--c-brand-sky);
+        z-index: 2;
+      }
+    }
+
+    @media (max-width: 990px) {
+      .pipeline-nodes-row {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .pipeline-node:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        bottom: -16px;
+        left: 50%;
+        transform: translateX(-50%) rotate(135deg);
+        width: 8px;
+        height: 8px;
+        border-top: 2px solid var(--c-brand-blue);
+        border-right: 2px solid var(--c-brand-blue);
+        z-index: 2;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       HEADER & NAVIGATION
+       ========================================================================== -->
+  <header class="site-header" id="site-header">
+    <div class="container nav-container">
+      <div class="nav-brand-group">
+        <a href="../" class="brand-logo" aria-label="Acquiro Home">
+          <img src="../assets/logo-dark.png" alt="Acquiro" class="brand-logo-img">
+        </a>
+        <a href="../contact" class="btn btn-primary btn-sm nav-cta-beside-logo">
+          <span>Contact Us</span>
+          <span class="btn-icon-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </a>
+      </div>
+
+      <!-- Desktop & Mobile Navigation Menu -->
+      <div class="nav-menu-wrapper" id="nav-menu">
+        <nav aria-label="Main Navigation">
+          <ul class="nav-links">
+            <li><a href="../" class="nav-link">Home</a></li>
+            <li><a href="../ai-agents" class="nav-link">AI Agents</a></li>
+            <li><a href="../automation" class="nav-link active" aria-current="page">Automation</a></li>
+            <li><a href="../web-development" class="nav-link">Web Development</a></li>
+            <li><a href="../about" class="nav-link">About</a></li>
+            <li class="mobile-only">
+              <a href="../contact" class="btn btn-primary" style="width: 100%;">
+                <span>Contact Us</span>
+                <span class="btn-icon-arrow">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="nav-actions">
+        <button class="mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- ==========================================================================
+         HERO SECTION: AUTOMATION
+         ========================================================================== -->
+    <section class="hero-wrapper" aria-labelledby="automation-hero-heading">
+      <div class="ambient-glow-wrapper" aria-hidden="true">
+        <div class="ambient-orb orb-blue"></div>
+        <div class="ambient-orb orb-violet"></div>
+      </div>
+
+      <div class="container">
+        <div class="hero-content">
+          <div class="section-badge badge-blue">
+            <span class="section-badge-dot"></span>
+            <span>Supporting Service &bull; Workflow Connectivity</span>
+          </div>
+
+          <h1 id="automation-hero-heading" class="hero-headline">
+            Connect your business tools and <span class="text-gradient">eliminate repetitive work.</span>
+          </h1>
+
+          <p class="hero-supporting-copy">
+            Acquiro designs, connects, and tests automated workflows that sync customer data, dispatch team notifications, and route leads between your phone systems, CRM, calendars, and spreadsheets.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="../contact?service=workflow-setup" class="btn btn-primary btn-lg">
+              <span>Discuss Your Workflow</span>
+              <span class="btn-icon-arrow">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </a>
+            <a href="#pipeline-demo" class="btn btn-secondary btn-lg">
+              <span>See Workflow Example</span>
+            </a>
+          </div>
+
+          <div class="hero-trust-row">
+            <div class="trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>n8n, Make &amp; Zapier Pipelines</span>
+            </div>
+            <div class="trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>CRM &amp; Database Sync</span>
+            </div>
+            <div class="trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Custom Webhooks &amp; APIs</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         ANIMATED WORKFLOW PIPELINE EXAMPLE
+         ========================================================================== -->
+    <section class="section-padding" id="pipeline-demo" aria-labelledby="pipeline-heading">
+      <div class="container">
+        <div class="section-header text-center center-block" style="max-width: 720px;">
+          <div class="section-badge badge-blue">
+            <span class="section-badge-dot"></span>
+            <span>Interactive Workflow Demonstration</span>
+          </div>
+          <h2 id="pipeline-heading" class="section-title">
+            How data moves <span class="text-gradient">automatically.</span>
+          </h2>
+          <p class="section-subtitle center-block">
+            From the moment a new prospective client reaches out, every downstream step happens in seconds with zero manual copying.
+          </p>
+        </div>
+
+        <div class="workflow-pipeline-card">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+            <div style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--c-brand-blue); text-transform: uppercase;">
+              Active Flow: Inbound Lead to Dispatch
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--c-text-muted);">
+              <span class="status-pulse-dot"></span>
+              <span>Running Automated Pipeline</span>
+            </div>
+          </div>
+
+          <!-- 5 Pipeline Nodes -->
+          <div class="pipeline-nodes-row">
+            <!-- Node 1: New Enquiry -->
+            <div class="pipeline-node">
+              <div class="node-icon-wrap">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              </div>
+              <span class="node-step-tag">Step 1</span>
+              <h4 class="node-title">New Enquiry</h4>
+              <p class="node-desc">Phone call or website form submission received.</p>
+            </div>
+
+            <!-- Node 2: Qualify Lead -->
+            <div class="pipeline-node">
+              <div class="node-icon-wrap">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+              </div>
+              <span class="node-step-tag">Step 2</span>
+              <h4 class="node-title">Qualify Lead</h4>
+              <p class="node-desc">Evaluates project scope, location, and urgency.</p>
+            </div>
+
+            <!-- Node 3: Update CRM -->
+            <div class="pipeline-node">
+              <div class="node-icon-wrap">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              </div>
+              <span class="node-step-tag">Step 3</span>
+              <h4 class="node-title">Update CRM</h4>
+              <p class="node-desc">Creates contact record and updates pipeline stage.</p>
+            </div>
+
+            <!-- Node 4: Notify Team -->
+            <div class="pipeline-node">
+              <div class="node-icon-wrap">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              </div>
+              <span class="node-step-tag">Step 4</span>
+              <h4 class="node-title">Notify Team</h4>
+              <p class="node-desc">Sends Slack alert, internal SMS, and summary note.</p>
+            </div>
+
+            <!-- Node 5: Send Follow-up -->
+            <div class="pipeline-node">
+              <div class="node-icon-wrap">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              </div>
+              <span class="node-step-tag">Step 5</span>
+              <h4 class="node-title">Send Follow-up</h4>
+              <p class="node-desc">Instant booking link and confirmation sent to caller.</p>
+            </div>
+          </div>
+
+          <div style="text-align: center; font-size: 0.85rem; color: var(--c-text-muted); background: #f8fafc; border-radius: var(--radius-sm); padding: 12px;">
+            Execution time: ~1.8 seconds &bull; Zero manual data entry &bull; Compatible with n8n, Make, Zapier, and custom webhooks.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         AUTOMATION CAPABILITIES GRID (6 CLEAR GROUPS)
+         ========================================================================== -->
+    <section class="section-padding" style="background: #fafcff; border-top: 1px solid var(--c-border); border-bottom: 1px solid var(--c-border);" aria-labelledby="automation-groups-heading">
+      <div class="container">
+        <div class="section-header text-center center-block" style="max-width: 720px;">
+          <div class="section-badge">
+            <span class="section-badge-dot"></span>
+            <span>Core Automation Areas</span>
+          </div>
+          <h2 id="automation-groups-heading" class="section-title">
+            Where automation creates <span class="text-gradient">immediate value.</span>
+          </h2>
+          <p class="section-subtitle center-block">
+            We focus on practical, high-impact automations that reduce friction between incoming leads, team members, and client records.
+          </p>
+        </div>
+
+        <div class="grid-3-col">
+          <!-- 1. Lead Capture, Qualification, and Routing -->
+          <div class="service-card">
+            <h4 style="font-size: 1.2rem; margin-bottom: 10px;">Lead Capture &amp; Routing</h4>
+            <p style="font-size: 0.9rem; color: var(--c-text-secondary); line-height: 1.55;">
+              Capture inbound leads across phone calls, web forms, and booking widgets. Automatically assess urgency and route high-fit opportunities directly to assigned team leads.
+            </p>
+          </div>
+
+          <!-- 2. CRM Updates and Data Syncing -->
+          <div class="service-card">
+            <h4 style="font-size: 1.2rem; margin-bottom: 10px;">CRM &amp; Data Syncing</h4>
+            <p style="font-size: 0.9rem; color: var(--c-text-secondary); line-height: 1.55;">
+              Eliminate double-entry. Keep HubSpot, GoHighLevel, Google Sheets, and Airtable synchronized with real-time customer data, call notes, and deal stage updates.
+            </p>
+          </div>
+
+          <!-- 3. Email Notifications & Follow-ups -->
+          <div class="service-card">
+            <h4 style="font-size: 1.2rem; margin-bottom: 10px;">Notifications &amp; Follow-ups</h4>
+            <p style="font-size: 0.9rem; color: var(--c-text-secondary); line-height: 1.55;">
+              Trigger instantaneous email and SMS confirmations to prospective clients while dispatching internal alerts to Slack, Microsoft Teams, or field staff phones.
+            </p>
+          </div>
+
+          <!-- 4. Booking & Calendar Workflows -->
+          <div class="service-card">
+            <h4 style="font-size: 1.2rem; margin-bottom: 10px;">Booking &amp; Calendar Flows</h4>
+            <p style="font-size: 0.9rem; color: var(--c-text-secondary); line-height: 1.55;">
+              Connect Google Calendar and Calendly with pre-booking qualification forms, buffer rules, reminder sequences, and post-appointment follow-up actions.
+            </p>
+          </div>
+
+          <!-- 5. API & Webhook Integrations -->
+          <div class="service-card">
+            <h4 style="font-size: 1.2rem; margin-bottom: 10px;">API &amp; Webhook Connections</h4>
+            <p style="font-size: 0.9rem; color: var(--c-text-secondary); line-height: 1.55;">
+              Connect proprietary backends, third-party software APIs, and custom webhook payloads with secure authorization, error logging, and retry logic.
+            </p>
+          </div>
+
+          <!-- 6. Custom Multi-Step Workflows -->
+          <div class="service-card">
+            <h4 style="font-size: 1.2rem; margin-bottom: 10px;">Custom Multi-Step Pipelines</h4>
+            <p style="font-size: 0.9rem; color: var(--c-text-secondary); line-height: 1.55;">
+              Multi-branch logic pipelines tailored to complex business requirements—including document generation, payment triggers, and multi-tier escalation rules.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         OFFER CARDS: AUTOMATION (NO PRICES)
+         ========================================================================== -->
+    <section class="section-padding" aria-labelledby="automation-offers-heading">
+      <div class="container">
+        <div class="section-header text-center center-block" style="max-width: 720px;">
+          <div class="section-badge badge-blue">
+            <span class="section-badge-dot"></span>
+            <span>Automation Scopes</span>
+          </div>
+          <h2 id="automation-offers-heading" class="section-title">
+            Tailored automation <span class="text-gradient">implementations.</span>
+          </h2>
+          <p class="section-subtitle center-block">
+            Whether you need to connect two core tools or build a comprehensive multi-system workflow, we design solutions that fit your operational budget.
+          </p>
+        </div>
+
+        <div class="offers-grid">
+          <!-- Offer 1: Workflow Setup -->
+          <article class="offer-card">
+            <h3 class="offer-title">Workflow Setup</h3>
+            <span class="offer-scope-tag">Essential Tool Connections</span>
+            <p class="offer-description">
+              Connect your primary lead capture or scheduling tool with your CRM and Google Sheets to automate everyday data entry.
+            </p>
+            <ul class="offer-features-list">
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Lead capture form to CRM synchronization</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Google Sheets or Airtable real-time logging</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Basic email &amp; team notification triggers</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Testing, verification, and documentation handover</span>
+              </li>
+            </ul>
+            <a href="../contact?service=workflow-setup" class="btn btn-secondary" style="width: 100%;">
+              <span>Contact Us</span>
+              <span class="btn-icon-arrow">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </a>
+            <p class="offer-note">Final scope tailored to your business needs</p>
+          </article>
+
+          <!-- Offer 2: Connected Business Tools -->
+          <article class="offer-card featured">
+            <span class="offer-badge-popular">Popular</span>
+            <h3 class="offer-title">Connected Business Tools</h3>
+            <span class="offer-scope-tag">Multi-Platform Synchronization</span>
+            <p class="offer-description">
+              Unified automation across telephony, calendars, CRM stages, team communication channels, and client notifications.
+            </p>
+            <ul class="offer-features-list">
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Everything in Workflow Setup package</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>n8n, Make, or Zapier multi-step logic architecture</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Calendar appointment booking &amp; reminder workflows</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Automated SMS and email client follow-up sequences</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Slack / Teams operational channel alerts</span>
+              </li>
+            </ul>
+            <a href="../contact?service=connected-tools" class="btn btn-primary" style="width: 100%;">
+              <span>Contact Us</span>
+              <span class="btn-icon-arrow">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </a>
+            <p class="offer-note">Final scope tailored to your business needs</p>
+          </article>
+
+          <!-- Offer 3: Custom Business Automation -->
+          <article class="offer-card">
+            <h3 class="offer-title">Custom Business Automation</h3>
+            <span class="offer-scope-tag">Complex Logic &amp; Custom APIs</span>
+            <p class="offer-description">
+              Advanced multi-branch workflow architecture with custom API endpoints, webhook handling, database transformations, and fallback logic.
+            </p>
+            <ul class="offer-features-list">
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Everything in Connected Tools package</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Custom REST API endpoints &amp; payload transformations</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Multi-branch conditional logic &amp; escalation routing</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Automated error detection, alerts, and retry handlers</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Dedicated staging environment testing &amp; validation</span>
+              </li>
+            </ul>
+            <a href="../contact?service=custom-automation" class="btn btn-secondary" style="width: 100%;">
+              <span>Contact Us</span>
+              <span class="btn-icon-arrow">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </a>
+            <p class="offer-note">Final scope tailored to your business needs</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         CONTACT CTA BANNER
+         ========================================================================== -->
+    <section class="section-padding-bottom" aria-labelledby="automation-cta-heading">
+      <div class="container">
+        <div style="background: var(--grad-brand); border-radius: var(--radius-xl); padding: clamp(40px, 6vw, 68px) clamp(24px, 4vw, 48px); text-align: center; color: #ffffff; box-shadow: var(--shadow-lg);">
+          <div style="max-width: 680px; margin: 0 auto;">
+            <h2 id="automation-cta-heading" style="color: #ffffff; font-size: clamp(2rem, 3.5vw, 2.75rem); margin-bottom: 16px;">
+              Ready to automate your manual processes?
+            </h2>
+            <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.125rem; margin-bottom: 32px;">
+              Tell us what tools your team uses, and we will outline an automation architecture that saves hours of manual work every week.
+            </p>
+            <a href="../contact?service=workflow-setup" class="btn btn-secondary btn-lg" style="background: #ffffff; color: var(--c-text-primary); border-color: #ffffff;">
+              <span>Discuss Your Automation</span>
+              <span class="btn-icon-arrow">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand-col">
+          <a href="../" class="brand-logo" aria-label="Acquiro Home">
+            <img src="../assets/logo-transparent.png" alt="Acquiro" class="brand-logo-img">
+          </a>
+          <p>
+            AI voice agents, connected business workflows, and professional web development.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Navigation</h4>
+          <ul class="footer-links-list">
+            <li><a href="../" class="footer-link">Home</a></li>
+            <li><a href="../ai-agents" class="footer-link">AI Agents</a></li>
+            <li><a href="../automation" class="footer-link">Automation</a></li>
+            <li><a href="../web-development" class="footer-link">Web Development</a></li>
+            <li><a href="../about" class="footer-link">About</a></li>
+            <li><a href="../contact" class="footer-link">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Automations</h4>
+          <ul class="footer-links-list">
+            <li><a href="../automation" class="footer-link">Lead Capture &amp; Routing</a></li>
+            <li><a href="../automation" class="footer-link">CRM &amp; Sheets Synchronization</a></li>
+            <li><a href="../automation" class="footer-link">n8n &amp; Make Pipelines</a></li>
+            <li><a href="../automation" class="footer-link">Calendar Booking Workflows</a></li>
+            <li><a href="../automation" class="footer-link">Custom API &amp; Webhooks</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Direct Contact</h4>
+          <ul class="footer-links-list">
+            <li>
+              <a href="mailto:hamza.acquiro@gmail.com" class="footer-link" style="color: #ffffff; font-weight: 500;">
+                hamza.acquiro@gmail.com
+              </a>
+            </li>
+            <li>
+              <a href="tel:+12142865081" class="footer-link" style="color: #ffffff; font-weight: 500;">
+                +1 214-286-5081
+              </a>
+            </li>
+            <li style="font-size: 0.8125rem; color: #94a3b8; margin-top: 6px;">
+              Remote implementation available worldwide.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; <span class="current-year">2026</span> Acquiro. All rights reserved.
+        </div>
+        <div class="footer-legal-links">
+          <button type="button" class="footer-link open-privacy-trigger">Privacy Policy</button>
+          <button type="button" class="footer-link open-terms-trigger">Terms of Service</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Privacy Dialog -->
+  <dialog id="privacy-dialog" class="custom-modal" aria-labelledby="automation-priv-title">
+    <div class="modal-inner">
+      <button type="button" class="modal-close-btn" aria-label="Close dialog">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div class="section-badge" style="margin-bottom: 12px;">Legal Information</div>
+      <h3 id="automation-priv-title" class="modal-title">Privacy Policy</h3>
+      <div class="modal-body">
+        <p><strong>1. Information Collection:</strong> When you submit a project enquiry through our website, we collect your name, work email address, business name, and workflow details.</p>
+        <p><strong>2. Usage:</strong> Data is used solely to assess technical feasibility and prepare proposals for workflow automation and AI development.</p>
+        <p><strong>3. Contact:</strong> Inquiries may be sent to <code>hamza.acquiro@gmail.com</code>.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Terms Dialog -->
+  <dialog id="terms-dialog" class="custom-modal" aria-labelledby="automation-terms-title">
+    <div class="modal-inner">
+      <button type="button" class="modal-close-btn" aria-label="Close dialog">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div class="section-badge" style="margin-bottom: 12px;">Legal Information</div>
+      <h3 id="automation-terms-title" class="modal-title">Terms of Service</h3>
+      <div class="modal-body">
+        <p><strong>1. Informational Purpose:</strong> Content on this website describes Acquiro’s custom AI voice agent development, business workflow automation, and website development services.</p>
+        <p><strong>2. Third-Party Platforms:</strong> Automation tools (including n8n, Make, Zapier, and CRM providers) are independent third-party software services subject to their respective terms.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Scripts -->
+  <script src="../js/app.js"></script>
+</body>
+</html>

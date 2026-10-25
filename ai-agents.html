@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Voice Agents &amp; AI Receptionists | Acquiro</title>
+  <meta name="description" content="Custom AI voice agents and 24/7 AI receptionists that handle inbound calls, answer business FAQs, qualify callers, and book appointments directly on your calendar.">
+  <link rel="canonical" href="https://acquiro-tech.vercel.app/ai-agents">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <!-- Google Fonts: Plus Jakarta Sans, Inter, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       HEADER & NAVIGATION
+       ========================================================================== -->
+  <header class="site-header" id="site-header">
+    <div class="container nav-container">
+      <div class="nav-brand-group">
+        <a href="./" class="brand-logo" aria-label="Acquiro Home">
+          <img src="assets/logo-dark.png" alt="Acquiro" class="brand-logo-img">
+        </a>
+        <a href="contact" class="btn btn-primary btn-sm nav-cta-beside-logo">
+          <span>Contact Us</span>
+          <span class="btn-icon-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </a>
+      </div>
+
+      <!-- Desktop & Mobile Navigation Menu -->
+      <div class="nav-menu-wrapper" id="nav-menu">
+        <nav aria-label="Main Navigation">
+          <ul class="nav-links">
+            <li><a href="./" class="nav-link">Home</a></li>
+            <li><a href="ai-agents" class="nav-link active" aria-current="page">AI Agents</a></li>
+            <li><a href="automation" class="nav-link">Automation</a></li>
+            <li><a href="web-development" class="nav-link">Web Development</a></li>
+            <li><a href="about" class="nav-link">About</a></li>
+            <li class="mobile-only">
+              <a href="contact" class="btn btn-primary" style="width: 100%;">
+                <span>Contact Us</span>
+                <span class="btn-icon-arrow">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="nav-actions">
+        <button class="mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- ==========================================================================
+         HERO SECTION: AI VOICE AGENTS & RECEPTIONISTS
+         ========================================================================== -->
+    <section class="hero-wrapper" aria-labelledby="ai-agents-hero-heading">
+      <div class="ambient-glow-wrapper" aria-hidden="true">
+        <div class="ambient-orb orb-violet"></div>
+        <div class="ambient-orb orb-blue"></div>
+      </div>
+
+      <div class="container">
+        <div class="hero-content">
+          <div class="section-badge">
+            <span class="section-badge-dot"></span>
+            <span>Primary Service &bull; Voice Engineering</span>
+          </div>
+
+          <h1 id="ai-agents-hero-heading" class="hero-headline">
+            AI voice agents that answer calls, book appointments, and <span class="text-gradient">delight callers.</span>
+          </h1>
+
+          <p class="hero-supporting-copy">
+            Acquiro designs and deploys custom 24/7 AI receptionists that speak naturally, resolve inquiries from your approved knowledge base, and integrate directly with your business calendar and CRM.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="contact?service=ai-receptionist" class="btn btn-primary btn-lg">
+              <span>Discuss Your Voice Agent</span>
+              <span class="btn-icon-arrow">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </a>
+            <a href="#demo-section" class="btn btn-secondary btn-lg">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              <span>Watch Explained Demo</span>
+            </a>
+          </div>
+
+          <div class="hero-trust-row">
+            <div class="trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Retell AI, Vapi &amp; Telnyx Compatible</span>
+            </div>
+            <div class="trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Existing Phone Numbers Supported</span>
+            </div>
+            <div class="trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Configurable Privacy &amp; Transcripts</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         CORE CAPABILITIES GROUPS (FOUR DISTINCT ARCHITECTURE PILLARS)
+         ========================================================================== -->
+    <section class="section-padding" aria-labelledby="capabilities-heading">
+      <div class="container">
+        <div class="section-header text-center center-block" style="max-width: 720px;">
+          <div class="section-badge badge-blue">
+            <span class="section-badge-dot"></span>
+            <span>Comprehensive Capabilities</span>
+          </div>
+          <h2 id="capabilities-heading" class="section-title">
+            Engineered for <span class="text-gradient">real customer interactions.</span>
+          </h2>
+          <p class="section-subtitle center-block">
+            We don't offer rigid generic chatbots. We build voice systems configured around your business rules, staff availability, and customer service workflows.
+          </p>
+        </div>
+
+        <div class="grid-2-col" style="margin-bottom: 40px;">
+          <!-- Group 1: Calls & Customer Support -->
+          <div style="background: #ffffff; border: 1px solid var(--c-border); border-radius: var(--radius-xl); padding: 36px 32px; box-shadow: var(--shadow-sm);">
+            <div style="width: 48px; height: 48px; border-radius: var(--radius-md); background: rgba(124, 58, 237, 0.1); color: var(--c-brand-violet); display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            </div>
+            <h3 style="font-size: 1.4rem; margin-bottom: 12px;">Calls &amp; Customer Support</h3>
+            <p style="font-size: 0.95rem; color: var(--c-text-secondary); margin-bottom: 20px; line-height: 1.6;">
+              Reliable voice answering that sounds human, answers customer questions, and safeguards your brand's reputation.
+            </p>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.9rem; color: var(--c-text-secondary);">
+              <li style="display: flex; gap: 10px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: var(--c-brand-violet); flex-shrink: 0; margin-top: 3px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>24/7 AI Receptionist:</strong> Answers calls day and night, handling peak-volume overflow and after-hours callers.</span>
+              </li>
+              <li style="display: flex; gap: 10px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: var(--c-brand-violet); flex-shrink: 0; margin-top: 3px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>FAQ &amp; Custom Knowledge Base:</strong> Accurate answers on services, pricing structure, business location, and policies based strictly on your verified facts.</span>
+              </li>
+              <li style="display: flex; gap: 10px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: var(--c-brand-violet); flex-shrink: 0; margin-top: 3px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>Natural-Sounding Voices:</strong> State-of-the-art conversational pacing, vocal tone calibration, and multilingual support.</span>
+              </li>
+              <li style="display: flex; gap: 10px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: var(--c-brand-violet); flex-shrink: 0; margin-top: 3px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>Human Call Transfer &amp; Smart Routing:</strong> Live transfer to designated department phones when VIP callers or emergencies are identified.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Group 2: Bookings & Lead Capture -->
+          <div style="background: #ffffff; border: 1px solid var(--c-border); border-radius: var(--radius-xl); padding: 36px 32px; box-shadow: var(--shadow-sm);">
+            <div style="width: 48px; height: 48px; border-radius: var(--radius-md); background: rgba(37, 99, 235, 0.1); color: var(--c-brand-blue); display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </div>
+            <h3 style="font-size: 1.4rem; margin-bottom: 12px;">Bookings &amp; Lead Capture</h3>
+            <p style="font-size: 0.95rem; color: var(--c-text-secondary); margin-bottom: 20px; line-height: 1.6;">
+              Convert phone inquiries into confirmed appointments and qualified prospective clients without phone tag.
+            </p>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.9rem; color: var(--c-text-secondary);">
+              <li style="display: flex; gap: 10px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: var(--c-brand-blue); flex-shrink: 0; margin-top: 3px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>Real-Time Calendar Booking:</strong> Verifies live slot availability and books directly into Google Calendar or Calendly without double-booking.</span>
+              </li>
+              <li style="display: flex; gap: 10px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: var(--c-brand-blue); flex-shrink: 0; margin-top: 3px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>Structured Lead Qualification:</strong> Asks customized questions to gather customer address, project scope, budget, and urgency.</span>
+              </li>
+              <li style="display: flex; gap: 10px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: var(--c-brand-blue); flex-shrink: 0; margin-top: 3px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>Instant Confirmations &amp; Follow-ups:</strong> Triggers SMS and email notifications with booking links, confirmation codes, and directions.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Group 3: Business Integrations -->
+          <div style="background: #ffffff; border: 1px solid var(--c-border); border-radius: var(--radius-xl); padding: 36px 32px; box-shadow: var(--shadow-sm);">
+            <div style="width: 48px; height: 48px; border-radius: var(--radius-md); background: rgba(16, 185, 129, 0.1); color: #059669; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            </div>
+            <h3 style="font-size: 1.4rem; margin-bottom: 12px;">Business Integrations</h3>
+            <p style="font-size: 0.95rem; color: var(--c-text-secondary); margin-bottom: 20px; line-height: 1.6;">
+              Seamless connectivity that logs every caller directly into your team's existing operational software.
+            </p>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.9rem; color: var(--c-text-secondary);">
+              <li style="display: flex; gap: 10px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: #059669; flex-shrink: 0; margin-top: 3px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>Google Sheets &amp; Airtable:</strong> Every call logs structured customer records, timestamps, and qualified tags in real time.</span>
+              </li>
+              <li style="display: flex; gap: 10px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: #059669; flex-shrink: 0; margin-top: 3px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>CRM Integration:</strong> Compatible with HubSpot, GoHighLevel, Salesforce, and custom CRM systems via REST API or webhooks.</span>
+              </li>
+              <li style="display: flex; gap: 10px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: #059669; flex-shrink: 0; margin-top: 3px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>Existing Phone Numbers:</strong> Assess call forwarding, SIP trunking, or number provisioning options based on your carrier setup.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Group 4: Call Visibility & Delivery -->
+          <div style="background: #ffffff; border: 1px solid var(--c-border); border-radius: var(--radius-xl); padding: 36px 32px; box-shadow: var(--shadow-sm);">
+            <div style="width: 48px; height: 48px; border-radius: var(--radius-md); background: rgba(245, 158, 11, 0.1); color: var(--c-accent-amber); display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </div>
+            <h3 style="font-size: 1.4rem; margin-bottom: 12px;">Call Visibility &amp; Delivery</h3>
+            <p style="font-size: 0.95rem; color: var(--c-text-secondary); margin-bottom: 20px; line-height: 1.6;">
+              Complete operational transparency with documented test cycles and configurable quality controls.
+            </p>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.9rem; color: var(--c-text-secondary);">
+              <li style="display: flex; gap: 10px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: var(--c-accent-amber); flex-shrink: 0; margin-top: 3px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>Call Transcripts &amp; Summaries:</strong> Clean, concise summaries generated after every call, highlighting intent and next steps.</span>
+              </li>
+              <li style="display: flex; gap: 10px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: var(--c-accent-amber); flex-shrink: 0; margin-top: 3px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>Configurable Recording &amp; Privacy:</strong> Audio recording and transcript storage configured to your client jurisdiction and privacy policies.</span>
+              </li>
+              <li style="display: flex; gap: 10px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: var(--c-accent-amber); flex-shrink: 0; margin-top: 3px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>Simulated Testing &amp; Calibration:</strong> Rigorous stress-testing of complex inquiries, interruptions, and telephony edge cases prior to launch.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="background: #f1f5f9; border-radius: var(--radius-md); padding: 14px 20px; font-size: 0.85rem; color: var(--c-text-muted); text-align: center;">
+          Note: Call recording, audio processing, and data handling are configured according to client operational requirements and local communication laws. We mention Retell AI, Vapi, and Telnyx as compatible technical platforms we work with.
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         VISUAL CALL-TO-BOOKING EXAMPLE
+         ========================================================================== -->
+    <section class="section-padding" style="background: #ffffff; border-top: 1px solid var(--c-border); border-bottom: 1px solid var(--c-border);" aria-labelledby="example-dialogue-heading">
+      <div class="container">
+        <div class="section-header text-center center-block" style="max-width: 720px;">
+          <div class="section-badge">
+            <span class="section-badge-dot"></span>
+            <span>Example Dialogue Flow</span>
+          </div>
+          <h2 id="example-dialogue-heading" class="section-title">
+            How a conversation unfolds in <span class="text-gradient">practice.</span>
+          </h2>
+          <p class="section-subtitle center-block">
+            Here is a realistic dialogue showing how the agent politely resolves inquiries, handles time selection, and books the call.
+          </p>
+        </div>
+
+        <div style="max-width: 780px; margin: 0 auto; background: #f8fafc; border: 1px solid var(--c-border); border-radius: var(--radius-xl); padding: 32px 28px; box-shadow: var(--shadow-sm);">
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div class="bubble bubble-caller">
+              <strong>Caller:</strong> "Hi, I’m looking to see if someone can come out to inspect our office HVAC system this week."
+            </div>
+            <div class="bubble bubble-agent">
+              <strong>AI Receptionist:</strong> "I can certainly help you schedule a diagnostic inspection. To ensure our technician brings the right equipment, could you share whether you’re experiencing heating, cooling, or ventilation issues?"
+            </div>
+            <div class="bubble bubble-caller">
+              <strong>Caller:</strong> "The main cooling unit on the second floor stopped blowing cold air this morning."
+            </div>
+            <div class="bubble bubble-agent">
+              <strong>AI Receptionist:</strong> "Thank you for the detail. What is your commercial address, and do you have a preference between Thursday morning at 10:00 AM or Friday afternoon at 2:00 PM for the inspection window?"
+            </div>
+            <div class="bubble bubble-caller">
+              <strong>Caller:</strong> "We’re at 140 North Main Street, Suite 300. Thursday at 10:00 AM works best."
+            </div>
+            <div class="bubble bubble-agent">
+              <strong>AI Receptionist:</strong> "Excellent. I have reserved Thursday between 10:00 AM and 11:30 AM for your HVAC diagnostic. May I have your full name and the best email to send confirmation details?"
+            </div>
+          </div>
+
+          <div style="margin-top: 24px; padding-top: 18px; border-top: 1px dashed var(--c-border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 0.85rem; color: var(--c-text-muted);">
+            <span>Result: Confirmed calendar slot &bull; Dispatch record in Airtable &bull; SMS alert to technician</span>
+            <span style="font-family: var(--font-mono); color: var(--c-brand-violet); font-weight: 600;">Zero hold time</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         DEMO VIDEO SECTION
+         ========================================================================== -->
+    <section class="section-padding demo-section-dark" id="demo-section" aria-labelledby="ai-demo-heading">
+      <div class="demo-ambient-glow" aria-hidden="true"></div>
+
+      <div class="container" style="position: relative; z-index: 1;">
+        <div class="section-header text-center center-block" style="max-width: 740px;">
+          <div class="section-badge badge-dark">
+            <span class="section-badge-dot"></span>
+            <span>Video Walkthrough</span>
+          </div>
+          <h2 id="ai-demo-heading" class="section-title" style="color: #ffffff;">
+            AI Receptionist | <span class="text-gradient">Explained</span>
+          </h2>
+          <p class="section-subtitle center-block" style="color: #94a3b8;">
+            A responsive breakdown of our AI receptionist architecture and how it handles real caller interactions.
+          </p>
+        </div>
+
+        <div class="demo-video-wrapper">
+          <div class="demo-video-frame">
+            <iframe
+              class="demo-video-iframe"
+              src="https://www.youtube.com/embed/HHQEmbUSshM"
+              title="AI Receptionist | Explained"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
+
+          <div class="demo-fallback-bar">
+            <span>Prefer viewing on YouTube?</span>
+            <a href="https://www.youtube.com/watch?v=HHQEmbUSshM" target="_blank" rel="noopener noreferrer" class="demo-fallback-link">
+              <span>Watch on YouTube</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         THREE OFFER CARDS (NO PRICES, SCOPE-BASED)
+         ========================================================================== -->
+    <section class="section-padding" aria-labelledby="offers-heading">
+      <div class="container">
+        <div class="section-header text-center center-block" style="max-width: 740px;">
+          <div class="section-badge">
+            <span class="section-badge-dot"></span>
+            <span>Implementation Packages</span>
+          </div>
+          <h2 id="offers-heading" class="section-title">
+            Tailored voice solutions for <span class="text-gradient">your exact workflow.</span>
+          </h2>
+          <p class="section-subtitle center-block">
+            We scope each deployment around your business volume, telephony setup, and integration needs. No generic lock-ins.
+          </p>
+        </div>
+
+        <div class="offers-grid">
+          <!-- Offer 1: AI Receptionist -->
+          <article class="offer-card">
+            <h3 class="offer-title">AI Receptionist</h3>
+            <span class="offer-scope-tag">Inbound Answering &amp; FAQs</span>
+            <p class="offer-description">
+              24/7 call answering configured with your approved business knowledge base to address customer FAQs, take messages, and log summaries.
+            </p>
+            <ul class="offer-features-list">
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>24/7 inbound call handling &amp; natural voice greeting</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Custom FAQ knowledge base integration</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Caller contact info &amp; inquiry intent capture</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Automated call summaries sent to your email</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Phone number forwarding configuration guidance</span>
+              </li>
+            </ul>
+            <a href="contact?service=ai-receptionist" class="btn btn-secondary" style="width: 100%;">
+              <span>Contact Us</span>
+              <span class="btn-icon-arrow">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </a>
+            <p class="offer-note">Final scope tailored to your business needs</p>
+          </article>
+
+          <!-- Offer 2: Booking & Lead Assistant -->
+          <article class="offer-card featured">
+            <span class="offer-badge-popular">Most Popular</span>
+            <h3 class="offer-title">Booking &amp; Lead Assistant</h3>
+            <span class="offer-scope-tag">Calendar Sync &amp; Lead Qualification</span>
+            <p class="offer-description">
+              Direct calendar appointment scheduling, customized caller qualification, live transfer routing, and automatic email/SMS follow-ups.
+            </p>
+            <ul class="offer-features-list">
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Everything in AI Receptionist package</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Google Calendar or Calendly live real-time booking</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Business-specific lead qualification questions</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Human call transfer logic for urgent inquiries</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Post-call SMS and email confirmation follow-ups</span>
+              </li>
+            </ul>
+            <a href="contact?service=booking-assistant" class="btn btn-primary" style="width: 100%;">
+              <span>Contact Us</span>
+              <span class="btn-icon-arrow">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </a>
+            <p class="offer-note">Final scope tailored to your business needs</p>
+          </article>
+
+          <!-- Offer 3: Connected AI Solution -->
+          <article class="offer-card">
+            <h3 class="offer-title">Connected AI Solution</h3>
+            <span class="offer-scope-tag">CRM &amp; Multi-Step Automations</span>
+            <p class="offer-description">
+              Comprehensive voice intelligence connected with CRM pipelines, internal databases, webhook triggers, and custom operational automations.
+            </p>
+            <ul class="offer-features-list">
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Everything in Booking &amp; Lead Assistant package</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>CRM synchronization (HubSpot, GoHighLevel, etc.)</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Multi-branch n8n, Make, or Zapier workflow triggers</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Custom REST API endpoints &amp; internal database logging</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Comprehensive simulation testing &amp; staging reviews</span>
+              </li>
+            </ul>
+            <a href="contact?service=connected-solution" class="btn btn-secondary" style="width: 100%;">
+              <span>Contact Us</span>
+              <span class="btn-icon-arrow">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </a>
+            <p class="offer-note">Final scope tailored to your business needs</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SHORT FAQ SECTION
+         ========================================================================== -->
+    <section class="section-padding" style="background: #fafcff;" aria-labelledby="faq-heading">
+      <div class="container">
+        <div class="section-header text-center center-block" style="max-width: 720px;">
+          <div class="section-badge badge-blue">
+            <span class="section-badge-dot"></span>
+            <span>Common Questions</span>
+          </div>
+          <h2 id="faq-heading" class="section-title">
+            Frequently Asked <span class="text-gradient">Questions</span>
+          </h2>
+          <p class="section-subtitle center-block">
+            Clear information about how our voice agents are designed, deployed, and connected.
+          </p>
+        </div>
+
+        <div class="faq-accordion-stack" role="region" aria-label="Voice Agent FAQs">
+          <div class="faq-item">
+            <button type="button" class="faq-trigger" aria-expanded="false">
+              <span>What happens if the AI agent does not know the answer to a question?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="faq-content" hidden>
+              <p>The agent is trained never to fabricate answers. When an inquiry falls outside its approved knowledge base, it executes your configured rule: politely taking caller details for a human team member to follow up, or transferring the call directly to your designated staff phone.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-trigger" aria-expanded="false">
+              <span>Can we use our existing business phone number?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="faq-content" hidden>
+              <p>Yes, in most cases. You can retain your existing phone number using carrier call forwarding, SIP trunk routing, or number provisioning options depending on your telephony provider and operational preferences.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-trigger" aria-expanded="false">
+              <span>How does appointment booking prevent double-booking?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="faq-content" hidden>
+              <p>The voice agent integrates directly via API with Google Calendar or Calendly to perform a real-time availability check during the call, respecting your buffer times and team schedule before confirming the appointment.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-trigger" aria-expanded="false">
+              <span>Are recordings and transcripts accessible to our team?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="faq-content" hidden>
+              <p>Yes. Recordings, full transcripts, and executive summaries can be securely logged into your CRM, database, or emailed to your team, configured according to your business privacy policy and regional compliance requirements.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         CONTACT CTA BANNER
+         ========================================================================== -->
+    <section class="section-padding-bottom" aria-labelledby="cta-bottom-heading">
+      <div class="container">
+        <div style="background: var(--grad-brand); border-radius: var(--radius-xl); padding: clamp(40px, 6vw, 68px) clamp(24px, 4vw, 48px); text-align: center; color: #ffffff; box-shadow: var(--shadow-lg);">
+          <div style="max-width: 680px; margin: 0 auto;">
+            <h2 id="cta-bottom-heading" style="color: #ffffff; font-size: clamp(2rem, 3.5vw, 2.75rem); margin-bottom: 16px;">
+              Ready to deploy your custom voice agent?
+            </h2>
+            <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.125rem; margin-bottom: 32px;">
+              Contact us to discuss your call volume, system integrations, and operational requirements.
+            </p>
+            <a href="contact?service=ai-receptionist" class="btn btn-secondary btn-lg" style="background: #ffffff; color: var(--c-text-primary); border-color: #ffffff;">
+              <span>Discuss Your Voice Agent</span>
+              <span class="btn-icon-arrow">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand-col">
+          <a href="./" class="brand-logo" aria-label="Acquiro Home">
+            <img src="assets/logo-transparent.png" alt="Acquiro" class="brand-logo-img">
+          </a>
+          <p>
+            AI voice agents, connected business workflows, and professional web development.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Navigation</h4>
+          <ul class="footer-links-list">
+            <li><a href="./" class="footer-link">Home</a></li>
+            <li><a href="ai-agents" class="footer-link">AI Agents</a></li>
+            <li><a href="automation" class="footer-link">Automation</a></li>
+            <li><a href="web-development" class="footer-link">Web Development</a></li>
+            <li><a href="about" class="footer-link">About</a></li>
+            <li><a href="contact" class="footer-link">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Voice Capabilities</h4>
+          <ul class="footer-links-list">
+            <li><a href="ai-agents" class="footer-link">24/7 AI Receptionists</a></li>
+            <li><a href="ai-agents" class="footer-link">Google Calendar Booking</a></li>
+            <li><a href="ai-agents" class="footer-link">Smart Call Routing</a></li>
+            <li><a href="ai-agents" class="footer-link">Configurable Call Summaries</a></li>
+            <li><a href="ai-agents" class="footer-link">Existing Number Forwarding</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Direct Contact</h4>
+          <ul class="footer-links-list">
+            <li>
+              <a href="mailto:hamza.acquiro@gmail.com" class="footer-link" style="color: #ffffff; font-weight: 500;">
+                hamza.acquiro@gmail.com
+              </a>
+            </li>
+            <li>
+              <a href="tel:+12142865081" class="footer-link" style="color: #ffffff; font-weight: 500;">
+                +1 214-286-5081
+              </a>
+            </li>
+            <li style="font-size: 0.8125rem; color: #94a3b8; margin-top: 6px;">
+              Remote implementation available worldwide.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; <span class="current-year">2026</span> Acquiro. All rights reserved.
+        </div>
+        <div class="footer-legal-links">
+          <button type="button" class="footer-link open-privacy-trigger">Privacy Policy</button>
+          <button type="button" class="footer-link open-terms-trigger">Terms of Service</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       PRIVACY & TERMS DIALOG MODALS
+       ========================================================================== -->
+  <dialog id="privacy-dialog" class="custom-modal" aria-labelledby="privacy-modal-title">
+    <div class="modal-inner">
+      <button type="button" class="modal-close-btn" aria-label="Close dialog">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div class="section-badge" style="margin-bottom: 12px;">Legal Information</div>
+      <h3 id="privacy-modal-title" class="modal-title">Privacy Policy</h3>
+      <div class="modal-body">
+        <p><strong>1. Information Collection:</strong> When you submit a project enquiry through our website, we collect your name, work email address, business name, and workflow details.</p>
+        <p><strong>2. How We Use Information:</strong> Submitted data is used solely to respond to your project request, assess technical feasibility, and prepare proposals for AI voice agents and automations.</p>
+        <p><strong>3. Data Protection:</strong> We do not sell, rent, or trade your contact information.</p>
+        <p><strong>4. Telephony &amp; AI Data Processing:</strong> In deployed client systems, call recording, audio processing, and transcripts are subject to client-defined data retention rules and applicable local communication laws.</p>
+        <p><strong>5. Contact:</strong> Contact us at <code>hamza.acquiro@gmail.com</code>.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="terms-dialog" class="custom-modal" aria-labelledby="terms-modal-title">
+    <div class="modal-inner">
+      <button type="button" class="modal-close-btn" aria-label="Close dialog">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div class="section-badge" style="margin-bottom: 12px;">Legal Information</div>
+      <h3 id="terms-modal-title" class="modal-title">Terms of Service</h3>
+      <div class="modal-body">
+        <p><strong>1. Informational Purpose:</strong> Content on this website describes Acquiro’s custom AI voice agent development, business workflow automation, and website development services.</p>
+        <p><strong>2. Scoping &amp; Contracts:</strong> All client deliverables, timelines, integration access, provider usage fees, and maintenance arrangements are governed by individual written agreements.</p>
+        <p><strong>3. Third-Party Services:</strong> Telephony, voice models, calendar systems, and automation software are independent third-party services subject to their respective terms.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+</body>
+</html>

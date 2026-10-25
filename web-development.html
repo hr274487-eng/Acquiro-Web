@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professional Business Web Development | Acquiro</title>
+  <meta name="description" content="Acquiro builds responsive business websites and landing pages engineered to present offers clearly, capture leads, and integrate with booking and CRM systems.">
+  <link rel="canonical" href="https://acquiro-tech.vercel.app/web-development">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <!-- Google Fonts: Plus Jakarta Sans, Inter, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* Complementary color styling for Web Development: Violet with subtle coral accents */
+    .section-badge-coral {
+      background: rgba(251, 113, 133, 0.1);
+      border-color: rgba(251, 113, 133, 0.25);
+      color: #e11d48;
+    }
+    .section-badge-coral .section-badge-dot {
+      background: #f43f5e;
+      box-shadow: 0 0 8px #f43f5e;
+    }
+
+    /* Mockup Showcase Layout */
+    .mockup-showcase-container {
+      display: grid;
+      grid-template-columns: 1.35fr 0.65fr;
+      gap: 28px;
+      align-items: center;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 900px) {
+      .mockup-showcase-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Desktop Browser Mockup Frame */
+    .desktop-mockup-frame {
+      background: #ffffff;
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-xl);
+      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(225, 29, 72, 0.08);
+      overflow: hidden;
+    }
+
+    .mockup-browser-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 18px;
+      background: #f8fafc;
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .mockup-url-bar {
+      background: #ffffff;
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-full);
+      padding: 4px 14px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--c-text-muted);
+      width: 50%;
+      text-align: center;
+    }
+
+    .mockup-page-content {
+      padding: 24px;
+      background: linear-gradient(180deg, #fcfdff 0%, #f8fafc 100%);
+      min-height: 280px;
+    }
+
+    /* Mobile Phone Mockup Frame */
+    .phone-mockup-frame {
+      background: #ffffff;
+      border: 6px solid #1e293b;
+      border-radius: 36px;
+      box-shadow: 0 25px 50px -10px rgba(15, 23, 42, 0.15);
+      overflow: hidden;
+      max-width: 280px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 600px) {
+      .mockup-browser-bar {
+        padding: 10px 14px;
+      }
+      .mockup-url-bar {
+        width: auto;
+        flex: 1;
+        margin: 0 8px;
+        font-size: 0.7rem;
+        padding: 3px 8px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .mockup-page-content {
+        padding: 16px;
+      }
+    }
+
+    .phone-notch-bar {
+      height: 22px;
+      background: #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .phone-speaker {
+      width: 48px;
+      height: 4px;
+      border-radius: 2px;
+      background: #475569;
+    }
+
+    .phone-screen-content {
+      padding: 16px;
+      background: #ffffff;
+      font-size: 0.785rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       HEADER & NAVIGATION
+       ========================================================================== -->
+  <header class="site-header" id="site-header">
+    <div class="container nav-container">
+      <div class="nav-brand-group">
+        <a href="./" class="brand-logo" aria-label="Acquiro Home">
+          <img src="assets/logo-dark.png" alt="Acquiro" class="brand-logo-img">
+        </a>
+        <a href="contact" class="btn btn-primary btn-sm nav-cta-beside-logo">
+          <span>Contact Us</span>
+          <span class="btn-icon-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </a>
+      </div>
+
+      <!-- Desktop & Mobile Navigation Menu -->
+      <div class="nav-menu-wrapper" id="nav-menu">
+        <nav aria-label="Main Navigation">
+          <ul class="nav-links">
+            <li><a href="./" class="nav-link">Home</a></li>
+            <li><a href="ai-agents" class="nav-link">AI Agents</a></li>
+            <li><a href="automation" class="nav-link">Automation</a></li>
+            <li><a href="web-development" class="nav-link active" aria-current="page">Web Development</a></li>
+            <li><a href="about" class="nav-link">About</a></li>
+            <li class="mobile-only">
+              <a href="contact" class="btn btn-primary" style="width: 100%;">
+                <span>Contact Us</span>
+                <span class="btn-icon-arrow">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="nav-actions">
+        <button class="mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- ==========================================================================
+         HERO SECTION: WEB DEVELOPMENT
+         ========================================================================== -->
+    <section class="hero-wrapper" aria-labelledby="web-hero-heading">
+      <div class="ambient-glow-wrapper" aria-hidden="true">
+        <div class="ambient-orb orb-violet"></div>
+        <div class="ambient-orb orb-warm"></div>
+      </div>
+
+      <div class="container">
+        <div class="hero-content">
+          <div class="section-badge section-badge-coral">
+            <span class="section-badge-dot"></span>
+            <span>Secondary Service &bull; Web Engineering</span>
+          </div>
+
+          <h1 id="web-hero-heading" class="hero-headline">
+            Modern business websites engineered to <span class="text-gradient-web">convert and connect.</span>
+          </h1>
+
+          <p class="hero-supporting-copy">
+            Acquiro designs and builds fast, responsive business websites and landing pages that present your services clearly, capture qualified leads, and connect seamlessly with your booking calendars and CRM.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="contact?service=web-dev" class="btn btn-primary btn-lg">
+              <span>Discuss Your Website</span>
+              <span class="btn-icon-arrow">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </a>
+            <a href="#process-section" class="btn btn-secondary btn-lg">
+              <span>Our Delivery Process</span>
+            </a>
+          </div>
+
+          <div class="hero-trust-row">
+            <div class="trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Responsive Mobile-First Architecture</span>
+            </div>
+            <div class="trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Direct Booking &amp; Lead Form Integration</span>
+            </div>
+            <div class="trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Basic Technical SEO &amp; Performance</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Realistic Multi-Device Showcase Mockups (Labeled as Conceptual Preview) -->
+        <div class="mockup-showcase-container" role="region" aria-label="Conceptual Website Mockup Showcase">
+          <!-- Desktop Mockup -->
+          <div class="desktop-mockup-frame">
+            <div class="mockup-browser-bar">
+              <div class="window-dots">
+                <span class="window-dot dot-red"></span>
+                <span class="window-dot dot-yellow"></span>
+                <span class="window-dot dot-green"></span>
+              </div>
+              <div class="mockup-url-bar">https://yourbusiness.com</div>
+              <div style="font-size: 0.7rem; font-family: var(--font-mono); color: var(--c-brand-violet); font-weight: 600;">
+                Desktop View
+              </div>
+            </div>
+            <div class="mockup-page-content">
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--c-border-subtle); padding-bottom: 12px; margin-bottom: 20px;">
+                <div style="font-weight: 700; font-size: 0.95rem; color: #0f172a;">Apex Solutions</div>
+                <div style="display: flex; gap: 12px; font-size: 0.8rem; color: #475569;">
+                  <span>Services</span>
+                  <span>Solutions</span>
+                  <span>Contact</span>
+                </div>
+              </div>
+              <div class="mockup-inner-grid">
+                <div>
+                  <span style="font-size: 0.7rem; font-family: var(--font-mono); color: #e11d48; text-transform: uppercase; font-weight: 700;">Professional Services</span>
+                  <h4 style="font-size: 1.25rem; margin: 6px 0;">Transforming Client Operations With Speed.</h4>
+                  <p style="font-size: 0.825rem; color: #64748b; margin-bottom: 14px;">High-performance systems designed to simplify daily customer appointments.</p>
+                  <button type="button" class="btn btn-primary btn-sm" style="pointer-events: none;">Schedule Consultation</button>
+                </div>
+                <div style="background: #ffffff; border: 1px solid var(--c-border); border-radius: var(--radius-md); padding: 14px; box-shadow: var(--shadow-xs);">
+                  <div style="font-size: 0.75rem; font-weight: 700; color: #0f172a; margin-bottom: 6px;">Calendar Reservation</div>
+                  <div style="font-size: 0.7rem; color: #059669; font-weight: 600; margin-bottom: 8px;">&bull; Next Open: Tomorrow 10:00 AM</div>
+                  <div style="height: 6px; background: #e2e8f0; border-radius: 3px; margin-bottom: 6px; width: 85%;"></div>
+                  <div style="height: 6px; background: #e2e8f0; border-radius: 3px; width: 65%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile Mockup -->
+          <div class="phone-mockup-frame">
+            <div class="phone-notch-bar">
+              <div class="phone-speaker"></div>
+            </div>
+            <div class="phone-screen-content">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px;">
+                <span style="font-weight: 700; font-size: 0.8rem;">Apex Mobile</span>
+                <span style="font-size: 0.75rem; color: #64748b;">&#9776;</span>
+              </div>
+              <span style="font-size: 0.65rem; color: #e11d48; font-weight: 700; text-transform: uppercase;">Quick Booking</span>
+              <h5 style="font-size: 0.95rem; margin: 4px 0 6px 0;">Fast Mobile Intake</h5>
+              <p style="font-size: 0.725rem; color: #64748b; margin-bottom: 10px;">Tap below to reserve your appointment in 30 seconds.</p>
+              <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; margin-bottom: 10px;">
+                <div style="font-size: 0.7rem; font-weight: 600; color: #2563eb;">Select Time &bull; Google Sync</div>
+              </div>
+              <button type="button" class="btn btn-primary btn-sm" style="width: 100%; font-size: 0.75rem; padding: 6px 12px; pointer-events: none;">Confirm Booking</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 18px; font-size: 0.8125rem; color: var(--c-text-muted);">
+          Conceptual design preview demonstrating responsive desktop and mobile web layouts engineered for client service clarity.
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         WHAT WE DELIVER IN WEB DEVELOPMENT
+         ========================================================================== -->
+    <section class="section-padding" aria-labelledby="web-features-heading">
+      <div class="container">
+        <div class="section-header text-center center-block" style="max-width: 720px;">
+          <div class="section-badge section-badge-coral">
+            <span class="section-badge-dot"></span>
+            <span>Comprehensive Web Delivery</span>
+          </div>
+          <h2 id="web-features-heading" class="section-title">
+            Built for <span class="text-gradient-web">credibility, performance, and conversion.</span>
+          </h2>
+          <p class="section-subtitle center-block">
+            Every business website we build combines clean visual presentation, accessible code, and deep integration with your operational tools.
+          </p>
+        </div>
+
+        <div class="grid-3-col">
+          <!-- Feature 1: Business Websites -->
+          <div class="service-card">
+            <div class="service-icon-box" style="background: rgba(225, 29, 72, 0.1); color: #e11d48;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            </div>
+            <h4 style="font-size: 1.25rem; margin-bottom: 10px;">Multi-Page Business Websites</h4>
+            <p style="font-size: 0.9rem; color: var(--c-text-secondary); line-height: 1.6;">
+              Structured, modern websites that present your service catalog, team credibility, and business values with clarity.
+            </p>
+          </div>
+
+          <!-- Feature 2: High-Converting Landing Pages -->
+          <div class="service-card">
+            <div class="service-icon-box" style="background: rgba(124, 58, 237, 0.1); color: var(--c-brand-violet);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+            </div>
+            <h4 style="font-size: 1.25rem; margin-bottom: 10px;">High-Converting Landing Pages</h4>
+            <p style="font-size: 0.9rem; color: var(--c-text-secondary); line-height: 1.6;">
+              Laser-focused single-offer pages engineered to maximize lead conversions from paid advertising and outbound marketing campaigns.
+            </p>
+          </div>
+
+          <!-- Feature 3: Responsive Mobile Layouts -->
+          <div class="service-card">
+            <div class="service-icon-box" style="background: rgba(37, 99, 235, 0.1); color: var(--c-brand-blue);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+            </div>
+            <h4 style="font-size: 1.25rem; margin-bottom: 10px;">Responsive Mobile Layouts</h4>
+            <p style="font-size: 0.9rem; color: var(--c-text-secondary); line-height: 1.6;">
+              Touch-optimized experiences that look and function gracefully across mobile phones, tablets, and wide desktop displays.
+            </p>
+          </div>
+
+          <!-- Feature 4: Form & Booking Integration -->
+          <div class="service-card">
+            <div class="service-icon-box" style="background: rgba(16, 185, 129, 0.1); color: #059669;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </div>
+            <h4 style="font-size: 1.25rem; margin-bottom: 10px;">Form &amp; Booking Integration</h4>
+            <p style="font-size: 0.9rem; color: var(--c-text-secondary); line-height: 1.6;">
+              Seamless integration with Google Calendar, Calendly, CRM forms, and webhook handlers to eliminate manual lead entry.
+            </p>
+          </div>
+
+          <!-- Feature 5: Technical SEO & Speed -->
+          <div class="service-card">
+            <div class="service-icon-box" style="background: rgba(245, 158, 11, 0.1); color: var(--c-accent-amber);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </div>
+            <h4 style="font-size: 1.25rem; margin-bottom: 10px;">Technical SEO &amp; Speed</h4>
+            <p style="font-size: 0.9rem; color: var(--c-text-secondary); line-height: 1.6;">
+              Clean semantic markup, optimized metadata, responsive imagery, and rapid loading times to ensure high search visibility.
+            </p>
+          </div>
+
+          <!-- Feature 6: Voice Agent Widget Embeds -->
+          <div class="service-card">
+            <div class="service-icon-box" style="background: rgba(124, 58, 237, 0.1); color: var(--c-brand-violet);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+            </div>
+            <h4 style="font-size: 1.25rem; margin-bottom: 10px;">AI Voice Agent Embeds</h4>
+            <p style="font-size: 0.9rem; color: var(--c-text-secondary); line-height: 1.6;">
+              Optional on-page web call widgets allowing website visitors to speak directly with your AI voice agent straight from the browser.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         WEB PROCESS SECTION: PLAN -> DESIGN -> DEVELOP -> TEST -> LAUNCH
+         ========================================================================== -->
+    <section class="section-padding" id="process-section" style="background: #fafcff; border-top: 1px solid var(--c-border); border-bottom: 1px solid var(--c-border);" aria-labelledby="web-process-heading">
+      <div class="container">
+        <div class="section-header text-center center-block" style="max-width: 720px;">
+          <div class="section-badge section-badge-coral">
+            <span class="section-badge-dot"></span>
+            <span>Structured 5-Stage Process</span>
+          </div>
+          <h2 id="web-process-heading" class="section-title">
+            Our web development <span class="text-gradient-web">process.</span>
+          </h2>
+          <p class="section-subtitle center-block">
+            From initial wireframe architecture to final browser performance tuning, we deliver websites that are easy to maintain and scale.
+          </p>
+        </div>
+
+        <div class="process-5-grid">
+          <div class="process-step-card">
+            <div class="process-step-number" style="font-size: 2rem;">01</div>
+            <h4 style="font-size: 1.15rem; margin-bottom: 8px;">Plan</h4>
+            <p style="font-size: 0.85rem; color: var(--c-text-secondary); line-height: 1.5;">
+              Define site structure, navigation hierarchy, content requirements, and key conversion actions.
+            </p>
+          </div>
+
+          <div class="process-step-card">
+            <div class="process-step-number" style="font-size: 2rem;">02</div>
+            <h4 style="font-size: 1.15rem; margin-bottom: 8px;">Design</h4>
+            <p style="font-size: 0.85rem; color: var(--c-text-secondary); line-height: 1.5;">
+              Create clean desktop and mobile layouts with spacious typography, balanced color tokens, and custom components.
+            </p>
+          </div>
+
+          <div class="process-step-card">
+            <div class="process-step-number" style="font-size: 2rem;">03</div>
+            <h4 style="font-size: 1.15rem; margin-bottom: 8px;">Develop</h4>
+            <p style="font-size: 0.85rem; color: var(--c-text-secondary); line-height: 1.5;">
+              Write clean semantic HTML, modular CSS, accessible ARIA attributes, and lightweight client-side scripts.
+            </p>
+          </div>
+
+          <div class="process-step-card">
+            <div class="process-step-number" style="font-size: 2rem;">04</div>
+            <h4 style="font-size: 1.15rem; margin-bottom: 8px;">Test</h4>
+            <p style="font-size: 0.85rem; color: var(--c-text-secondary); line-height: 1.5;">
+              Verify responsive behavior, keyboard navigation, form dispatch mechanisms, and mobile browser compatibility.
+            </p>
+          </div>
+
+          <div class="process-step-card">
+            <div class="process-step-number" style="font-size: 2rem;">05</div>
+            <h4 style="font-size: 1.15rem; margin-bottom: 8px;">Launch</h4>
+            <p style="font-size: 0.85rem; color: var(--c-text-secondary); line-height: 1.5;">
+              Deploy to your production hosting setup, configure clean URL routing, and verify form notifications.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         OFFER CARDS: WEB DEVELOPMENT (NO PRICES)
+         ========================================================================== -->
+    <section class="section-padding" aria-labelledby="web-offers-heading">
+      <div class="container">
+        <div class="section-header text-center center-block" style="max-width: 720px;">
+          <div class="section-badge section-badge-coral">
+            <span class="section-badge-dot"></span>
+            <span>Development Packages</span>
+          </div>
+          <h2 id="web-offers-heading" class="section-title">
+            Tailored website <span class="text-gradient-web">solutions.</span>
+          </h2>
+          <p class="section-subtitle center-block">
+            Every project is scoped around your target audience, content volume, and integration needs.
+          </p>
+        </div>
+
+        <div class="offers-grid">
+          <!-- Offer 1: High-Converting Landing Page -->
+          <article class="offer-card">
+            <h3 class="offer-title">Landing Page</h3>
+            <span class="offer-scope-tag" style="color: #e11d48; background: rgba(225, 29, 72, 0.08);">Single-Offer Conversion</span>
+            <p class="offer-description">
+              A high-impact, focused landing page designed to capture prospective client enquiries from marketing campaigns.
+            </p>
+            <ul class="offer-features-list">
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Single-page conversion-focused layout</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Responsive mobile-first design</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Direct contact or lead capture form</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Basic technical SEO and fast load times</span>
+              </li>
+            </ul>
+            <a href="contact?service=web-dev" class="btn btn-secondary" style="width: 100%;">
+              <span>Discuss Your Website</span>
+              <span class="btn-icon-arrow">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </a>
+            <p class="offer-note">Final scope tailored to your business needs</p>
+          </article>
+
+          <!-- Offer 2: Multi-Page Business Website -->
+          <article class="offer-card featured">
+            <span class="offer-badge-popular">Popular</span>
+            <h3 class="offer-title">Business Website</h3>
+            <span class="offer-scope-tag" style="color: var(--c-brand-violet); background: rgba(124, 58, 237, 0.08);">Multi-Page Business Architecture</span>
+            <p class="offer-description">
+              A comprehensive multi-page corporate website with dedicated service pages, about section, and seamless booking embeds.
+            </p>
+            <ul class="offer-features-list">
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Multi-page architecture with separate URLs</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Service catalogs &amp; detailed offer presentation</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Calendar booking &amp; CRM form synchronization</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Accessible mobile navigation drawer</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Core Web Vitals &amp; performance optimization</span>
+              </li>
+            </ul>
+            <a href="contact?service=web-dev" class="btn btn-primary" style="width: 100%;">
+              <span>Discuss Your Website</span>
+              <span class="btn-icon-arrow">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </a>
+            <p class="offer-note">Final scope tailored to your business needs</p>
+          </article>
+
+          <!-- Offer 3: Custom Web Platform -->
+          <article class="offer-card">
+            <h3 class="offer-title">Connected Web Solution</h3>
+            <span class="offer-scope-tag" style="color: var(--c-brand-blue); background: rgba(37, 99, 235, 0.08);">Custom Integrations &amp; Voice Widget</span>
+            <p class="offer-description">
+              Custom business website integrated directly with live voice agent widgets, automation webhooks, and backend CRM systems.
+            </p>
+            <ul class="offer-features-list">
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Everything in Business Website package</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>AI voice agent web widget embed</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Custom API endpoints and webhook data logging</span>
+              </li>
+              <li class="offer-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Automated multi-step client onboarding pipelines</span>
+              </li>
+            </ul>
+            <a href="contact?service=web-dev" class="btn btn-secondary" style="width: 100%;">
+              <span>Discuss Your Website</span>
+              <span class="btn-icon-arrow">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </a>
+            <p class="offer-note">Final scope tailored to your business needs</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         CONTACT CTA BANNER
+         ========================================================================== -->
+    <section class="section-padding-bottom" aria-labelledby="web-cta-heading">
+      <div class="container">
+        <div style="background: var(--grad-brand); border-radius: var(--radius-xl); padding: clamp(40px, 6vw, 68px) clamp(24px, 4vw, 48px); text-align: center; color: #ffffff; box-shadow: var(--shadow-lg);">
+          <div style="max-width: 680px; margin: 0 auto;">
+            <h2 id="web-cta-heading" style="color: #ffffff; font-size: clamp(2rem, 3.5vw, 2.75rem); margin-bottom: 16px;">
+              Ready to elevate your business website?
+            </h2>
+            <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.125rem; margin-bottom: 32px;">
+              Contact us to discuss your design direction, required pages, and integration requirements.
+            </p>
+            <a href="contact?service=web-dev" class="btn btn-secondary btn-lg" style="background: #ffffff; color: var(--c-text-primary); border-color: #ffffff;">
+              <span>Discuss Your Website</span>
+              <span class="btn-icon-arrow">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand-col">
+          <a href="./" class="brand-logo" aria-label="Acquiro Home">
+            <img src="assets/logo-transparent.png" alt="Acquiro" class="brand-logo-img">
+          </a>
+          <p>
+            AI voice agents, connected business workflows, and professional web development.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Navigation</h4>
+          <ul class="footer-links-list">
+            <li><a href="./" class="footer-link">Home</a></li>
+            <li><a href="ai-agents" class="footer-link">AI Agents</a></li>
+            <li><a href="automation" class="footer-link">Automation</a></li>
+            <li><a href="web-development" class="footer-link">Web Development</a></li>
+            <li><a href="about" class="footer-link">About</a></li>
+            <li><a href="contact" class="footer-link">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Web Capabilities</h4>
+          <ul class="footer-links-list">
+            <li><a href="web-development" class="footer-link">Multi-Page Business Websites</a></li>
+            <li><a href="web-development" class="footer-link">Landing Pages</a></li>
+            <li><a href="web-development" class="footer-link">Mobile-First Responsive Layouts</a></li>
+            <li><a href="web-development" class="footer-link">Calendar &amp; CRM Form Integrations</a></li>
+            <li><a href="web-development" class="footer-link">Technical SEO &amp; Performance</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Direct Contact</h4>
+          <ul class="footer-links-list">
+            <li>
+              <a href="mailto:hamza.acquiro@gmail.com" class="footer-link" style="color: #ffffff; font-weight: 500;">
+                hamza.acquiro@gmail.com
+              </a>
+            </li>
+            <li>
+              <a href="tel:+12142865081" class="footer-link" style="color: #ffffff; font-weight: 500;">
+                +1 214-286-5081
+              </a>
+            </li>
+            <li style="font-size: 0.8125rem; color: #94a3b8; margin-top: 6px;">
+              Remote implementation available worldwide.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; <span class="current-year">2026</span> Acquiro. All rights reserved.
+        </div>
+        <div class="footer-legal-links">
+          <button type="button" class="footer-link open-privacy-trigger">Privacy Policy</button>
+          <button type="button" class="footer-link open-terms-trigger">Terms of Service</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Privacy Dialog -->
+  <dialog id="privacy-dialog" class="custom-modal" aria-labelledby="web-priv-title">
+    <div class="modal-inner">
+      <button type="button" class="modal-close-btn" aria-label="Close dialog">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div class="section-badge" style="margin-bottom: 12px;">Legal Information</div>
+      <h3 id="web-priv-title" class="modal-title">Privacy Policy</h3>
+      <div class="modal-body">
+        <p><strong>1. Information Collection:</strong> When you submit a project enquiry through our website, we collect your name, work email address, business name, and workflow details.</p>
+        <p><strong>2. Contact:</strong> Inquiries may be sent to <code>hamza.acquiro@gmail.com</code>.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Terms Dialog -->
+  <dialog id="terms-dialog" class="custom-modal" aria-labelledby="web-terms-title">
+    <div class="modal-inner">
+      <button type="button" class="modal-close-btn" aria-label="Close dialog">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div class="section-badge" style="margin-bottom: 12px;">Legal Information</div>
+      <h3 id="web-terms-title" class="modal-title">Terms of Service</h3>
+      <div class="modal-body">
+        <p><strong>1. Informational Purpose:</strong> Content on this website describes Acquiro’s custom AI voice agent development, business workflow automation, and website development services.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+</body>
+</html>

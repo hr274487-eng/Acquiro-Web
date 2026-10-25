@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acquiro | AI Voice Agents, Business Automation &amp; Web Development</title>
+  <meta name="description" content="Acquiro builds custom AI receptionists, connected workflows, and business websites to help you capture leads, book appointments, and simplify everyday work.">
+  <link rel="canonical" href="https://acquiro-tech.vercel.app/">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <!-- Google Fonts: Plus Jakarta Sans, Inter, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       HEADER & NAVIGATION
+       ========================================================================== -->
+  <header class="site-header" id="site-header">
+    <div class="container nav-container">
+      <div class="nav-brand-group">
+        <a href="./" class="brand-logo" aria-label="Acquiro Home">
+          <img src="assets/logo-dark.png" alt="Acquiro" class="brand-logo-img">
+        </a>
+        <a href="contact" class="btn btn-primary btn-sm nav-cta-beside-logo">
+          <span>Contact Us</span>
+          <span class="btn-icon-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </a>
+      </div>
+
+      <!-- Desktop & Mobile Navigation Menu -->
+      <div class="nav-menu-wrapper" id="nav-menu">
+        <nav aria-label="Main Navigation">
+          <ul class="nav-links">
+            <li><a href="./" class="nav-link active" aria-current="page">Home</a></li>
+            <li><a href="ai-agents" class="nav-link">AI Agents</a></li>
+            <li><a href="automation" class="nav-link">Automation</a></li>
+            <li><a href="web-development" class="nav-link">Web Development</a></li>
+            <li><a href="about" class="nav-link">About</a></li>
+            <li class="mobile-only">
+              <a href="contact" class="btn btn-primary" style="width: 100%;">
+                <span>Contact Us</span>
+                <span class="btn-icon-arrow">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="nav-actions">
+        <button class="mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- ==========================================================================
+         HERO SECTION WITH REALISTIC CALL INTERFACE SIMULATION
+         ========================================================================== -->
+    <section class="hero-wrapper" aria-labelledby="hero-heading">
+      <div class="ambient-glow-wrapper" aria-hidden="true">
+        <div class="ambient-orb orb-violet"></div>
+        <div class="ambient-orb orb-blue"></div>
+        <div class="ambient-orb orb-warm"></div>
+      </div>
+
+      <div class="container">
+        <div class="hero-content">
+          <div class="section-badge">
+            <span class="section-badge-dot"></span>
+            <span>Custom AI Voice Agents &amp; Connected Workflows</span>
+          </div>
+
+          <h1 id="hero-heading" class="hero-headline">
+            AI agents that answer calls and <span class="text-gradient">keep your business moving.</span>
+          </h1>
+
+          <p class="hero-supporting-copy">
+            Acquiro builds AI receptionists, connected workflows, and business websites to help you capture leads, book appointments, and simplify everyday work.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="contact" class="btn btn-primary btn-lg">
+              <span>Discuss Your Project</span>
+              <span class="btn-icon-arrow">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </a>
+            <a href="#demo-video" class="btn btn-secondary btn-lg">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              <span>Watch Demo</span>
+            </a>
+          </div>
+
+          <div class="hero-trust-row">
+            <div class="trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Custom Voice Models</span>
+            </div>
+            <div class="trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Calendar &amp; CRM Sync</span>
+            </div>
+            <div class="trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Dedicated Testing &amp; Deployment</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Realistic Interface Illustration (Call-to-Booking Pipeline) -->
+        <div class="interface-hero-preview" role="region" aria-label="Live AI Receptionist Call Simulation Preview">
+          <div class="interface-frame">
+            <!-- Window Bar -->
+            <div class="interface-header-bar">
+              <div class="window-dots" aria-hidden="true">
+                <span class="window-dot dot-red"></span>
+                <span class="window-dot dot-yellow"></span>
+                <span class="window-dot dot-green"></span>
+              </div>
+              <div class="interface-label-badge">
+                <span class="status-pulse-dot"></span>
+                <span>Live Call-to-Booking Interface Simulation</span>
+              </div>
+              <span class="interface-header-meta" style="font-size: 0.75rem; color: var(--c-text-muted); font-family: var(--font-mono);">
+                Telephony &bull; Cal &bull; CRM
+              </span>
+            </div>
+
+            <!-- Simulation Layout -->
+            <div class="interface-grid">
+              <!-- Left: Live Call Stream -->
+              <div class="call-simulation-pane">
+                <div class="caller-card">
+                  <div class="caller-info">
+                    <div class="caller-avatar">SM</div>
+                    <div class="caller-details">
+                      <h4>Sarah Mitchell</h4>
+                      <p>Inbound Call &bull; (415) 890-2194</p>
+                    </div>
+                  </div>
+                  <span class="call-pill">Active Call (01:24)</span>
+                </div>
+
+                <!-- Animated Waveform Graphic -->
+                <div class="waveform-container" aria-label="Speech waveform illustration">
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                </div>
+
+                <!-- Live Dialogue Snippets -->
+                <div class="dialogue-stack">
+                  <div class="bubble bubble-caller">
+                    <strong>Caller:</strong> "Hi, I'm calling to see if you have any consultation openings tomorrow around 2:00 PM for project onboarding?"
+                  </div>
+                  <div class="bubble bubble-agent">
+                    <strong>AI Receptionist:</strong> "Hello Sarah! Let me check the schedule for tomorrow. Yes, we have a 2:00 PM discovery slot open with our technical team. Would you like me to hold that for you?"
+                  </div>
+                  <div class="bubble bubble-caller">
+                    <strong>Caller:</strong> "Yes please, 2:00 PM is great. My email is sarah.m@mitchellgroup.com."
+                  </div>
+                  <div class="bubble bubble-agent">
+                    <strong>AI Receptionist:</strong> "Perfect! I have confirmed your appointment for tomorrow at 2:00 PM. A calendar invitation has been sent to your email, and our team has been notified."
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: Connected Real-Time Actions -->
+              <div class="actions-preview-pane">
+                <div style="font-size: 0.825rem; font-family: var(--font-mono); text-transform: uppercase; color: var(--c-text-muted); font-weight: 600; letter-spacing: 0.05em;">
+                  Triggered System Actions
+                </div>
+
+                <!-- Action 1: Lead Capture -->
+                <div class="action-event-card">
+                  <div class="event-header">
+                    <span class="event-badge event-crm">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                      Lead Captured
+                    </span>
+                    <span class="event-time">Just now</span>
+                  </div>
+                  <h5 class="event-title">Sarah Mitchell &bull; Mitchell Group</h5>
+                  <p class="event-desc">Qualified enquiry tagged as high-fit prospective client with full contact details logged.</p>
+                </div>
+
+                <!-- Action 2: Calendar Booking -->
+                <div class="action-event-card">
+                  <div class="event-header">
+                    <span class="event-badge event-calendar">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                      Calendar Synced
+                    </span>
+                    <span class="event-time">Just now</span>
+                  </div>
+                  <h5 class="event-title">Onboarding Consultation &bull; 2:00 PM</h5>
+                  <p class="event-desc">Directly reserved on Google Calendar with zero double-booking or manual scheduling friction.</p>
+                </div>
+
+                <!-- Action 3: Team Notification -->
+                <div class="action-event-card">
+                  <div class="event-header">
+                    <span class="event-badge event-notify">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3zm-8.27 4a2 2 0 0 1-3.46 0"></path></svg>
+                      Team Notification
+                    </span>
+                    <span class="event-time">Just now</span>
+                  </div>
+                  <h5 class="event-title">CRM &amp; Slack Updated</h5>
+                  <p class="event-desc">Structured call summary and recording link automatically delivered to internal channels.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interface Footer Caption -->
+            <div class="interface-footer-caption">
+              Illustrative simulation demonstrating call handling, appointment confirmation, and automated CRM updates configured for client operations.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 1: DEMO VIDEO THEATER (RESPONSIVE 16:9 CONTAINER)
+         ========================================================================== -->
+    <section class="section-padding demo-section-dark" id="demo-video" aria-labelledby="demo-heading">
+      <div class="demo-ambient-glow" aria-hidden="true"></div>
+
+      <div class="container" style="position: relative; z-index: 1;">
+        <div class="section-header text-center center-block" style="max-width: 740px;">
+          <div class="section-badge badge-dark">
+            <span class="section-badge-dot"></span>
+            <span>Real Demonstration</span>
+          </div>
+          <h2 id="demo-heading" class="section-title" style="color: #ffffff;">
+            See an AI receptionist <span class="text-gradient">in action.</span>
+          </h2>
+          <p class="section-subtitle center-block" style="color: #94a3b8;">
+            Watch how a custom AI voice agent conducts a natural phone conversation, captures caller requirements, and confirms a calendar booking.
+          </p>
+        </div>
+
+        <div class="demo-video-wrapper">
+          <div class="demo-video-frame">
+            <iframe
+              class="demo-video-iframe"
+              src="https://www.youtube.com/embed/HHQEmbUSshM"
+              title="AI Receptionist | Explained"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
+
+          <div class="demo-fallback-bar">
+            <span>Video not loading in your browser?</span>
+            <a href="https://www.youtube.com/watch?v=HHQEmbUSshM" target="_blank" rel="noopener noreferrer" class="demo-fallback-link">
+              <span>Watch on YouTube</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 2: THREE CORE SERVICES (CARDS LINKING TO SERVICE PAGES)
+         ========================================================================== -->
+    <section class="section-padding" aria-labelledby="services-heading">
+      <div class="container">
+        <div class="section-header text-center center-block" style="max-width: 720px;">
+          <div class="section-badge">
+            <span class="section-badge-dot"></span>
+            <span>What We Build</span>
+          </div>
+          <h2 id="services-heading" class="section-title">
+            Tailored solutions designed for <span class="text-gradient">practical everyday business.</span>
+          </h2>
+          <p class="section-subtitle center-block">
+            We design, connect, test, and deploy custom voice AI, business automations, and modern websites that work with your existing tools.
+          </p>
+        </div>
+
+        <div class="services-grid">
+          <!-- Card 1: AI Agents -->
+          <article class="service-card">
+            <div class="service-icon-box icon-box-violet">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            </div>
+            <span class="service-tag">Primary Service</span>
+            <h3 class="service-title">AI Voice Agents &amp; Receptionists</h3>
+            <p class="service-description">
+              Custom conversational voice agents that answer inbound business calls 24/7, handle FAQs, qualify callers, and book appointments directly on your calendar.
+            </p>
+            <ul class="service-features-list">
+              <li class="service-feature-item">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Natural conversational voices &amp; multilingual support</span>
+              </li>
+              <li class="service-feature-item">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Google Calendar &amp; Calendly real-time booking</span>
+              </li>
+              <li class="service-feature-item">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Smart call transfers &amp; existing phone number integration</span>
+              </li>
+            </ul>
+            <a href="ai-agents" class="card-link-action">
+              <span>Explore AI Voice Agents</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </article>
+
+          <!-- Card 2: Workflow Automation -->
+          <article class="service-card">
+            <div class="service-icon-box icon-box-blue">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+            </div>
+            <span class="service-tag" style="color: var(--c-brand-blue);">Supporting Service</span>
+            <h3 class="service-title">Business Workflow Automation</h3>
+            <p class="service-description">
+              Connect your core software tools to eliminate repetitive manual data entry, synchronize customer records, and automate team notifications.
+            </p>
+            <ul class="service-features-list">
+              <li class="service-feature-item">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Lead routing, CRM syncing &amp; Google Sheets logging</span>
+              </li>
+              <li class="service-feature-item">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>n8n, Make, and Zapier custom multi-step pipelines</span>
+              </li>
+              <li class="service-feature-item">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Automated SMS, email follow-ups, and webhook logic</span>
+              </li>
+            </ul>
+            <a href="automation" class="card-link-action" style="color: var(--c-brand-blue);">
+              <span>Explore Automation</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </article>
+
+          <!-- Card 3: Web Development -->
+          <article class="service-card">
+            <div class="service-icon-box icon-box-warm">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            </div>
+            <span class="service-tag" style="color: #e11d48;">Secondary Service</span>
+            <h3 class="service-title">Professional Business Websites</h3>
+            <p class="service-description">
+              High-performing, responsive websites and landing pages engineered to present your offers clearly, capture enquiries, and integrate with your booking systems.
+            </p>
+            <ul class="service-features-list">
+              <li class="service-feature-item">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Responsive mobile-first layouts &amp; accessible code</span>
+              </li>
+              <li class="service-feature-item">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Interactive lead capture forms &amp; booking embeds</span>
+              </li>
+              <li class="service-feature-item">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Basic technical SEO, fast load times &amp; clean design</span>
+              </li>
+            </ul>
+            <a href="web-development" class="card-link-action" style="color: #e11d48;">
+              <span>Explore Web Development</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 3: VISUAL SEQUENCE: ANSWER -> CAPTURE -> BOOK/ROUTE -> UPDATE
+         ========================================================================== -->
+    <section class="section-padding" aria-labelledby="sequence-heading">
+      <div class="container">
+        <div class="section-header text-center center-block" style="max-width: 720px;">
+          <div class="section-badge badge-blue">
+            <span class="section-badge-dot"></span>
+            <span>Operational Flow</span>
+          </div>
+          <h2 id="sequence-heading" class="section-title">
+            From the first ring to <span class="text-gradient">confirmed action.</span>
+          </h2>
+          <p class="section-subtitle center-block">
+            Every call follows a structured, verified pathway configured specifically for your business operations.
+          </p>
+        </div>
+
+        <div class="sequence-grid">
+          <!-- Step 1: Answer -->
+          <div class="sequence-card">
+            <span class="step-num-pill">Step 01</span>
+            <h3 class="step-title">Answer</h3>
+            <p class="step-desc">
+              Answers promptly 24/7 with a natural, conversational voice. Greets callers and addresses common questions using your approved business knowledge base.
+            </p>
+          </div>
+
+          <!-- Step 2: Capture -->
+          <div class="sequence-card">
+            <span class="step-num-pill">Step 02</span>
+            <h3 class="step-title">Capture</h3>
+            <p class="step-desc">
+              Gathers caller contact details, identifies the exact nature of their enquiry, and asks qualifying questions tailored to your service criteria.
+            </p>
+          </div>
+
+          <!-- Step 3: Book or Route -->
+          <div class="sequence-card">
+            <span class="step-num-pill">Step 03</span>
+            <h3 class="step-title">Book or Route</h3>
+            <p class="step-desc">
+              Checks live calendar availability to book appointments directly, or transfers urgent calls to designated human staff according to your transfer rules.
+            </p>
+          </div>
+
+          <!-- Step 4: Update -->
+          <div class="sequence-card">
+            <span class="step-num-pill">Step 04</span>
+            <h3 class="step-title">Update</h3>
+            <p class="step-desc">
+              Synchronizes call records with your CRM, Google Sheets, or Airtable. Dispatches instant confirmation emails and notifies your team via SMS or internal alerts.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 4: COMPACT INTEGRATIONS SECTION
+         ========================================================================== -->
+    <section class="section-padding" style="background: #fafcff;" aria-labelledby="integrations-heading">
+      <div class="container">
+        <div class="integrations-box">
+          <div class="section-header text-center center-block" style="max-width: 700px; margin-bottom: 40px;">
+            <div class="section-badge">
+              <span class="section-badge-dot"></span>
+              <span>Tool Connectivity</span>
+            </div>
+            <h2 id="integrations-heading" class="section-title">
+              Connected with tools you <span class="text-gradient">already rely on.</span>
+            </h2>
+            <p class="section-subtitle center-block" style="font-size: 1rem;">
+              We connect your voice agents and workflows into your existing business stack. No need to replace systems that are already working.
+            </p>
+          </div>
+
+          <div class="integrations-category-grid">
+            <!-- Voice Technologies -->
+            <div>
+              <h4 class="integration-category-title">Telephony &amp; Voice Tech</h4>
+              <div class="tool-tags-list">
+                <div class="tool-tag"><span class="tool-dot"></span>Retell AI</div>
+                <div class="tool-tag"><span class="tool-dot"></span>Vapi</div>
+                <div class="tool-tag"><span class="tool-dot"></span>Telnyx</div>
+              </div>
+            </div>
+
+            <!-- Workflow Automation -->
+            <div>
+              <h4 class="integration-category-title">Workflow Automation</h4>
+              <div class="tool-tags-list">
+                <div class="tool-tag"><span class="tool-dot"></span>n8n</div>
+                <div class="tool-tag"><span class="tool-dot"></span>Make</div>
+                <div class="tool-tag"><span class="tool-dot"></span>Zapier</div>
+              </div>
+            </div>
+
+            <!-- Scheduling -->
+            <div>
+              <h4 class="integration-category-title">Calendar &amp; Booking</h4>
+              <div class="tool-tags-list">
+                <div class="tool-tag"><span class="tool-dot"></span>Google Calendar</div>
+                <div class="tool-tag"><span class="tool-dot"></span>Calendly</div>
+              </div>
+            </div>
+
+            <!-- Data & CRM -->
+            <div>
+              <h4 class="integration-category-title">Data &amp; Records</h4>
+              <div class="tool-tags-list">
+                <div class="tool-tag"><span class="tool-dot"></span>Google Sheets</div>
+                <div class="tool-tag"><span class="tool-dot"></span>Airtable</div>
+                <div class="tool-tag"><span class="tool-dot"></span>CRMs &amp; Webhooks</div>
+              </div>
+            </div>
+          </div>
+
+          <p class="integrations-disclaimer">
+            All trademarks, logos, and brand names are property of their respective owners. Mention of tools reflects technical compatibility and integration capabilities, not official partnerships.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 5: BRIEF "HOW WE WORK" SECTION
+         ========================================================================== -->
+    <section class="section-padding" aria-labelledby="process-heading">
+      <div class="container">
+        <div class="section-header text-center center-block" style="max-width: 720px;">
+          <div class="section-badge badge-blue">
+            <span class="section-badge-dot"></span>
+            <span>How We Work</span>
+          </div>
+          <h2 id="process-heading" class="section-title">
+            A structured, careful process from <span class="text-gradient">planning to production.</span>
+          </h2>
+          <p class="section-subtitle center-block">
+            We work collaboratively to understand your operational requirements, build tailored solutions, and thoroughly test before going live.
+          </p>
+        </div>
+
+        <div class="process-grid">
+          <div class="process-step-card">
+            <div class="process-step-number">01</div>
+            <h3 class="process-step-name">Discover</h3>
+            <p class="process-step-desc">
+              We map your call types, frequently asked questions, qualification rules, and existing software stack to define the right scope.
+            </p>
+          </div>
+
+          <div class="process-step-card">
+            <div class="process-step-number">02</div>
+            <h3 class="process-step-name">Build</h3>
+            <p class="process-step-desc">
+              We calibrate the conversational voice model, connect your calendars and CRM, and configure automated workflow pipelines.
+            </p>
+          </div>
+
+          <div class="process-step-card">
+            <div class="process-step-number">03</div>
+            <h3 class="process-step-name">Test</h3>
+            <p class="process-step-desc">
+              We simulate real calling scenarios—including background noise, edge-case inquiries, and scheduling conflicts—to ensure reliability.
+            </p>
+          </div>
+
+          <div class="process-step-card">
+            <div class="process-step-number">04</div>
+            <h3 class="process-step-name">Launch</h3>
+            <p class="process-step-desc">
+              We connect to your agreed phone numbers, verify live routing, provide handover documentation, and optimize based on reviewed calls.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 6: STRONG CONTACT CTA BANNER
+         ========================================================================== -->
+    <section class="section-padding-bottom" aria-labelledby="cta-heading">
+      <div class="container">
+        <div style="background: var(--grad-brand); border-radius: var(--radius-xl); padding: clamp(40px, 6vw, 68px) clamp(24px, 4vw, 48px); text-align: center; color: #ffffff; box-shadow: var(--shadow-lg); position: relative; overflow: hidden;">
+          <div style="max-width: 680px; margin: 0 auto; position: relative; z-index: 1;">
+            <h2 id="cta-heading" style="color: #ffffff; font-size: clamp(2rem, 3.5vw, 2.75rem); margin-bottom: 16px;">
+              Let’s discuss the right solution for your business.
+            </h2>
+            <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.125rem; margin-bottom: 32px;">
+              Whether you need an AI receptionist to handle inbound calls, automated workflow connections, or a polished business website, we are ready to help.
+            </p>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;">
+              <a href="contact" class="btn btn-secondary btn-lg" style="background: #ffffff; color: var(--c-text-primary); border-color: #ffffff;">
+                <span>Discuss Your Project</span>
+                <span class="btn-icon-arrow">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </span>
+              </a>
+              <a href="tel:+12142865081" class="btn btn-dark btn-lg">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <span>Call +1 214-286-5081</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand-col">
+          <a href="./" class="brand-logo" aria-label="Acquiro Home">
+            <img src="assets/logo-transparent.png" alt="Acquiro" class="brand-logo-img">
+          </a>
+          <p>
+            AI voice agents, connected business workflows, and professional web development. Tailored solutions for growing businesses.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Navigation</h4>
+          <ul class="footer-links-list">
+            <li><a href="./" class="footer-link">Home</a></li>
+            <li><a href="ai-agents" class="footer-link">AI Agents</a></li>
+            <li><a href="automation" class="footer-link">Automation</a></li>
+            <li><a href="web-development" class="footer-link">Web Development</a></li>
+            <li><a href="about" class="footer-link">About</a></li>
+            <li><a href="contact" class="footer-link">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Services</h4>
+          <ul class="footer-links-list">
+            <li><a href="ai-agents" class="footer-link">24/7 AI Receptionists</a></li>
+            <li><a href="ai-agents" class="footer-link">Calendar Appointment Booking</a></li>
+            <li><a href="automation" class="footer-link">Lead Routing &amp; CRM Sync</a></li>
+            <li><a href="automation" class="footer-link">Custom API &amp; Webhooks</a></li>
+            <li><a href="web-development" class="footer-link">Business Websites &amp; Landing Pages</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Direct Contact</h4>
+          <ul class="footer-links-list">
+            <li>
+              <a href="mailto:hamza.acquiro@gmail.com" class="footer-link" style="color: #ffffff; font-weight: 500;">
+                hamza.acquiro@gmail.com
+              </a>
+            </li>
+            <li>
+              <a href="tel:+12142865081" class="footer-link" style="color: #ffffff; font-weight: 500;">
+                +1 214-286-5081
+              </a>
+            </li>
+            <li style="font-size: 0.8125rem; color: #94a3b8; margin-top: 6px;">
+              Remote implementation available worldwide.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; <span class="current-year">2026</span> Acquiro. All rights reserved.
+        </div>
+        <div class="footer-legal-links">
+          <button type="button" class="footer-link open-privacy-trigger">Privacy Policy</button>
+          <button type="button" class="footer-link open-terms-trigger">Terms of Service</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       PRIVACY & TERMS ACCESSIBLE DIALOG MODALS
+       ========================================================================== -->
+  <dialog id="privacy-dialog" class="custom-modal" aria-labelledby="privacy-title">
+    <div class="modal-inner">
+      <button type="button" class="modal-close-btn" aria-label="Close dialog">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div class="section-badge" style="margin-bottom: 12px;">Legal Information</div>
+      <h3 id="privacy-title" class="modal-title">Privacy Policy</h3>
+      <div class="modal-body">
+        <p><strong>1. Information Collection:</strong> When you submit a project enquiry through our website, we collect your name, work email address, business name, and the workflow details you provide.</p>
+        <p><strong>2. How We Use Information:</strong> The information submitted is used solely to respond to your project request, assess technical feasibility, and prepare implementation proposals for AI voice agents, automations, or web development.</p>
+        <p><strong>3. Data Protection:</strong> We do not sell, rent, or trade your contact information. Client data is handled strictly in accordance with agreed service parameters.</p>
+        <p><strong>4. Telephony &amp; AI Data Processing:</strong> In deployed client systems, call recording, audio processing, and transcripts are subject to client-defined data retention rules and applicable local communication laws.</p>
+        <p><strong>5. Contact:</strong> For any inquiries or data requests, contact us directly at <code>hamza.acquiro@gmail.com</code>.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="terms-dialog" class="custom-modal" aria-labelledby="terms-title">
+    <div class="modal-inner">
+      <button type="button" class="modal-close-btn" aria-label="Close dialog">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div class="section-badge" style="margin-bottom: 12px;">Legal Information</div>
+      <h3 id="terms-title" class="modal-title">Terms of Service</h3>
+      <div class="modal-body">
+        <p><strong>1. Informational Purpose:</strong> Content on this website describes Acquiro’s custom AI voice agent development, business workflow automation, and website development services.</p>
+        <p><strong>2. Project Scoping &amp; Contracts:</strong> All client deliverables, timelines, integration access, provider usage fees, and maintenance arrangements are governed by individual written agreements and statements of work.</p>
+        <p><strong>3. Third-Party Services:</strong> Telephony, voice models, calendar systems, and automation software (including Retell AI, Vapi, Telnyx, Google, Make, and CRM platforms) are independent third-party services subject to their respective terms and consumption fees.</p>
+        <p><strong>4. Intellectual Property:</strong> Acquiro, the Acquiro logo, and custom website materials are protected by intellectual property laws. Third-party brand names and trademarks belong to their respective owners.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+</body>
+</html>
