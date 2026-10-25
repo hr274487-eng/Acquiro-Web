@@ -17,8 +17,8 @@ android {
         applicationId "com.acquiro.manager"
         minSdkVersion 24
         targetSdkVersion 33
-        versionCode 12
-        versionName "2.11.0"
+        versionCode 13
+        versionName "2.12.0"
 
         ndk {
             abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
