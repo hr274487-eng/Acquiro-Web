@@ -41,17 +41,23 @@ jobs:
             "platforms;android-34" \
             "build-tools;34.0.0" || true
 
-      - name: Generate Debug Keystore
+      - name: Setup Permanent Keystore
         run: |
-          keytool -genkey -v \
-            -keystore mobile-app/android/app/debug.keystore \
-            -alias androiddebugkey \
-            -keyalg RSA \
-            -keysize 2048 \
-            -validity 10000 \
-            -storepass android \
-            -keypass android \
-            -dname "CN=Android Debug,O=Android,C=US"
+          if [ -f mobile-app/android/app/acquiro.keystore ]; then
+            echo "Using existing permanent acquiro.keystore"
+          else
+            echo "Generating permanent acquiro.keystore"
+            keytool -genkey -v \
+              -keystore mobile-app/android/app/acquiro.keystore \
+              -alias acquirokey \
+              -keyalg RSA \
+              -keysize 2048 \
+              -validity 10000 \
+              -storepass acquiro2026 \
+              -keypass acquiro2026 \
+              -dname "CN=Acquiro Manager,O=Acquiro,C=US"
+          fi
+          cp mobile-app/android/app/acquiro.keystore mobile-app/android/app/debug.keystore || true
 
       - name: Install React Native Dependencies
         run: |
@@ -109,39 +115,44 @@ jobs:
             exit 1
           fi
           echo "Found APK at: $APK_PATH"
-          cp "$APK_PATH" output-apk/Acquiro-Manager-v2.4.0.apk
+          cp "$APK_PATH" output-apk/Acquiro-Manager-v2.5.0.apk
           echo "=== APK Ready ==="
-          ls -lh output-apk/Acquiro-Manager-v2.4.0.apk
+          ls -lh output-apk/Acquiro-Manager-v2.5.0.apk
 
       - name: Upload APK as Workflow Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Acquiro-Manager-v2.4.0-APK
-          path: output-apk/Acquiro-Manager-v2.4.0.apk
+          name: Acquiro-Manager-v2.5.0-APK
+          path: output-apk/Acquiro-Manager-v2.5.0.apk
           retention-days: 90
 
       - name: Create GitHub Release with React Native APK
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/heads/main')
         with:
-          tag_name: v2.4.0-apk
-          name: "Acquiro Manager v2.4.0 (Real Background Order Service & Status Bugfix)"
+          tag_name: v2.5.0-apk
+          name: "Acquiro Manager v2.5.0 (Android 9+ Universal Installation & Background Reception)"
           body: |
-            ### 📱 Acquiro Mobile Manager — React Native v2.4.0 (Production Release)
+            ### 📱 Acquiro Mobile Manager — React Native v2.5.0 (Universal Android 9+ Release)
 
-            **Version:** 2.4.0
+            **Version:** 2.5.0
             **Target Compatibility:** Android 9.0 (API 28) through Android 14+ (API 34/35)
             **Branding:** Official Acquiro Company Geometric "A" Logo
             **Architecture:** `arm64-v8a`, `armeabi-v7a`, `x86`, `x86_64`
 
-            #### 🛠️ What's Fixed in v2.4.0:
-            1. **Fixed Status Change Crash (`Cannot read property 'id' of undefined`):** Corrected the callback signature in `OrdersScreen.js` and added safe object guards in `App.js` so changing status to Accepted/Completed/etc. works instantly without error dialogs.
-            2. **Native Android Background Service (`BackgroundOrderService`):** Runs 24/7 in the Android background via a low-priority foreground service. Even when your phone is locked or the app is minimized, new customer orders placed on the website will trigger Heads-Up banner notifications and the Modern Tech Ping tone.
-            3. **In-App Notification Hygiene:** Eliminated intrusive heads-up popup notifications while you are actively inside the app. In-app new orders cleanly update the orders list and badge counter without covering your screen.
+            #### 🛠️ What's Fixed in v2.5.0:
+            1. **Full Android 9 Installation Compatibility:**
+               - Removed API 34-only manifest attributes (`foregroundServiceType="dataSync"` and `FOREGROUND_SERVICE_DATA_SYNC`) that caused Android 9 package managers to abort installation with parse errors.
+               - Set `targetSdkVersion = 33` for backward compatibility across all Android versions without breaking foreground background services.
+               - Guaranteed native `useLegacyPackaging = true` and `extractNativeLibs="true"` for smooth execution on 32-bit and 64-bit Android 9 devices.
+            2. **Permanent Keystore Signature:** Signed with consistent permanent keys so future updates do not fail with signature mismatch.
+            3. **Background Order Reception Service:** Runs 24/7 in the background with `R.raw.tech_ping` audio and heads-up banner notifications when minimized or locked.
+            4. **Clean Order Status Transitions:** Fixed status toggle callbacks so changing orders to Accepted, Completed, etc., works smoothly without errors.
 
             #### 📥 Download & Install:
-            1. Download `Acquiro-Manager-v2.4.0.apk` below directly onto your device.
-            2. Tap the file to install (select "Update").
-          files: output-apk/Acquiro-Manager-v2.4.0.apk
+            > **Important Note for Android 9:** If you have an older test version installed on your device, **please uninstall the old version first** to avoid Android signature conflicts, then install `Acquiro-Manager-v2.5.0.apk`.
+            1. Download `Acquiro-Manager-v2.5.0.apk` below directly onto your device.
+            2. Tap the file to install.
+          files: output-apk/Acquiro-Manager-v2.5.0.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

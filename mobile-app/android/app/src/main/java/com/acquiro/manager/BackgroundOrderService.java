@@ -9,7 +9,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ServiceInfo;
 import android.media.AudioAttributes;
 import android.net.Uri;
 import android.os.Build;
@@ -111,15 +110,9 @@ public class BackgroundOrderService extends Service {
             .build();
 
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                startForeground(SERVICE_NOTIFICATION_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
-            } else {
-                startForeground(SERVICE_NOTIFICATION_ID, notification);
-            }
+            startForeground(SERVICE_NOTIFICATION_ID, notification);
         } catch (Throwable t) {
-            try {
-                startForeground(SERVICE_NOTIFICATION_ID, notification);
-            } catch (Throwable ignored) {}
+            t.printStackTrace();
         }
     }
 
