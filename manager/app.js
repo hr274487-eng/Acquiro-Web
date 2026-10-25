@@ -294,14 +294,54 @@
     }
   }
 
+  function normalizeOrder(o) {
+    if (!o) return {};
+    const name = o.customer_name || o.name || 'Unnamed Client';
+    const email = o.customer_email || o.email || '';
+    const phone = o.customer_phone || o.phone || '';
+    const company = o.company_name || o.company || '';
+    const service = o.service_type || o.service_requested || 'AI Voice Agents & Receptionists';
+    const details = o.order_details || o.message || o.project_details || 'New incoming order via Acquiro Web.';
+    const ref = o.order_id || o.order_ref || `ACQ-${String(o.id).slice(-4).toUpperCase()}`;
+
+    return {
+      ...o,
+      id: o.id,
+      name,
+      customer_name: name,
+      email,
+      customer_email: email,
+      phone,
+      customer_phone: phone,
+      company,
+      company_name: company,
+      service,
+      service_requested: service,
+      service_type: service,
+      details,
+      message: details,
+      project_details: details,
+      order_details: details,
+      order_ref: ref,
+      order_id: ref,
+      status: (o.status || 'new').toLowerCase(),
+      budget: o.budget || (o.metadata && o.metadata.budget) || 'Custom Scope',
+      timeline: o.timeline || (o.metadata && o.metadata.timeline) || 'Standard',
+      created_at: o.created_at || new Date().toISOString(),
+      manager_notes: o.manager_notes || ''
+    };
+  }
+
   function handleOrdersUpdate(freshOrders) {
     if (!Array.isArray(freshOrders)) return;
+
+    const normalizedOrders = freshOrders.map(normalizeOrder);
 
     // Detect brand new incoming orders
     let newlyArrivedOrder = null;
 
     if (seenOrderIds.size > 0) {
-      for (const order of freshOrders) {
+      for (const order of normalizedOrders) {
         if (!seenOrderIds.has(order.id) && (order.status === 'new' || !order.status)) {
           newlyArrivedOrder = order;
           break;
@@ -310,8 +350,8 @@
     }
 
     // Update seen IDs
-    freshOrders.forEach(o => seenOrderIds.add(o.id));
-    ordersState = freshOrders;
+    normalizedOrders.forEach(o => seenOrderIds.add(o.id));
+    ordersState = normalizedOrders;
 
     renderOrders();
     renderCustomerDirectory();
@@ -613,29 +653,39 @@
 
   function openOrderDetailsModal(order) {
     activeOrderForModal = order;
-    if (modalOrderTitle) modalOrderTitle.textContent = `${order.name || 'Order'} - Details`;
+    const clientName = order.customer_name || order.name || 'Unnamed Client';
+    const email = order.customer_email || order.email || 'N/A';
+    const phone = order.customer_phone || order.phone || 'N/A';
+    const company = order.company_name || order.company || 'Direct Client';
+    const service = order.service_type || order.service_requested || 'AI Voice Agents & Receptionists';
+    const details = order.order_details || order.message || order.project_details || 'No additional scope details provided.';
+    const ref = order.order_id || order.order_ref || '#' + (order.id ? String(order.id).slice(0, 8) : 'ACQ');
+    const budget = order.budget || (order.metadata && order.metadata.budget) || 'Custom Scope';
+    const timeline = order.timeline || (order.metadata && order.metadata.timeline) || 'Standard';
+
+    if (modalOrderTitle) modalOrderTitle.textContent = `${clientName} - Details`;
 
     if (modalOrderBody) {
       modalOrderBody.innerHTML = `
         <div style="background: var(--c-bg-subtle); border: 1px solid var(--c-border); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 14px;">
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
-            <div><strong>Client:</strong> ${escapeHtml(order.name || 'N/A')}</div>
-            <div><strong>Company:</strong> ${escapeHtml(order.company || 'N/A')}</div>
-            <div><strong>Email:</strong> ${escapeHtml(order.email || 'N/A')}</div>
-            <div><strong>Phone:</strong> ${escapeHtml(order.phone || 'N/A')}</div>
-            <div><strong>Service:</strong> ${escapeHtml(order.service_requested || 'N/A')}</div>
+            <div><strong>Client:</strong> ${escapeHtml(clientName)}</div>
+            <div><strong>Company:</strong> ${escapeHtml(company)}</div>
+            <div><strong>Email:</strong> ${escapeHtml(email)}</div>
+            <div><strong>Phone:</strong> ${escapeHtml(phone)}</div>
+            <div><strong>Service:</strong> ${escapeHtml(service)}</div>
             <div><strong>Status:</strong> ${escapeHtml((order.status || 'new').toUpperCase())}</div>
-            <div><strong>Budget:</strong> ${escapeHtml(order.budget || 'Not specified')}</div>
-            <div><strong>Timeline:</strong> ${escapeHtml(order.timeline || 'Not specified')}</div>
+            <div><strong>Budget:</strong> ${escapeHtml(budget)}</div>
+            <div><strong>Timeline:</strong> ${escapeHtml(timeline)}</div>
           </div>
           <div style="font-size: 0.75rem; color: var(--c-text-muted);">
-            Created: ${new Date(order.created_at).toLocaleString()} | Ref: ${escapeHtml(order.order_ref || '#' + order.id)}
+            Created: ${new Date(order.created_at || Date.now()).toLocaleString()} | Ref: ${escapeHtml(ref)}
           </div>
         </div>
 
         <div style="margin-bottom: 12px;">
           <label class="auth-label">Customer Project Description</label>
-          <div style="background: var(--c-bg-card); border: 1px solid var(--c-border); padding: 10px; border-radius: var(--radius-sm); white-space: pre-wrap; font-size: 0.85rem;">${escapeHtml(order.message || order.project_details || 'No additional scope details provided.')}</div>
+          <div style="background: var(--c-bg-card); border: 1px solid var(--c-border); padding: 10px; border-radius: var(--radius-sm); white-space: pre-wrap; font-size: 0.85rem;">${escapeHtml(details)}</div>
         </div>
       `;
     }
