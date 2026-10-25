@@ -1,4 +1,4 @@
-﻿name: Build Acquiro Manager React Native APK
+name: Build Acquiro Manager React Native APK
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   build-apk:
-    name: Build React Native Android APK (Android 5+)
+    name: Build React Native Android APK (Android 9+)
     runs-on: ubuntu-latest
     env:
       ANDROID_HOME: /usr/local/lib/android/sdk
@@ -57,7 +57,6 @@ jobs:
               -keypass acquiro2026 \
               -dname "CN=Acquiro Manager,O=Acquiro,C=US"
           fi
-          # Always copy as debug.keystore so build.gradle can use a fixed path
           cp mobile-app/android/app/acquiro.keystore mobile-app/android/app/debug.keystore
 
       - name: Install React Native Dependencies
@@ -116,41 +115,40 @@ jobs:
             exit 1
           fi
           echo "Found APK at: $APK_PATH"
-          cp "$APK_PATH" output-apk/Acquiro-Manager-v2.9.0.apk
+          cp "$APK_PATH" output-apk/Acquiro-Manager-v2.10.0.apk
           echo "=== APK Ready ==="
-          ls -lh output-apk/Acquiro-Manager-v2.9.0.apk
+          ls -lh output-apk/Acquiro-Manager-v2.10.0.apk
 
       - name: Upload APK as Workflow Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Acquiro-Manager-v2.9.0-APK
-          path: output-apk/Acquiro-Manager-v2.9.0.apk
+          name: Acquiro-Manager-v2.10.0-APK
+          path: output-apk/Acquiro-Manager-v2.10.0.apk
           retention-days: 90
 
       - name: Create GitHub Release with React Native APK
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/heads/main')
         with:
-          tag_name: v2.9.0-apk
-          name: "Acquiro Manager v2.9.0 (Android 5+ Fixed â€” True Universal Install)"
+          tag_name: v2.10.0-apk
+          name: "Acquiro Manager v2.10.0 (Android 9+ — Final .so Packaging Fix)"
           body: |
-            ### 📱 Acquiro Mobile Manager — React Native v2.9.0
+            ### Acquiro Mobile Manager — React Native v2.10.0
 
-            **Version:** 2.9.0
-            **Target Compatibility:** Android 5.0 (API 21) through Android 14+ (API 34/35)
-            **Branding:** Official Acquiro Company Geometric "A" Logo
-            **Architecture:** `arm64-v8a`, `armeabi-v7a`, `x86`, `x86_64`
+            **Version:** 2.10.0
+            **Compatibility:** Android 9.0 (API 28) through Android 14+ (API 34/35)
+            **Architecture:** arm64-v8a, armeabi-v7a, x86, x86_64
 
-            #### 🛠️ What's Fixed in v2.9.0 (True Android 9 Install Fix):
-            1. **Root cause found & fixed — `.so` files DEFLATED despite `useLegacyPackaging=true`:** AGP 8.3 was silently ignoring the `packaging {}` DSL setting because `android:extractNativeLibs="true"` in the manifest conflicted with it, causing AGP to fall back to its default behavior. Fixed by removing `extractNativeLibs` from the manifest entirely and letting Gradle DSL alone control it.
-            2. **Lowered `minSdkVersion` from 24 → 21:** AGP 8.3 auto-applies `useLegacyPackaging=false` when `minSdkVersion >= 23`, silently overriding our Gradle DSL. Setting to 21 forces AGP to respect `useLegacyPackaging=true` and store `.so` files in the correct STORED format Android 9 can handle.
-            3. **All features from previous versions preserved:** Persistent login, background order notifications, Acquiro "A" logo, filter chip layout, no in-app notification banners.
+            #### Fixed in v2.10.0:
+            - Used correct AGP 8 androidComponents.onVariants API to force useLegacyPackaging=true, overriding AGP 8.3 auto-default
+            - Removed conflicting extractNativeLibs manifest attribute
+            - Fixed workflow YAML that caused APK to not attach to v2.9.0 release
 
-            #### 📥 Download & Install:
-            > ⚠️ **IMPORTANT — Uninstall old version first!** If you have ANY previous version of Acquiro Manager installed, uninstall it completely before installing v2.9.0.
-            1. Download `Acquiro-Manager-v2.9.0.apk` below directly onto your device.
-            2. Allow "Install from unknown sources" in your device settings if prompted.
-            3. Tap the APK file to install.          files: output-apk/Acquiro-Manager-v2.9.0.apk
+            #### Install Instructions:
+            1. Uninstall any old version of Acquiro Manager first
+            2. Download Acquiro-Manager-v2.10.0.apk below
+            3. Allow "Install from unknown sources" if prompted
+            4. Tap the APK to install
+          files: output-apk/Acquiro-Manager-v2.10.0.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
