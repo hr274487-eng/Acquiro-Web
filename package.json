@@ -4,7 +4,9 @@
   "description": "Official multi-page business website for **Acquiro**, an engineering company that designs, integrates, tests, and deploys custom AI voice agents, business workflow automations, and modern web applications.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cap": "cap",
+    "copy": "cap copy android",
+    "build-apk": "cd android && ./gradlew assembleDebug"
   },
   "repository": {
     "type": "git",
