@@ -3,27 +3,17 @@
  * ============================================================================
  * Configure your Supabase project credentials below to receive incoming orders
  * and customer inquiries directly into your cloud database in real time.
- *
- * HOW TO OBTAIN THESE CREDENTIALS:
- * 1. Log in to https://supabase.com and open your Acquiro project.
- * 2. Go to "Project Settings" (gear icon) -> "API".
- * 3. Copy "Project URL" into `url` below.
- * 4. Copy "anon" / "public" Project API key into `anonKey` below.
- * 5. Run the provided `supabase-schema.sql` script in the Supabase SQL Editor.
- *
- * Once filled, all orders submitted on the website will instantly save to your
- * database and alert your upcoming Android Mobile Manager App!
  * ============================================================================
  */
 
 window.ACQUIRO_CONFIG = window.ACQUIRO_CONFIG || {};
 
 window.ACQUIRO_CONFIG.supabase = {
-  // Your Supabase Project URL (e.g., "https://abcdefghijklmno.supabase.co")
-  url: '',
+  // Supabase Project Base URL
+  url: 'https://tpvqnghvvlsqowpklkav.supabase.co',
 
-  // Your Supabase Anon/Public API Key (starts with "eyJ...")
-  anonKey: '',
+  // Supabase Anon / Public API Key
+  anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwdnFuZ2h2dmxzcW93cGtsa2F2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI5MTg4MjcsImV4cCI6MjEwODQ5NDgyN30.fCENMp7E7otno_XLfx-eqaAB7tKRT_IhTnd2Bs4FsMM',
 
   // The database table designated for orders and inquiries
   ordersTable: 'orders'

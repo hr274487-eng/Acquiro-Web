@@ -238,7 +238,9 @@ Generated via Acquiro Order Reception System`;
         }
 
         try {
-          const endpoint = `${sbConfig.url.trim().replace(/\/+$/, '')}/rest/v1/${sbConfig.ordersTable || 'orders'}`;
+          const rawUrl = sbConfig.url.trim().replace(/\/+$/, '');
+          const baseUrl = rawUrl.endsWith('/rest/v1') ? rawUrl.slice(0, -8) : rawUrl;
+          const endpoint = `${baseUrl}/rest/v1/${sbConfig.ordersTable || 'orders'}`;
           const orderPayload = {
             order_id: orderId,
             customer_name: name,
