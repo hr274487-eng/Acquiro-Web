@@ -68,32 +68,7 @@ export default function App() {
     try {
       const fetched = await fetchOrdersFromSupabase();
       if (Array.isArray(fetched)) {
-        // Detect newly arrived orders for notifications only after initial snapshot
-        if (!isInitialLoad.current) {
-          const brandNewOrders = fetched.filter(o => {
-            const idStr = String(o.id);
-            if (knownOrderIds.current.has(idStr)) return false;
-            const isNewStatus = (o.status || 'new').toLowerCase() === 'new';
-            if (!isNewStatus) return false;
-
-            // Ensure order was placed recently (within last 5 min or after app start)
-            const orderTime = o.created_at ? new Date(o.created_at).getTime() : Date.now();
-            const isRecent = !isNaN(orderTime) && (Date.now() - orderTime < 300000 || orderTime >= appMountTime.current);
-            return isRecent;
-          });
-
-          if (brandNewOrders.length > 0) {
-            const latest = brandNewOrders[0];
-            const title = `🔔 New Order: ${latest.customer_name || 'Client'}`;
-            const body = `${latest.service_type || 'New Project'} • ${latest.order_ref || ''}`;
-            
-            triggerHeadsUpAlert(title, body, latest.order_ref);
-            playTechPing();
-            pulseVibration();
-          }
-        }
-
-        // Update known order IDs using String conversion to guarantee exact match
+        // Track known order IDs
         fetched.forEach(o => knownOrderIds.current.add(String(o.id)));
         isInitialLoad.current = false;
         setOrders(fetched);
@@ -132,8 +107,12 @@ export default function App() {
   };
 
   const handleOrderUpdated = (updatedOrder) => {
+    if (!updatedOrder || !updatedOrder.id) {
+      loadOrders(false);
+      return;
+    }
     setOrders(prev =>
-      prev.map(o => (o.id === updatedOrder.id ? { ...o, ...updatedOrder } : o))
+      prev.map(o => (String(o.id) === String(updatedOrder.id) ? { ...o, ...updatedOrder } : o))
     );
   };
 

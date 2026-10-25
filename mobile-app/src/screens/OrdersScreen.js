@@ -77,7 +77,9 @@ export default function OrdersScreen({
       setSavingNotes(true);
       await updateManagerNotesInSupabase(activeModalOrder.id, managerNotesInput.trim());
       activeModalOrder.manager_notes = managerNotesInput.trim();
-      onOrderUpdated();
+      if (typeof onOrderUpdated === 'function') {
+        onOrderUpdated({ id: activeModalOrder.id, manager_notes: managerNotesInput.trim() });
+      }
       Alert.alert('Saved', 'Manager internal notes saved to Supabase cloud.');
       handleCloseDetails();
     } catch (err) {
@@ -90,7 +92,13 @@ export default function OrdersScreen({
   const handleStatusChange = async (orderId, newStatus) => {
     try {
       await updateOrderStatusInSupabase(orderId, newStatus);
-      onOrderUpdated();
+      if (activeModalOrder && String(activeModalOrder.id) === String(orderId)) {
+        activeModalOrder.status = newStatus;
+      }
+      if (typeof onOrderUpdated === 'function') {
+        onOrderUpdated({ id: orderId, status: newStatus });
+      }
+      Alert.alert('Status Updated', `Order marked as ${newStatus.replace('_', ' ').toUpperCase()}.`);
     } catch (err) {
       Alert.alert('Error', err.message || 'Unable to update status.');
     }

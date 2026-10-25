@@ -109,42 +109,39 @@ jobs:
             exit 1
           fi
           echo "Found APK at: $APK_PATH"
-          cp "$APK_PATH" output-apk/Acquiro-Manager-v2.3.0.apk
+          cp "$APK_PATH" output-apk/Acquiro-Manager-v2.4.0.apk
           echo "=== APK Ready ==="
-          ls -lh output-apk/Acquiro-Manager-v2.3.0.apk
+          ls -lh output-apk/Acquiro-Manager-v2.4.0.apk
 
       - name: Upload APK as Workflow Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Acquiro-Manager-v2.3.0-APK
-          path: output-apk/Acquiro-Manager-v2.3.0.apk
+          name: Acquiro-Manager-v2.4.0-APK
+          path: output-apk/Acquiro-Manager-v2.4.0.apk
           retention-days: 90
 
       - name: Create GitHub Release with React Native APK
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/heads/main')
         with:
-          tag_name: v2.3.0-apk
-          name: "Acquiro Manager v2.3.0 (Persistent Auth, Fixed Filter Chips & Clean Login)"
+          tag_name: v2.4.0-apk
+          name: "Acquiro Manager v2.4.0 (Real Background Order Service & Status Bugfix)"
           body: |
-            ### 📱 Acquiro Mobile Manager — React Native v2.3.0 (Production Release)
+            ### 📱 Acquiro Mobile Manager — React Native v2.4.0 (Production Release)
 
-            **Version:** 2.3.0
+            **Version:** 2.4.0
             **Target Compatibility:** Android 9.0 (API 28) through Android 14+ (API 34/35)
             **Branding:** Official Acquiro Company Geometric "A" Logo
             **Architecture:** `arm64-v8a`, `armeabi-v7a`, `x86`, `x86_64`
 
-            #### 🛠️ What's New in v2.3.0:
-            1. **Fixed Filter Chips Orientation & Sizing:** Corrected the vertical capsule stretching by enforcing strict 32px pill chip heights, centered alignment, and constrained scroll wrappers.
-            2. **Persistent Native Authentication Session:** Integrated Android `SharedPreferences` session persistence. You only need to log in once after installing; the app remembers your session and opens directly into Orders without logging you out when closed.
-            3. **Explicit Logout in Settings:** Added persistent sign-out support via the "Sign Out of Console" button in Settings.
-            4. **Clean Login Screen (No Pre-filled Credentials):** Removed pre-filled usernames/passwords from the login screen and replaced placeholders with generic prompts.
-            5. **Refined Real-time Order Alerting:** Prevented historical unfulfilled orders from triggering false notifications on login or cold start by filtering on recent timestamp deltas and String ID tracking.
+            #### 🛠️ What's Fixed in v2.4.0:
+            1. **Fixed Status Change Crash (`Cannot read property 'id' of undefined`):** Corrected the callback signature in `OrdersScreen.js` and added safe object guards in `App.js` so changing status to Accepted/Completed/etc. works instantly without error dialogs.
+            2. **Native Android Background Service (`BackgroundOrderService`):** Runs 24/7 in the Android background via a low-priority foreground service. Even when your phone is locked or the app is minimized, new customer orders placed on the website will trigger Heads-Up banner notifications and the Modern Tech Ping tone.
+            3. **In-App Notification Hygiene:** Eliminated intrusive heads-up popup notifications while you are actively inside the app. In-app new orders cleanly update the orders list and badge counter without covering your screen.
 
             #### 📥 Download & Install:
-            1. Download `Acquiro-Manager-v2.3.0.apk` below directly onto your device.
-            2. Tap the file to install (select "Update" or install over previous version).
-            3. Log in once with `admin` / `acquiro2026` — subsequent launches will keep you logged in automatically.
-          files: output-apk/Acquiro-Manager-v2.3.0.apk
+            1. Download `Acquiro-Manager-v2.4.0.apk` below directly onto your device.
+            2. Tap the file to install (select "Update").
+          files: output-apk/Acquiro-Manager-v2.4.0.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
