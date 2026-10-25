@@ -91,10 +91,12 @@ jobs:
       - name: Locate and Prepare Output APK
         run: |
           mkdir -p output-apk
-          APK_PATH=$(find mobile-app/android/app/build -name "*.apk" -type f 2>/dev/null | head -1)
+          echo "=== Searching for all APKs in workspace ==="
+          find . -name "*.apk" -type f
+          APK_PATH=$(find . -name "*.apk" -type f | head -1)
           if [ -z "$APK_PATH" ]; then
-            echo "ERROR: No APK found anywhere in build directory"
-            find mobile-app/android/app/build -type f 2>/dev/null | head -40 || true
+            echo "ERROR: No APK found anywhere in workspace"
+            find . -type d -name "build" || true
             exit 1
           fi
           echo "Found APK at: $APK_PATH"
