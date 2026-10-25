@@ -1036,3 +1036,13 @@ dialog.app-dialog::backdrop {
 .dialog-inner {
   padding: 24px;
 }
+
+.order-meta-item svg {
+  width: 14px !important;
+  height: 14px !important;
+  max-width: 14px !important;
+  max-height: 14px !important;
+  flex-shrink: 0;
+  display: inline-block;
+}
+

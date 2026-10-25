@@ -11,16 +11,23 @@ desktop.ini
 *.log
 npm-debug.log*
 
-# Environment & Secrets (Keep your private keys safe!)
+# Environment & Secrets
 .env
 .env.local
 .env.*.local
 
 # Node Dependencies
 node_modules/
+mobile-app/node_modules/
 
 # Android Build Outputs & Caches
 android/app/build/
 android/.gradle/
 android/build/
+mobile-app/android/app/build/
+mobile-app/android/.gradle/
+mobile-app/android/build/
+.gradle/
+build/
 output-apk/
+*.apk
