@@ -29,6 +29,11 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
+      - name: Accept Licenses & Install Android SDK 36
+        run: |
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-36" "build-tools;36.0.0" || true
+
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
@@ -49,7 +54,7 @@ jobs:
       - name: Build Android Debug APK
         run: |
           cd android
-          ./gradlew assembleDebug --no-daemon --stacktrace
+          ./gradlew assembleDebug --no-daemon --stacktrace --info
 
       - name: Locate and Prepare APK
         run: |
@@ -74,7 +79,7 @@ jobs:
           body: |
             ### 📱 Acquiro Mobile Manager - Installable Android APK
             **Version:** 1.0.0
-            **Compatibility:** Android 9.0+ (API Level 28 to 34)
+            **Compatibility:** Android 9.0+ (API Level 28 to 36)
             
             #### 🚀 Highlights & Features:
             - **Realtime Order Reception:** Live cloud sync with Supabase `orders` table.
