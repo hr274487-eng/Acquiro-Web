@@ -54,7 +54,7 @@ jobs:
       - name: Build Android Debug APK
         run: |
           cd android
-          ./gradlew assembleDebug --no-daemon --stacktrace --info
+          ./gradlew assembleDebug --no-daemon --stacktrace > ../gradle-output.log 2>&1 || (echo "=== GRADLE FAILURE LOG ===" && tail -n 80 ../gradle-output.log && exit 1)
 
       - name: Locate and Prepare APK
         run: |
