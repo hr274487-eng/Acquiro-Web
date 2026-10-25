@@ -85,9 +85,16 @@ jobs:
 
       - name: Locate and Prepare Output APK
         run: |
+          echo "=== Listing all built APKs ==="
+          find mobile-app/android/app/build/outputs -name "*.apk" -type f 2>/dev/null || true
           mkdir -p output-apk
-          cp mobile-app/android/app/build/outputs/apk/debug/app-debug.apk \
-             output-apk/Acquiro-Manager-ReactNative-v1.0.apk
+          APK_PATH=$(find mobile-app/android/app/build/outputs -name "*.apk" -type f 2>/dev/null | head -1)
+          if [ -z "$APK_PATH" ]; then
+            echo "ERROR: No APK found — listing build dir:"
+            find mobile-app/android/app/build -type f 2>/dev/null | head -30 || true
+            exit 1
+          fi
+          cp "$APK_PATH" output-apk/Acquiro-Manager-ReactNative-v1.0.apk
           echo "=== APK Built Successfully ==="
           ls -lh output-apk/Acquiro-Manager-ReactNative-v1.0.apk
 
