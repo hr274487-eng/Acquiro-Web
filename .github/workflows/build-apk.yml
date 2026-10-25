@@ -1,4 +1,4 @@
-name: Build Acquiro Manager React Native APK
+﻿name: Build Acquiro Manager React Native APK
 
 on:
   push:
@@ -115,40 +115,40 @@ jobs:
             exit 1
           fi
           echo "Found APK at: $APK_PATH"
-          cp "$APK_PATH" output-apk/Acquiro-Manager-v2.10.0.apk
+          cp "$APK_PATH" output-apk/Acquiro-Manager-v2.11.0.apk
           echo "=== APK Ready ==="
-          ls -lh output-apk/Acquiro-Manager-v2.10.0.apk
+          ls -lh output-apk/Acquiro-Manager-v2.11.0.apk
 
       - name: Upload APK as Workflow Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Acquiro-Manager-v2.10.0-APK
-          path: output-apk/Acquiro-Manager-v2.10.0.apk
+          name: Acquiro-Manager-v2.11.0-APK
+          path: output-apk/Acquiro-Manager-v2.11.0.apk
           retention-days: 90
 
       - name: Create GitHub Release with React Native APK
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/heads/main')
         with:
-          tag_name: v2.10.0-apk
-          name: "Acquiro Manager v2.10.0 (Android 9+ — Final .so Packaging Fix)"
+          tag_name: v2.11.0-apk
+          name: "Acquiro Manager v2.11.0 (Android 9+ â€” extractNativeLibs Fix for Android 9)"
           body: |
-            ### Acquiro Mobile Manager — React Native v2.10.0
+            ### Acquiro Mobile Manager â€” React Native v2.11.0
 
-            **Version:** 2.10.0
+            **Version:** 2.11.0
             **Compatibility:** Android 9.0 (API 28) through Android 14+ (API 34/35)
             **Architecture:** arm64-v8a, armeabi-v7a, x86, x86_64
 
-            #### Fixed in v2.10.0:
+            #### Fixed in v2.11.0:
             - Used correct AGP 8 androidComponents.onVariants API to force useLegacyPackaging=true, overriding AGP 8.3 auto-default
             - Removed conflicting extractNativeLibs manifest attribute
             - Fixed workflow YAML that caused APK to not attach to v2.9.0 release
 
             #### Install Instructions:
             1. Uninstall any old version of Acquiro Manager first
-            2. Download Acquiro-Manager-v2.10.0.apk below
+            2. Download Acquiro-Manager-v2.11.0.apk below
             3. Allow "Install from unknown sources" if prompted
             4. Tap the APK to install
-          files: output-apk/Acquiro-Manager-v2.10.0.apk
+          files: output-apk/Acquiro-Manager-v2.11.0.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
