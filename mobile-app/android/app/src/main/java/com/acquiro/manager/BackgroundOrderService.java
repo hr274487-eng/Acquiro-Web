@@ -9,6 +9,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.AudioAttributes;
 import android.net.Uri;
 import android.os.Build;
@@ -49,9 +50,12 @@ public class BackgroundOrderService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        // MUST call startForeground() immediately before anything else.
+        // On Android O+, startForegroundService() requires startForeground()
+        // within 5 seconds or the system throws RemoteServiceException.
         createNotificationChannels();
-        loadPersistedSeenIds();
         startInForeground();
+        loadPersistedSeenIds();
         startPolling();
     }
 
@@ -60,7 +64,7 @@ public class BackgroundOrderService extends Service {
             NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             if (manager == null) return;
 
-            // 1. Silent channel for ongoing background service status
+            // 1. Silent ongoing channel for the foreground service status bar notification
             NotificationChannel serviceChannel = new NotificationChannel(
                 SERVICE_CHANNEL_ID,
                 SERVICE_CHANNEL_NAME,
@@ -68,6 +72,7 @@ public class BackgroundOrderService extends Service {
             );
             serviceChannel.setDescription("Keeps Acquiro order reception active in background");
             serviceChannel.setShowBadge(false);
+            serviceChannel.setSound(null, null); // Completely silent
             manager.createNotificationChannel(serviceChannel);
 
             // 2. High-priority alert channel for incoming orders
@@ -76,42 +81,56 @@ public class BackgroundOrderService extends Service {
                 ALERTS_CHANNEL_NAME,
                 NotificationManager.IMPORTANCE_HIGH
             );
-            alertChannel.setDescription("High priority order reception alerts with Modern Tech Ping tone");
+            alertChannel.setDescription("High priority order reception alerts");
             alertChannel.enableVibration(true);
             alertChannel.setVibrationPattern(new long[]{0, 250, 100, 250, 100, 350});
+            alertChannel.enableLights(true);
+            alertChannel.setLightColor(Color.BLUE);
             alertChannel.setLockscreenVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
-            Uri soundUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + getPackageName() + "/" + R.raw.tech_ping);
-            AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .setUsage(AudioAttributes.USAGE_NOTIFICATION_COMMUNICATION_REQUEST)
-                .build();
-            alertChannel.setSound(soundUri, audioAttributes);
+            // Attach custom tech_ping sound to alert channel
+            try {
+                Uri soundUri = Uri.parse(
+                    ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + getPackageName() + "/raw/tech_ping"
+                );
+                AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                    .build();
+                alertChannel.setSound(soundUri, audioAttributes);
+            } catch (Throwable t) {
+                // If sound URI fails, channel still works (default sound)
+            }
 
             manager.createNotificationChannel(alertChannel);
         }
     }
 
     private void startInForeground() {
-        Intent notificationIntent = new Intent(this, MainActivity.class);
-        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            flags |= PendingIntent.FLAG_IMMUTABLE;
-        }
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, flags);
-
-        Notification notification = new NotificationCompat.Builder(this, SERVICE_CHANNEL_ID)
-            .setContentTitle("Acquiro Live Reception")
-            .setContentText("Monitoring new website orders in real-time")
-            .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentIntent(pendingIntent)
-            .setOngoing(true)
-            .setPriority(NotificationCompat.PRIORITY_LOW)
-            .build();
-
         try {
+            Intent notificationIntent = new Intent(this, MainActivity.class);
+            int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                flags |= PendingIntent.FLAG_IMMUTABLE;
+            }
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, flags);
+
+            // Use android.R.drawable.ic_dialog_info as small icon — this is a safe
+            // system drawable guaranteed to exist on all Android versions.
+            // Launcher icons (mipmap) are NOT valid small notification icons on Android 9.
+            Notification notification = new NotificationCompat.Builder(this, SERVICE_CHANNEL_ID)
+                .setContentTitle("Acquiro Live Reception")
+                .setContentText("Monitoring new website orders in real-time")
+                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setContentIntent(pendingIntent)
+                .setOngoing(true)
+                .setSilent(true)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .build();
+
             startForeground(SERVICE_NOTIFICATION_ID, notification);
         } catch (Throwable t) {
+            // Log but don't crash — polling will still start
             t.printStackTrace();
         }
     }
@@ -139,8 +158,7 @@ public class BackgroundOrderService extends Service {
 
     private void startPolling() {
         scheduler = Executors.newSingleThreadScheduledExecutor();
-        // Poll every 10 seconds for real-time order notifications
-        scheduler.scheduleWithFixedDelay(this::pollSupabaseOrders, 2, 10, TimeUnit.SECONDS);
+        scheduler.scheduleWithFixedDelay(this::pollSupabaseOrders, 3, 12, TimeUnit.SECONDS);
     }
 
     private void pollSupabaseOrders() {
@@ -160,22 +178,17 @@ public class BackgroundOrderService extends Service {
                 BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 StringBuilder sb = new StringBuilder();
                 String line;
-                while ((line = in.readLine()) != null) {
-                    sb.append(line);
-                }
+                while ((line = in.readLine()) != null) sb.append(line);
                 in.close();
 
                 JSONArray orders = new JSONArray(sb.toString());
 
-                // On first run, record all existing order IDs so we never alert on historical orders
                 if (isInitialRun) {
                     for (int i = 0; i < orders.length(); i++) {
                         JSONObject o = orders.optJSONObject(i);
                         if (o != null) {
                             String id = o.optString("id");
-                            if (!id.isEmpty()) {
-                                seenOrderIds.add(id);
-                            }
+                            if (!id.isEmpty()) seenOrderIds.add(id);
                         }
                     }
                     savePersistedSeenIds();
@@ -183,7 +196,6 @@ public class BackgroundOrderService extends Service {
                     return;
                 }
 
-                // Check for new incoming orders
                 for (int i = 0; i < orders.length(); i++) {
                     JSONObject o = orders.optJSONObject(i);
                     if (o == null) continue;
@@ -195,13 +207,12 @@ public class BackgroundOrderService extends Service {
                         seenOrderIds.add(id);
                         savePersistedSeenIds();
 
-                        if (status.equals("new") || status.isEmpty()) {
-                            // Only trigger system heads-up notification when app is in the background
-                            if (!MainActivity.isAppInForeground) {
+                        // Only fire notification when app is in background
+                        if (!MainActivity.isAppInForeground) {
+                            if (status.equals("new") || status.isEmpty()) {
                                 String customerName = o.optString("customer_name", "Client");
                                 String serviceType = o.optString("service_type", "New Project");
-                                String orderRef = o.optString("order_ref", "Order #" + id);
-
+                                String orderRef = o.optString("order_ref", "#" + id);
                                 triggerBackgroundAlert(customerName, serviceType, orderRef);
                             }
                         }
@@ -209,11 +220,9 @@ public class BackgroundOrderService extends Service {
                 }
             }
         } catch (Throwable t) {
-            // Network hiccups are ignored silently; next poll will retry
+            // Network errors silently ignored; next poll retries
         } finally {
-            if (conn != null) {
-                conn.disconnect();
-            }
+            if (conn != null) conn.disconnect();
         }
     }
 
@@ -221,6 +230,11 @@ public class BackgroundOrderService extends Service {
         try {
             NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             if (manager == null) return;
+
+            // On Android 9, check if notifications are enabled at all
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                if (!manager.areNotificationsEnabled()) return;
+            }
 
             Intent intent = new Intent(this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -230,21 +244,35 @@ public class BackgroundOrderService extends Service {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 flags |= PendingIntent.FLAG_IMMUTABLE;
             }
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, flags);
+            PendingIntent pendingIntent = PendingIntent.getActivity(
+                this, (int) System.currentTimeMillis(), intent, flags
+            );
 
-            Uri soundUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + getPackageName() + "/" + R.raw.tech_ping);
-
+            // Build the alert notification
+            // Use system drawable for small icon — mipmap icons are not valid for notifications
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, ALERTS_CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("🔔 New Order: " + customerName)
+                .setSmallIcon(android.R.drawable.ic_dialog_email)
+                .setContentTitle("New Order: " + customerName)
                 .setContentText(serviceType + " • " + orderRef)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                    .bigText(serviceType + "\nRef: " + orderRef + "\nTap to open Acquiro Manager"))
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
                 .setVibrate(new long[]{0, 250, 100, 250, 100, 350})
-                .setSound(soundUri)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setDefaults(NotificationCompat.DEFAULT_LIGHTS);
+
+            // Attach sound for pre-O devices (O+ uses the channel sound)
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                try {
+                    Uri soundUri = Uri.parse(
+                        ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + getPackageName() + "/raw/tech_ping"
+                    );
+                    builder.setSound(soundUri);
+                } catch (Throwable ignored) {}
+            }
 
             manager.notify((int) System.currentTimeMillis(), builder.build());
         } catch (Throwable t) {

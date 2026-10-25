@@ -50,7 +50,7 @@ public class NativeAlertModule extends ReactContextBaseJavaModule {
                     channel.setVibrationPattern(new long[]{0, 250, 100, 250, 100, 350});
                     channel.setLockscreenVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
-                    Uri soundUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() + "/" + R.raw.tech_ping);
+                    Uri soundUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() + "/raw/tech_ping");
                     AudioAttributes audioAttributes = new AudioAttributes.Builder()
                         .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                         .setUsage(AudioAttributes.USAGE_NOTIFICATION_COMMUNICATION_REQUEST)
@@ -84,10 +84,10 @@ public class NativeAlertModule extends ReactContextBaseJavaModule {
             }
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, flags);
 
-            Uri soundUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() + "/" + R.raw.tech_ping);
+            Uri soundUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() + "/raw/tech_ping");
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(android.R.drawable.ic_dialog_email)
                 .setContentTitle(title)
                 .setContentText(body)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
