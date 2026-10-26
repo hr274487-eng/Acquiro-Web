@@ -9,7 +9,7 @@ import {
   ScrollView,
   Alert
 } from 'react-native';
-import { playTechPing, pulseVibration } from '../services/notificationService';
+import { playTechPing, pulseVibration, triggerHeadsUpAlert } from '../services/notificationService';
 import { testSupabaseConnection } from '../services/supabase';
 
 export default function SettingsScreen({
@@ -33,6 +33,10 @@ export default function SettingsScreen({
   const handleTestPingAndVibration = () => {
     playTechPing();
     pulseVibration();
+  };
+
+  const handleTestNotificationBanner = () => {
+    triggerHeadsUpAlert('🔔 New Order: Test Client', 'AI Voice Agents • ACQ-TEST-001', 'ACQ-TEST-001');
   };
 
   const handleTestDatabase = async () => {
@@ -143,6 +147,17 @@ export default function SettingsScreen({
             🔊 Test Modern Tech Ping & Vibration
           </Text>
         </TouchableOpacity>
+
+        {/* Test Notification Banner Button */}
+        <TouchableOpacity
+          style={[styles.btnAction, { backgroundColor: 'rgba(16, 185, 129, 0.1)', borderColor: 'rgba(16, 185, 129, 0.4)', marginTop: 8 }]}
+          onPress={handleTestNotificationBanner}
+          activeOpacity={0.8}
+        >
+          <Text style={[styles.btnActionText, { color: '#10b981' }]}>
+            🔔 Test Live Notification Banner
+          </Text>
+        </TouchableOpacity>
       </View>
 
       {/* 3. Database Card */}
@@ -235,7 +250,7 @@ export default function SettingsScreen({
       </TouchableOpacity>
 
       <Text style={[styles.appVersionText, { color: theme.textMuted }]}>
-        Acquiro Mobile Manager v2.0.0 (React Native Engine) • Android 9+
+        Acquiro Mobile Manager v2.14.0 (React Native Engine) • Android 9+
       </Text>
     </ScrollView>
   );

@@ -37,7 +37,7 @@ public class BackgroundOrderService extends Service {
     public static final String ALERTS_CHANNEL_ID = "acquiro_orders_channel";
     public static final String ALERTS_CHANNEL_NAME = "Incoming Order Alerts";
 
-    private static final String SUPABASE_URL = "https://tpvqnghvvlsqowpklkav.supabase.co/rest/v1/orders?select=id,customer_name,service_type,order_ref,status,created_at&order=created_at.desc&limit=15";
+    private static final String SUPABASE_URL = "https://tpvqnghvvlsqowpklkav.supabase.co/rest/v1/orders?select=id,customer_name,service_type,order_id,status,created_at&order=created_at.desc&limit=15";
     private static final String SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwdnFuZ2h2dmxzcW93cGtsa2F2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI5MTg4MjcsImV4cCI6MjEwODQ5NDgyN30.fCENMp7E7otno_XLfx-eqaAB7tKRT_IhTnd2Bs4FsMM";
 
     private static final String PREFS_NAME = "acquiro_background_prefs";
@@ -212,7 +212,7 @@ public class BackgroundOrderService extends Service {
                             if (status.equals("new") || status.isEmpty()) {
                                 String customerName = o.optString("customer_name", "Client");
                                 String serviceType = o.optString("service_type", "New Project");
-                                String orderRef = o.optString("order_ref", "#" + id);
+                                String orderRef = o.optString("order_id", o.optString("order_ref", "#" + id));
                                 triggerBackgroundAlert(customerName, serviceType, orderRef);
                             }
                         }

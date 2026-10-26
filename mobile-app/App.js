@@ -68,7 +68,16 @@ export default function App() {
     try {
       const fetched = await fetchOrdersFromSupabase();
       if (Array.isArray(fetched)) {
-        // Track known order IDs
+        // Detect new arrivals BEFORE updating knownOrderIds
+        if (!isInitialLoad.current) {
+          const newArrivals = fetched.filter(o => !knownOrderIds.current.has(String(o.id)));
+          if (newArrivals.length > 0) {
+            // In-app alert: play sound + vibrate (no banner — handled by BackgroundOrderService when minimized)
+            playTechPing();
+            pulseVibration();
+          }
+        }
+        // Now record all fetched IDs as known
         fetched.forEach(o => knownOrderIds.current.add(String(o.id)));
         isInitialLoad.current = false;
         setOrders(fetched);
