@@ -51,6 +51,12 @@ public class MainActivity extends ReactActivity {
 
   private void startBackgroundService() {
     try {
+      android.content.SharedPreferences prefs = getSharedPreferences("acquiro_auth_prefs", android.content.Context.MODE_PRIVATE);
+      boolean isAuthenticated = prefs.getBoolean("is_authenticated", false);
+      if (!isAuthenticated) {
+        return; // Do not start background monitor if manager is logged out
+      }
+
       Intent intent = new Intent(this, BackgroundOrderService.class);
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         startForegroundService(intent);

@@ -152,4 +152,101 @@ public class NativeAlertModule extends ReactContextBaseJavaModule {
             promise.resolve(false);
         }
     }
+
+    @ReactMethod
+    public void getStoredPassword(Promise promise) {
+        try {
+            SharedPreferences prefs = reactContext.getSharedPreferences("acquiro_auth_prefs", Context.MODE_PRIVATE);
+            String pwd = prefs.getString("manager_password", "acquiro2026");
+            promise.resolve(pwd != null ? pwd : "acquiro2026");
+        } catch (Throwable t) {
+            promise.resolve("acquiro2026");
+        }
+    }
+
+    @ReactMethod
+    public void setStoredPassword(String newPassword, Promise promise) {
+        try {
+            SharedPreferences prefs = reactContext.getSharedPreferences("acquiro_auth_prefs", Context.MODE_PRIVATE);
+            prefs.edit().putString("manager_password", newPassword).apply();
+            promise.resolve(true);
+        } catch (Throwable t) {
+            promise.reject("PASSWORD_SAVE_ERROR", t.getMessage());
+        }
+    }
+
+    @ReactMethod
+    public void resetToDefaultPassword(Promise promise) {
+        try {
+            SharedPreferences prefs = reactContext.getSharedPreferences("acquiro_auth_prefs", Context.MODE_PRIVATE);
+            prefs.edit().putString("manager_password", "acquiro2026").apply();
+            promise.resolve(true);
+        } catch (Throwable t) {
+            promise.reject("PASSWORD_RESET_ERROR", t.getMessage());
+        }
+    }
+
+    @ReactMethod
+    public void getStoredTheme(Promise promise) {
+        try {
+            SharedPreferences prefs = reactContext.getSharedPreferences("acquiro_auth_prefs", Context.MODE_PRIVATE);
+            String theme = prefs.getString("app_theme", "dark");
+            promise.resolve(theme != null ? theme : "dark");
+        } catch (Throwable t) {
+            promise.resolve("dark");
+        }
+    }
+
+    @ReactMethod
+    public void setStoredTheme(String theme, Promise promise) {
+        try {
+            SharedPreferences prefs = reactContext.getSharedPreferences("acquiro_auth_prefs", Context.MODE_PRIVATE);
+            prefs.edit().putString("app_theme", theme).apply();
+            promise.resolve(true);
+        } catch (Throwable t) {
+            promise.reject("THEME_SAVE_ERROR", t.getMessage());
+        }
+    }
+
+    @ReactMethod
+    public void stopBackgroundMonitoring(Promise promise) {
+        try {
+            Context context = getReactApplicationContext();
+            Intent intent = new Intent(context, BackgroundOrderService.class);
+            context.stopService(intent);
+
+            // Post a logout notification to notify the user that background monitoring stopped
+            NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            if (manager != null) {
+                createNotificationChannel(context);
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                    .setSmallIcon(android.R.drawable.ic_dialog_info)
+                    .setContentTitle("Manager Signed Out")
+                    .setContentText("Background order monitoring has been stopped.")
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setAutoCancel(true);
+                manager.notify(1099, builder.build());
+            }
+
+            promise.resolve(true);
+        } catch (Throwable t) {
+            promise.reject("SERVICE_STOP_ERROR", t.getMessage());
+        }
+    }
+
+    @ReactMethod
+    public void startBackgroundMonitoring(Promise promise) {
+        try {
+            Context context = getReactApplicationContext();
+            Intent intent = new Intent(context, BackgroundOrderService.class);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.startForegroundService(intent);
+            } else {
+                context.startService(intent);
+            }
+            promise.resolve(true);
+        } catch (Throwable t) {
+            promise.reject("SERVICE_START_ERROR", t.getMessage());
+        }
+    }
 }

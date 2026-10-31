@@ -76,30 +76,30 @@ CREATE POLICY "Allow anonymous orders intake"
     TO anon, authenticated
     WITH CHECK (true);
 
--- Policy B: Allow authenticated managers (Mobile App users) to view all orders
+-- Policy B: Allow managers (Mobile App users) to view all orders
 DROP POLICY IF EXISTS "Allow managers to view orders" ON public.orders;
 CREATE POLICY "Allow managers to view orders"
     ON public.orders
     FOR SELECT
-    TO authenticated
+    TO anon, authenticated
     USING (true);
 
--- Policy C: Allow authenticated managers (Mobile App users) to update orders (accept, complete, notes)
+-- Policy C: Allow managers (Mobile App users) to update orders (accept, complete, notes)
 DROP POLICY IF EXISTS "Allow managers to update orders" ON public.orders;
 CREATE POLICY "Allow managers to update orders"
     ON public.orders
     FOR UPDATE
-    TO authenticated
+    TO anon, authenticated
     USING (true)
     WITH CHECK (true);
 
--- Policy D: Optional public read access by unique order_id (allows customers to check their order status)
-DROP POLICY IF EXISTS "Allow order status lookup by order_id" ON public.orders;
-CREATE POLICY "Allow order status lookup by order_id"
+-- Policy D: Allow managers (Mobile App users) to delete orders
+DROP POLICY IF EXISTS "Allow managers to delete orders" ON public.orders;
+CREATE POLICY "Allow managers to delete orders"
     ON public.orders
-    FOR SELECT
-    TO anon
-    USING (order_id IS NOT NULL);
+    FOR DELETE
+    TO anon, authenticated
+    USING (true);
 
 -- 6. Enable Supabase Realtime for instant push notifications to Android Manager App
 -- This publishes insert/update events to the mobile app in real time!

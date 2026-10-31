@@ -120,41 +120,53 @@ jobs:
             exit 1
           fi
           echo "Found APK at: $APK_PATH"
-          cp "$APK_PATH" output-apk/Acquiro-Manager-v2.14.0.apk
+          cp "$APK_PATH" output-apk/Acquiro-Manager-v2.15.0.apk
           echo "=== APK Ready ==="
-          ls -lh output-apk/Acquiro-Manager-v2.14.0.apk
+          ls -lh output-apk/Acquiro-Manager-v2.15.0.apk
 
       - name: Upload APK as Workflow Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Acquiro-Manager-v2.14.0-APK
-          path: output-apk/Acquiro-Manager-v2.14.0.apk
+          name: Acquiro-Manager-v2.15.0-APK
+          path: output-apk/Acquiro-Manager-v2.15.0.apk
           retention-days: 90
 
       - name: Create GitHub Release with React Native APK
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/heads/main')
         with:
-          tag_name: v2.14.0-apk
-          name: "Acquiro Manager v2.14.0 — Notifications Fixed"
+          tag_name: v2.15.0-apk
+          name: "Acquiro Manager v2.15.0 — Security, Deletion & Client History"
           body: |
-            ### Acquiro Mobile Manager — React Native v2.14.0
+            ### Acquiro Mobile Manager — React Native v2.15.0
 
-            **Version:** 2.14.0
+            **Version:** 2.15.0
             **Compatibility:** Android 9.0 (API 28) through Android 14+ (API 34/35)
             **Architecture:** arm64-v8a, armeabi-v7a, x86, x86_64
 
-            #### Fixed in v2.14.0:
-            - **CRITICAL:** Fixed Supabase query using wrong column `order_ref` (column is `order_id`) — this caused HTTP 400 on EVERY background poll, meaning zero notifications ever fired
-            - **CRITICAL:** Fixed in-app new order detection — `App.js` now correctly detects new arrivals before updating `knownOrderIds`, and calls `playTechPing()` + `pulseVibration()` when app is open
-            - **CRITICAL:** Fixed permanent keystore — CI now commits `acquiro.keystore` so the signing certificate persists across builds (no more `INSTALL_FAILED_UPDATE_INCOMPATIBLE`)
-            - Added "Test Live Notification Banner" button in Settings screen
+            #### New in v2.15.0:
+            - **Security & Password Management:**
+              - Dynamic password authentication with SharedPreferences persistence
+              - Dedicated Password Change Setup modal in Settings requiring current password, new password, and confirmation
+              - Strict password criteria (8+ characters, uppercase letter, digit, special character)
+              - Eye icon show/hide toggle on all password fields
+              - Master password reset recovery modal on login screen
+            - **Order Deletion:**
+              - Permanent order deletion button with confirmation dialog, synced live to Supabase cloud
+            - **Background Order Monitoring & Silent Service:**
+              - Background order polling minimized (`IMPORTANCE_MIN` / `PRIORITY_MIN`) so persistent notification is silent with no top status bar icon
+              - Explicit service shutdown on manager logout with sign-out notification
+            - **Client History:**
+              - Interactive client cards in Clients directory opening full order history
+            - **UI Polish & Bug Fixes:**
+              - Theme selection (Light/Dark) persists across app reboots
+              - Fixed filter chip from "• New" to "New"
+              - Updated Supabase schema RLS policies for order status, notes, and deletion
 
             #### Install Instructions:
-            1. **Uninstall any previous version of Acquiro Manager first** (one final time — keystore is now permanent)
-            2. Download Acquiro-Manager-v2.14.0.apk below
-            3. Allow "Install from unknown sources" if prompted
-            4. Tap the APK to install
-          files: output-apk/Acquiro-Manager-v2.14.0.apk
+            1. Download Acquiro-Manager-v2.15.0.apk below
+            2. Allow "Install from unknown sources" if prompted
+            3. Tap the APK to install / update
+          files: output-apk/Acquiro-Manager-v2.15.0.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

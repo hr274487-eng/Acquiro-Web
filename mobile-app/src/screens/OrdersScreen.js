@@ -12,13 +12,14 @@ import {
   RefreshControl,
   Alert
 } from 'react-native';
-import { updateOrderStatusInSupabase, updateManagerNotesInSupabase } from '../services/supabase';
+import { updateOrderStatusInSupabase, updateManagerNotesInSupabase, deleteOrderInSupabase } from '../services/supabase';
 
 export default function OrdersScreen({
   orders,
   refreshing,
   onRefresh,
   onOrderUpdated,
+  onOrderDeleted,
   theme
 }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -102,6 +103,34 @@ export default function OrdersScreen({
     } catch (err) {
       Alert.alert('Error', err.message || 'Unable to update status.');
     }
+  };
+
+  const handleDeleteOrder = (orderId, orderRef = 'Order') => {
+    Alert.alert(
+      'Delete Order',
+      `Are you sure you want to permanently delete order ${orderRef} from Supabase? This action will sync across all manager devices.`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete Permanently',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await deleteOrderInSupabase(orderId);
+              if (activeModalOrder && String(activeModalOrder.id) === String(orderId)) {
+                handleCloseDetails();
+              }
+              if (typeof onOrderDeleted === 'function') {
+                onOrderDeleted(orderId);
+              }
+              Alert.alert('Deleted', `Order ${orderRef} deleted successfully.`);
+            } catch (err) {
+              Alert.alert('Error', err.message || 'Unable to delete order.');
+            }
+          }
+        }
+      ]
+    );
   };
 
   const getStatusColor = (status) => {
@@ -240,6 +269,15 @@ export default function OrdersScreen({
               <Text style={{ fontSize: 11, fontWeight: '700', color: '#10b981' }}>✓ Accept</Text>
             </TouchableOpacity>
           ) : null}
+
+          {/* Delete Button */}
+          <TouchableOpacity
+            style={[styles.actionBtn, { backgroundColor: 'rgba(244, 63, 94, 0.1)' }]}
+            onPress={() => handleDeleteOrder(item.id, ref)}
+            activeOpacity={0.7}
+          >
+            <Text style={{ fontSize: 11, fontWeight: '700', color: '#f43f5e' }}>🗑️ Delete</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -297,7 +335,7 @@ export default function OrdersScreen({
         >
           {[
             { key: 'all', label: 'All Orders' },
-            { key: 'new', label: '• New' },
+            { key: 'new', label: 'New' },
             { key: 'accepted', label: 'Accepted' },
             { key: 'in_progress', label: 'In Progress' },
             { key: 'completed', label: 'Completed' },
@@ -444,6 +482,15 @@ export default function OrdersScreen({
                     </TouchableOpacity>
                   ))}
                 </View>
+
+                {/* Permanent Delete Button inside Modal */}
+                <TouchableOpacity
+                  style={[styles.deleteModalBtn, { backgroundColor: 'rgba(244, 63, 94, 0.1)', borderColor: 'rgba(244, 63, 94, 0.3)' }]}
+                  onPress={() => handleDeleteOrder(activeModalOrder.id, activeModalOrder.order_ref || '#' + activeModalOrder.id)}
+                  activeOpacity={0.8}
+                >
+                  <Text style={styles.deleteModalBtnText}>🗑️ Permanently Delete Order from Cloud</Text>
+                </TouchableOpacity>
 
               </ScrollView>
             </View>
@@ -768,5 +815,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 8,
+  },
+  deleteModalBtn: {
+    paddingVertical: 12,
+    borderRadius: 10,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 8,
+    marginBottom: 24,
+  },
+  deleteModalBtnText: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#f43f5e',
   },
 });

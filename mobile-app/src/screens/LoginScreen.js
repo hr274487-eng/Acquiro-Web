@@ -5,20 +5,30 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  Image,
   ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
-  ScrollView
+  ScrollView,
+  Modal,
+  Alert
 } from 'react-native';
+import { getManagerPassword, resetDefaultPassword } from '../services/authService';
 
 export default function LoginScreen({ onLoginSuccess, theme }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSignIn = () => {
+  // Forgot password modal state
+  const [forgotModalVisible, setForgotModalVisible] = useState(false);
+  const [masterPasswordInput, setMasterPasswordInput] = useState('');
+  const [showMasterPassword, setShowMasterPassword] = useState(false);
+  const [forgotError, setForgotError] = useState('');
+  const [resetting, setResetting] = useState(false);
+
+  const handleSignIn = async () => {
     setError('');
     const u = username.trim().toLowerCase();
     const p = password.trim();
@@ -29,17 +39,50 @@ export default function LoginScreen({ onLoginSuccess, theme }) {
     }
 
     setLoading(true);
-    setTimeout(() => {
+    try {
+      const activePassword = await getManagerPassword();
+      setTimeout(() => {
+        setLoading(false);
+        if (u === 'admin' && p === activePassword) {
+          onLoginSuccess();
+        } else {
+          setError('Invalid credentials. Please verify your username and password.');
+        }
+      }, 400);
+    } catch (e) {
       setLoading(false);
-      if (u === 'admin' && p === 'acquiro2026') {
-        onLoginSuccess();
-      } else {
-        setError('Invalid credentials. Please verify your username and password.');
-      }
-    }, 400);
+      setError('Authentication check failed. Please retry.');
+    }
   };
 
-  const isDark = theme.background === '#090d16';
+  const handleResetToDefault = async () => {
+    setForgotError('');
+    if (!masterPasswordInput.trim()) {
+      setForgotError('Please enter the default master credential.');
+      return;
+    }
+
+    if (masterPasswordInput.trim() !== 'acquiro2026') {
+      setForgotError('Incorrect default master password.');
+      return;
+    }
+
+    setResetting(true);
+    try {
+      await resetDefaultPassword();
+      setResetting(false);
+      setForgotModalVisible(false);
+      setMasterPasswordInput('');
+      Alert.alert(
+        'Password Reset Successful',
+        'Manager password has been restored to default: acquiro2026\nYou can now sign in with username: admin and password: acquiro2026',
+        [{ text: 'OK' }]
+      );
+    } catch (e) {
+      setResetting(false);
+      setForgotError('Failed to reset credentials. Please try again.');
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -76,15 +119,36 @@ export default function LoginScreen({ onLoginSuccess, theme }) {
 
           <View style={styles.formGroup}>
             <Text style={[styles.label, { color: theme.textSecondary }]}>Manager Password</Text>
-            <TextInput
-              style={[styles.input, { backgroundColor: theme.inputBg, color: theme.textPrimary, borderColor: theme.border }]}
-              value={password}
-              onChangeText={setPassword}
-              placeholder="Enter password"
-              placeholderTextColor={theme.textMuted}
-              secureTextEntry
-            />
+            <View style={[styles.passwordInputContainer, { backgroundColor: theme.inputBg, borderColor: theme.border }]}>
+              <TextInput
+                style={[styles.passwordInput, { color: theme.textPrimary }]}
+                value={password}
+                onChangeText={setPassword}
+                placeholder="Enter password"
+                placeholderTextColor={theme.textMuted}
+                secureTextEntry={!showPassword}
+              />
+              <TouchableOpacity
+                style={styles.eyeBtn}
+                onPress={() => setShowPassword(!showPassword)}
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              >
+                <Text style={styles.eyeIcon}>{showPassword ? '👁️' : '👁️‍🗨️'}</Text>
+              </TouchableOpacity>
+            </View>
           </View>
+
+          {/* Forgot Password Link */}
+          <TouchableOpacity
+            style={styles.forgotBtn}
+            onPress={() => {
+              setForgotError('');
+              setMasterPasswordInput('');
+              setForgotModalVisible(true);
+            }}
+          >
+            <Text style={[styles.forgotText, { color: theme.primary }]}>Forgot Password?</Text>
+          </TouchableOpacity>
 
           {error ? (
             <View style={[styles.errorBox, { backgroundColor: theme.dangerLight }]}>
@@ -112,6 +176,66 @@ export default function LoginScreen({ onLoginSuccess, theme }) {
           </View>
         </View>
       </ScrollView>
+
+      {/* Forgot Password Modal */}
+      <Modal
+        visible={forgotModalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setForgotModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={[styles.modalCard, { backgroundColor: theme.surfaceCard, borderColor: theme.border }]}>
+            <Text style={[styles.modalTitle, { color: theme.textPrimary }]}>🔑 Restore Default Password</Text>
+            <Text style={[styles.modalSubtitle, { color: theme.textSecondary }]}>
+              Enter the Default Master Credential to reset manager access to factory settings:
+            </Text>
+
+            <View style={[styles.passwordInputContainer, { backgroundColor: theme.inputBg, borderColor: theme.border, marginTop: 14 }]}>
+              <TextInput
+                style={[styles.passwordInput, { color: theme.textPrimary }]}
+                value={masterPasswordInput}
+                onChangeText={setMasterPasswordInput}
+                placeholder="Enter default master password"
+                placeholderTextColor={theme.textMuted}
+                secureTextEntry={!showMasterPassword}
+              />
+              <TouchableOpacity
+                style={styles.eyeBtn}
+                onPress={() => setShowMasterPassword(!showMasterPassword)}
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              >
+                <Text style={styles.eyeIcon}>{showMasterPassword ? '👁️' : '👁️‍🗨️'}</Text>
+              </TouchableOpacity>
+            </View>
+
+            {forgotError ? (
+              <Text style={[styles.modalError, { color: theme.danger }]}>{forgotError}</Text>
+            ) : null}
+
+            <View style={styles.modalBtnRow}>
+              <TouchableOpacity
+                style={[styles.modalBtnCancel, { borderColor: theme.border }]}
+                onPress={() => setForgotModalVisible(false)}
+              >
+                <Text style={[styles.modalBtnCancelText, { color: theme.textSecondary }]}>Cancel</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.modalBtnConfirm, { backgroundColor: theme.primary }]}
+                onPress={handleResetToDefault}
+                disabled={resetting}
+              >
+                {resetting ? (
+                  <ActivityIndicator color="#ffffff" size="small" />
+                ) : (
+                  <Text style={styles.modalBtnConfirmText}>Restore Default ✓</Text>
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </KeyboardAvoidingView>
   );
 }
@@ -164,7 +288,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   formGroup: {
-    marginBottom: 16,
+    marginBottom: 14,
   },
   label: {
     fontSize: 12,
@@ -179,6 +303,35 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 14,
     fontSize: 15,
+  },
+  passwordInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 48,
+    borderRadius: 12,
+    borderWidth: 1,
+    paddingHorizontal: 14,
+  },
+  passwordInput: {
+    flex: 1,
+    fontSize: 15,
+    height: 48,
+  },
+  eyeBtn: {
+    padding: 4,
+    marginLeft: 6,
+  },
+  eyeIcon: {
+    fontSize: 18,
+  },
+  forgotBtn: {
+    alignSelf: 'flex-end',
+    marginBottom: 12,
+    paddingVertical: 2,
+  },
+  forgotText: {
+    fontSize: 12,
+    fontWeight: '700',
   },
   errorBox: {
     padding: 10,
@@ -213,5 +366,64 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontSize: 11,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  modalCard: {
+    width: '100%',
+    maxWidth: 380,
+    borderRadius: 18,
+    borderWidth: 1,
+    padding: 20,
+    elevation: 8,
+  },
+  modalTitle: {
+    fontSize: 17,
+    fontWeight: '800',
+    marginBottom: 6,
+  },
+  modalSubtitle: {
+    fontSize: 13,
+    lineHeight: 18,
+  },
+  modalError: {
+    fontSize: 12,
+    fontWeight: '600',
+    marginTop: 8,
+    textAlign: 'center',
+  },
+  modalBtnRow: {
+    flexDirection: 'row',
+    gap: 10,
+    marginTop: 18,
+  },
+  modalBtnCancel: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: 10,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalBtnCancelText: {
+    fontSize: 13,
+    fontWeight: '700',
+  },
+  modalBtnConfirm: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalBtnConfirmText: {
+    color: '#ffffff',
+    fontSize: 13,
+    fontWeight: '700',
   },
 });

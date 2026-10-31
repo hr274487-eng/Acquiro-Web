@@ -64,14 +64,15 @@ public class BackgroundOrderService extends Service {
             NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             if (manager == null) return;
 
-            // 1. Silent ongoing channel for the foreground service status bar notification
+            // 1. Minimized silent ongoing channel for the background order monitor
             NotificationChannel serviceChannel = new NotificationChannel(
                 SERVICE_CHANNEL_ID,
                 SERVICE_CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_LOW
+                NotificationManager.IMPORTANCE_MIN
             );
             serviceChannel.setDescription("Keeps Acquiro order reception active in background");
             serviceChannel.setShowBadge(false);
+            serviceChannel.enableVibration(false);
             serviceChannel.setSound(null, null); // Completely silent
             manager.createNotificationChannel(serviceChannel);
 
@@ -119,13 +120,14 @@ public class BackgroundOrderService extends Service {
             // system drawable guaranteed to exist on all Android versions.
             // Launcher icons (mipmap) are NOT valid small notification icons on Android 9.
             Notification notification = new NotificationCompat.Builder(this, SERVICE_CHANNEL_ID)
-                .setContentTitle("Acquiro Live Reception")
-                .setContentText("Monitoring new website orders in real-time")
+                .setContentTitle("Acquiro Background Monitor")
+                .setContentText("Listening for incoming website orders")
                 .setSmallIcon(android.R.drawable.ic_dialog_info)
                 .setContentIntent(pendingIntent)
                 .setOngoing(true)
                 .setSilent(true)
-                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setPriority(NotificationCompat.PRIORITY_MIN)
+                .setVisibility(NotificationCompat.VISIBILITY_SECRET)
                 .build();
 
             startForeground(SERVICE_NOTIFICATION_ID, notification);
@@ -288,8 +290,17 @@ public class BackgroundOrderService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (scheduler != null && !scheduler.isShutdown()) {
-            scheduler.shutdownNow();
+        try {
+            if (scheduler != null && !scheduler.isShutdown()) {
+                scheduler.shutdownNow();
+            }
+            stopForeground(true);
+            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            if (manager != null) {
+                manager.cancel(SERVICE_NOTIFICATION_ID);
+            }
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
     }
 

@@ -109,6 +109,27 @@ export async function updateManagerNotesInSupabase(orderId, notes, config = DEFA
   return await res.json();
 }
 
+export async function deleteOrderInSupabase(orderId, config = DEFAULT_CONFIG) {
+  const url = config.url.replace(/\/+$/, '');
+  const endpoint = `${url}/rest/v1/${config.table}?id=eq.${orderId}`;
+
+  const res = await fetch(endpoint, {
+    method: 'DELETE',
+    headers: {
+      'apikey': config.anonKey,
+      'Authorization': `Bearer ${config.anonKey}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=representation'
+    }
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to delete order: HTTP ${res.status}`);
+  }
+
+  return true;
+}
+
 export async function createManualOrderInSupabase(orderData, config = DEFAULT_CONFIG) {
   const url = config.url.replace(/\/+$/, '');
   const endpoint = `${url}/rest/v1/${config.table}`;

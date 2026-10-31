@@ -13,7 +13,14 @@ import {
 import { lightTheme, darkTheme } from './src/theme/colors';
 import { fetchOrdersFromSupabase } from './src/services/supabase';
 import { triggerHeadsUpAlert, playTechPing, pulseVibration } from './src/services/notificationService';
-import { checkAuthSession, saveAuthSession } from './src/services/authService';
+import {
+  checkAuthSession,
+  saveAuthSession,
+  getSavedTheme,
+  saveThemePreference,
+  stopBackgroundService,
+  startBackgroundService
+} from './src/services/authService';
 
 // Screens
 import LoginScreen from './src/screens/LoginScreen';
@@ -31,14 +38,16 @@ export default function App() {
   const theme = isDarkMode ? darkTheme : lightTheme;
   const knownOrderIds = useRef(new Set());
   const isInitialLoad = useRef(true);
-  const appMountTime = useRef(Date.now());
 
-  // Check persistent authentication session on launch
+  // Check persistent authentication session and theme on launch
   useEffect(() => {
     let isMounted = true;
-    checkAuthSession().then(auth => {
+    Promise.all([checkAuthSession(), getSavedTheme()]).then(([auth, savedTheme]) => {
       if (isMounted) {
         setIsAuthenticated(!!auth);
+        if (savedTheme) {
+          setIsDarkMode(savedTheme === 'dark');
+        }
       }
     });
     return () => {
@@ -106,13 +115,21 @@ export default function App() {
   const handleLoginSuccess = async () => {
     await saveAuthSession(true);
     setIsAuthenticated(true);
+    await startBackgroundService();
   };
 
   const handleLogout = async () => {
+    await stopBackgroundService();
     await saveAuthSession(false);
     setIsAuthenticated(false);
     knownOrderIds.current = new Set();
     isInitialLoad.current = true;
+  };
+
+  const handleToggleTheme = async () => {
+    const nextDark = !isDarkMode;
+    setIsDarkMode(nextDark);
+    await saveThemePreference(nextDark ? 'dark' : 'light');
   };
 
   const handleOrderUpdated = (updatedOrder) => {
@@ -123,6 +140,11 @@ export default function App() {
     setOrders(prev =>
       prev.map(o => (String(o.id) === String(updatedOrder.id) ? { ...o, ...updatedOrder } : o))
     );
+  };
+
+  const handleOrderDeleted = (deletedOrderId) => {
+    setOrders(prev => prev.filter(o => String(o.id) !== String(deletedOrderId)));
+    knownOrderIds.current.delete(String(deletedOrderId));
   };
 
   const newOrdersCount = orders.filter(
@@ -172,6 +194,7 @@ export default function App() {
             refreshing={refreshing}
             onRefresh={() => loadOrders(true)}
             onOrderUpdated={handleOrderUpdated}
+            onOrderDeleted={handleOrderDeleted}
             theme={theme}
           />
         )}
@@ -183,7 +206,7 @@ export default function App() {
         {activeTab === 'settings' && (
           <SettingsScreen
             isDarkMode={isDarkMode}
-            onToggleTheme={() => setIsDarkMode(!isDarkMode)}
+            onToggleTheme={handleToggleTheme}
             onLogout={handleLogout}
             theme={theme}
           />
