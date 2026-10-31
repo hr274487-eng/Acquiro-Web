@@ -239,11 +239,7 @@ public class NativeAlertModule extends ReactContextBaseJavaModule {
         try {
             Context context = getReactApplicationContext();
             Intent intent = new Intent(context, BackgroundOrderService.class);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                context.startForegroundService(intent);
-            } else {
-                context.startService(intent);
-            }
+            context.startService(intent);
             promise.resolve(true);
         } catch (Throwable t) {
             promise.reject("SERVICE_START_ERROR", t.getMessage());

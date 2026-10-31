@@ -120,31 +120,31 @@ jobs:
             exit 1
           fi
           echo "Found APK at: $APK_PATH"
-          cp "$APK_PATH" output-apk/Acquiro-Manager-v2.15.0.apk
+          cp "$APK_PATH" output-apk/Acquiro-Manager-v2.16.0.apk
           echo "=== APK Ready ==="
-          ls -lh output-apk/Acquiro-Manager-v2.15.0.apk
+          ls -lh output-apk/Acquiro-Manager-v2.16.0.apk
 
       - name: Upload APK as Workflow Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Acquiro-Manager-v2.15.0-APK
-          path: output-apk/Acquiro-Manager-v2.15.0.apk
+          name: Acquiro-Manager-v2.16.0-APK
+          path: output-apk/Acquiro-Manager-v2.16.0.apk
           retention-days: 90
 
       - name: Create GitHub Release with React Native APK
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/heads/main')
         with:
-          tag_name: v2.15.0-apk
-          name: "Acquiro Manager v2.15.0 — Security, Deletion & Client History"
+          tag_name: v2.16.0-apk
+          name: "Acquiro Manager v2.16.0 — Security, Deletion & Client History"
           body: |
-            ### Acquiro Mobile Manager — React Native v2.15.0
+            ### Acquiro Mobile Manager — React Native v2.16.0
 
-            **Version:** 2.15.0
+            **Version:** 2.16.0
             **Compatibility:** Android 9.0 (API 28) through Android 14+ (API 34/35)
             **Architecture:** arm64-v8a, armeabi-v7a, x86, x86_64
 
-            #### New in v2.15.0:
+            #### New in v2.16.0:
             - **Security & Password Management:**
               - Dynamic password authentication with SharedPreferences persistence
               - Dedicated Password Change Setup modal in Settings requiring current password, new password, and confirmation
@@ -164,9 +164,9 @@ jobs:
               - Updated Supabase schema RLS policies for order status, notes, and deletion
 
             #### Install Instructions:
-            1. Download Acquiro-Manager-v2.15.0.apk below
+            1. Download Acquiro-Manager-v2.16.0.apk below
             2. Allow "Install from unknown sources" if prompted
             3. Tap the APK to install / update
-          files: output-apk/Acquiro-Manager-v2.15.0.apk
+          files: output-apk/Acquiro-Manager-v2.16.0.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

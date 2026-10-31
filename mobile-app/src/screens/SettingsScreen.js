@@ -322,7 +322,7 @@ export default function SettingsScreen({
       </TouchableOpacity>
 
       <Text style={[styles.appVersionText, { color: theme.textMuted }]}>
-        Acquiro Mobile Manager v2.15.0 (React Native Engine) • Android 9+
+        Acquiro Mobile Manager v2.16.0 (React Native Engine) • Android 9+
       </Text>
 
       {/* Password Change Setup Modal */}

@@ -50,11 +50,14 @@ public class BackgroundOrderService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        // MUST call startForeground() immediately before anything else.
-        // On Android O+, startForegroundService() requires startForeground()
-        // within 5 seconds or the system throws RemoteServiceException.
         createNotificationChannels();
-        startInForeground();
+        // Cancel any old ongoing service notification so tray stays completely clean
+        try {
+            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            if (manager != null) {
+                manager.cancel(SERVICE_NOTIFICATION_ID);
+            }
+        } catch (Throwable ignored) {}
         loadPersistedSeenIds();
         startPolling();
     }
@@ -104,36 +107,6 @@ public class BackgroundOrderService extends Service {
             }
 
             manager.createNotificationChannel(alertChannel);
-        }
-    }
-
-    private void startInForeground() {
-        try {
-            Intent notificationIntent = new Intent(this, MainActivity.class);
-            int flags = PendingIntent.FLAG_UPDATE_CURRENT;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                flags |= PendingIntent.FLAG_IMMUTABLE;
-            }
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, flags);
-
-            // Use android.R.drawable.ic_dialog_info as small icon — this is a safe
-            // system drawable guaranteed to exist on all Android versions.
-            // Launcher icons (mipmap) are NOT valid small notification icons on Android 9.
-            Notification notification = new NotificationCompat.Builder(this, SERVICE_CHANNEL_ID)
-                .setContentTitle("Acquiro Background Monitor")
-                .setContentText("Listening for incoming website orders")
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
-                .setContentIntent(pendingIntent)
-                .setOngoing(true)
-                .setSilent(true)
-                .setPriority(NotificationCompat.PRIORITY_MIN)
-                .setVisibility(NotificationCompat.VISIBILITY_SECRET)
-                .build();
-
-            startForeground(SERVICE_NOTIFICATION_ID, notification);
-        } catch (Throwable t) {
-            // Log but don't crash — polling will still start
-            t.printStackTrace();
         }
     }
 

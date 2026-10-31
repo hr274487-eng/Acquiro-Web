@@ -84,7 +84,12 @@ export async function updateOrderStatusInSupabase(orderId, newStatus, config = D
     throw new Error(`Failed to update status: HTTP ${res.status}`);
   }
 
-  return await res.json();
+  const data = await res.json();
+  if (!Array.isArray(data) || data.length === 0) {
+    throw new Error('Supabase RLS Blocked: 0 rows updated. You must run the RLS SQL policy in Supabase SQL editor.');
+  }
+
+  return data;
 }
 
 export async function updateManagerNotesInSupabase(orderId, notes, config = DEFAULT_CONFIG) {
@@ -106,7 +111,12 @@ export async function updateManagerNotesInSupabase(orderId, notes, config = DEFA
     throw new Error(`Failed to save notes: HTTP ${res.status}`);
   }
 
-  return await res.json();
+  const data = await res.json();
+  if (!Array.isArray(data) || data.length === 0) {
+    throw new Error('Supabase RLS Blocked: 0 rows updated for notes. You must run the RLS SQL policy in Supabase SQL editor.');
+  }
+
+  return data;
 }
 
 export async function deleteOrderInSupabase(orderId, config = DEFAULT_CONFIG) {
@@ -125,6 +135,11 @@ export async function deleteOrderInSupabase(orderId, config = DEFAULT_CONFIG) {
 
   if (!res.ok) {
     throw new Error(`Failed to delete order: HTTP ${res.status}`);
+  }
+
+  const data = await res.json();
+  if (!Array.isArray(data) || data.length === 0) {
+    throw new Error('Supabase RLS Blocked: 0 rows deleted. You must run the RLS SQL policy in Supabase SQL editor.');
   }
 
   return true;

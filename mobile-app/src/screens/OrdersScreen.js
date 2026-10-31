@@ -182,10 +182,21 @@ export default function OrdersScreen({
     return (
       <View style={[styles.orderCard, { backgroundColor: theme.surfaceCard, borderColor: theme.border }]}>
         
-        {/* Top Meta Line: Ref + Status Badge + Time */}
+        {/* Top Meta Line: Bin Icon on Upper Left + Ref + Status Badge + Time */}
         <View style={styles.cardHeaderRow}>
-          <View style={styles.refBox}>
-            <Text style={styles.refText}>{ref}</Text>
+          <View style={styles.headerLeftGroup}>
+            <TouchableOpacity
+              style={styles.trashBinBtn}
+              onPress={() => handleDeleteOrder(item.id, ref)}
+              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.trashBinIcon}>🗑️</Text>
+            </TouchableOpacity>
+
+            <View style={styles.refBox}>
+              <Text style={styles.refText}>{ref}</Text>
+            </View>
           </View>
 
           <View style={styles.headerRightGroup}>
@@ -270,14 +281,7 @@ export default function OrdersScreen({
             </TouchableOpacity>
           ) : null}
 
-          {/* Delete Button */}
-          <TouchableOpacity
-            style={[styles.actionBtn, { backgroundColor: 'rgba(244, 63, 94, 0.1)' }]}
-            onPress={() => handleDeleteOrder(item.id, ref)}
-            activeOpacity={0.7}
-          >
-            <Text style={{ fontSize: 11, fontWeight: '700', color: '#f43f5e' }}>🗑️ Delete</Text>
-          </TouchableOpacity>
+
         </View>
       </View>
     );
@@ -610,6 +614,38 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 8,
+  },
+  headerLeftGroup: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  trashBinBtn: {
+    width: 28,
+    height: 28,
+    borderRadius: 8,
+    backgroundColor: 'rgba(244, 63, 94, 0.12)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  trashBinIcon: {
+    fontSize: 13,
+  },
+  headerLeftGroup: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  trashBinBtn: {
+    width: 28,
+    height: 28,
+    borderRadius: 8,
+    backgroundColor: 'rgba(244, 63, 94, 0.12)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  trashBinIcon: {
+    fontSize: 13,
   },
   refBox: {
     paddingHorizontal: 6,

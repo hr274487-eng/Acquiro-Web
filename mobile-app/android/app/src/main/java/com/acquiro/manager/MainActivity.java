@@ -58,11 +58,7 @@ public class MainActivity extends ReactActivity {
       }
 
       Intent intent = new Intent(this, BackgroundOrderService.class);
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        startForegroundService(intent);
-      } else {
-        startService(intent);
-      }
+      startService(intent);
     } catch (Throwable t) {
       t.printStackTrace();
     }
