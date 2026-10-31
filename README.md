@@ -79,5 +79,5 @@ vercel --prod
 
 ## 📞 Verified Business Contact
 
-* **Email**: hamza.acquiro@gmail.com
+* **Email**: acquiro.agency@outlook.com
 * **Phone**: +1 214-286-5081 (`tel:+12142865081`)

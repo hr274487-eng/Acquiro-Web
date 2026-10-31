@@ -218,7 +218,7 @@ Generated via Acquiro Order Reception System`;
 
       const subject = encodeURIComponent(`Order Enquiry [${orderId}]: ${service} - ${business || name}`);
       const body = encodeURIComponent(briefText);
-      const mailtoUrl = `mailto:hamza.acquiro@gmail.com?subject=${subject}&body=${body}`;
+      const mailtoUrl = `mailto:acquiro.agency@outlook.com?subject=${subject}&body=${body}`;
 
       // Check if Supabase Database is configured
       const sbConfig = window.ACQUIRO_CONFIG?.supabase;
@@ -316,7 +316,7 @@ Generated via Acquiro Order Reception System`;
             formFeedback.className = 'form-feedback-box active info';
             formFeedback.innerHTML = `
               <div style="margin-bottom: 8px;">
-                <strong>Order Brief Compiled [${orderId}]!</strong> Database connection encountered a notice (${dbErr.message || 'check RLS policies'}). We are directing your enquiry directly via email to <strong>hamza.acquiro@gmail.com</strong>.
+                <strong>Order Brief Compiled [${orderId}]!</strong> Database connection encountered a notice (${dbErr.message || 'check RLS policies'}). We are directing your enquiry directly via email to <strong>acquiro.agency@outlook.com</strong>.
               </div>
               <div style="margin: 10px 0;">
                 <a href="${mailtoUrl}" class="btn btn-primary btn-sm">
@@ -345,10 +345,10 @@ Generated via Acquiro Order Reception System`;
           formFeedback.className = 'form-feedback-box active info';
           formFeedback.innerHTML = `
             <div style="margin-bottom: 10px;">
-              <strong>Your Order Enquiry is Compiled! [Ref: ${orderId}]</strong> We have opened your email client to send directly to <strong>hamza.acquiro@gmail.com</strong>.
+              <strong>Your Order Enquiry is Compiled! [Ref: ${orderId}]</strong> We have opened your email client to send directly to <strong>acquiro.agency@outlook.com</strong>.
             </div>
             <p style="font-size: 0.85rem; color: #475569; margin-bottom: 12px;">
-              If your email client did not open automatically, copy the structured brief below and email it to <strong>hamza.acquiro@gmail.com</strong> or call us at <strong>+1 214-286-5081</strong>.
+              If your email client did not open automatically, copy the structured brief below and email it to <strong>acquiro.agency@outlook.com</strong> or call us at <strong>+1 214-286-5081</strong>.
             </p>
             <button type="button" class="copy-button" id="copy-brief-btn" style="margin-bottom: 10px;">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
